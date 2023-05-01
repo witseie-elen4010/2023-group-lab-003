@@ -3,3 +3,4 @@
 ## Code Contributors
 
 * Sandile Kunene
+* Thamsanqa Mashinini
