@@ -4,3 +4,4 @@
 
 * Sandile Kunene
 * Thamsanqa Mashinini
+* Karabo Kgatla
