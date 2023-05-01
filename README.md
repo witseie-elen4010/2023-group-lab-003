@@ -5,3 +5,4 @@
 * Sandile Kunene
 * Thamsanqa Mashinini
 * Karabo Kgatla
+* Arshad Norat
