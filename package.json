@@ -18,8 +18,10 @@
   "homepage": "https://github.com/witseie-elen4010/2023-group-lab-003#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.3",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
