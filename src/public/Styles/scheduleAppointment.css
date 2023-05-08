@@ -1,0 +1,13 @@
+body {
+  display: center;
+  padding: 0;
+  margin: 0;
+}
+
+#scheduleAppointmentForm {
+    background: #c9d3c9;
+}
+
+.form-label {
+    font-weight: 500;
+}
