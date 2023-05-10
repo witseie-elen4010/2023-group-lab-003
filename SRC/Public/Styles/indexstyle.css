@@ -1,0 +1,11 @@
+*{
+    box-sizing: border-box;
+    background-color: lightskyblue !important;
+}
+#header{
+    background-color: lightseagreen;
+}
+
+.hero{
+    background-color: aqua;
+}
