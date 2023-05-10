@@ -23,5 +23,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(path.join(__dirname, './SRC/Public')))
 
+app.use(express.urlencoded({ extended: true }))
+
 app.use('/', route)
 app.use('/scheduleAppointment', route)
