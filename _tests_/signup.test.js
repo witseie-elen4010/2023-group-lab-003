@@ -1,5 +1,5 @@
 'use strict'
-const { validateEmail } = require('../SRC/public/scripts//signup');
+const { validateEmail } = require('../SRC/public/scripts/signup');
 const { validatePassword } = require('../SRC/public/scripts/signup');
 const { confirmPassword } = require('../SRC/public/scripts/class/signup')
 
