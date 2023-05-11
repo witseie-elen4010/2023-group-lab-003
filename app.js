@@ -22,7 +22,6 @@ mongoose.connect(dbUrl).then((result) => {
 
 app.set('views', path.join(__dirname, './SRC/Views'));
 app.set('view engine', 'ejs')
-
 app.use(express.static(path.join(__dirname, './SRC/Public')))
 
 

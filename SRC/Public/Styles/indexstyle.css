@@ -1,11 +1,14 @@
 *{
     box-sizing: border-box;
-    background-color: lightskyblue !important;
-}
-#header{
-    background-color: lightseagreen;
+    
 }
 
+
+
 .hero{
-    background-color: aqua;
+   background-image: url(".SRC/Public/images/background.png");
+}
+
+.about h1{
+    text-align: center;
 }
