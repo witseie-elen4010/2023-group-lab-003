@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-const route= require("./SRC/Routes/Models/routes")
+const route= require("./SRC/routes/main.routes")
 
 //connect to db url
 const dbUrl = 'mongodb+srv://sdiiigroup3:group3sd32023@cluster0.vjbvldr.mongodb.net/?retryWrites=true&w=majority';
@@ -20,9 +20,9 @@ mongoose.connect(dbUrl).then((result) => {
 
 
 
-app.set('views', path.join(__dirname, './SRC/Views'));
+app.set('views', path.join(__dirname, './SRC/views'));
 app.set('view engine', 'ejs')
-app.use(express.static(path.join(__dirname, './SRC/Public')))
+app.use(express.static(path.join(__dirname, './SRC/public')))
 
 
 
