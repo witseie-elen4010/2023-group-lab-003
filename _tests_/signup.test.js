@@ -1,7 +1,7 @@
 'use strict'
-const { validateEmail } = require('../SRC/Public/scripts/class/signup');
-const { validatePassword } = require('../SRC/Public/scripts/class/signup');
-const { confirmPassword } = require('../SRC/Public/scripts/class/signup')
+const { validateEmail } = require('../SRC/public/scripts//signup');
+const { validatePassword } = require('../SRC/public/scripts/signup');
+const { confirmPassword } = require('../SRC/public/scripts/class/signup')
 
 describe('ValidateEmail', () => {
   test('Should return true for valid email addresses', () => {
