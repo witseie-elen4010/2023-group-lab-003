@@ -16,6 +16,7 @@ router.get('/signin', (req, res) => {
 
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
+const {emptyInput} = require('../../Public/scripts/backendAppointment')
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
@@ -23,11 +24,18 @@ router.get('/scheduleAppointment', (req, res) => {
 // handling schedule appointment details
 router.post('/scheduleAppointment', async (req, res) => {
   // data will go to moongo
-  const data = await Appointment.create({
+  const data = {
     eventTitle: req.body.eventTitle
-  })
+  }
 
-  return res.status(200).json(data)
+  // save data to database if it is valid
+  if (emptyInput(data.eventTitle)){
+    res.status(400).send({message: 'Invalid event title'})
+  }
+  else{
+    Appointment.insertMany(data)
+    res.status(200).json({message: 'Schedule successfully set'})
+  }
 })
 
 module.exports = router
