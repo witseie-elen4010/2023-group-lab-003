@@ -10,14 +10,13 @@ router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
-router.get('/signin',(req, res) =>
-{
+router.get('/signin',(req, res) =>{
     res.render('Login');
 })
 
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
-const {emptyInput} = require('../public/scripts/backendAppointment')
+const {emptyInput, validateEventTitle} = require('../public/scripts/backendAppointment')
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
@@ -29,7 +28,7 @@ router.post('/scheduleAppointment', async (req, res) => {
   }
 
   // save data to database if it is valid
-  if (emptyInput(data.eventTitle)){
+  if (emptyInput(data.eventTitle) && !validateEventTitle(data.eventTitle)){
     res.status(400).send({message: 'Invalid event title'})
   }
   else{

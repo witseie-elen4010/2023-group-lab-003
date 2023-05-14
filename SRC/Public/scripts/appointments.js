@@ -63,6 +63,6 @@ function postJSON(data) {
 }
 
 // for tests:
-module.exports = {
-  validateEventTitle
-}
+// module.exports = {
+//   validateEventTitle
+// }
