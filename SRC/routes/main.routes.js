@@ -28,9 +28,11 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+
 router.get('/signin', (req, res) => {
     res.render('Login');
 });
+
 
 router.post('/signin', async (req, res) => { //asynchronous function
     const { email, password } = req.body; // get email and password from user
