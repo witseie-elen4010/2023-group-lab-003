@@ -10,3 +10,7 @@ body {
 .form-label {
     font-weight: 500;
 }
+
+.form-errors {
+  color: rgb(250, 43, 43)
+}
