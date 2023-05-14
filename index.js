@@ -21,10 +21,10 @@ mongoose.connect(dbUrl).then((result) => {
 
 
 app.set('views', path.join(__dirname, './SRC/views'));
-app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, './SRC/public')))
+app.use(express.json()); //use json to fetch data from user
+app.set('view engine', 'ejs') //view engine is ejs
 
 
-
-app.use('/', mainroute)
-app.use('/signup', mainroute)
+app.use(mainroute)
+//app.use('/signup', mainroute)
