@@ -23,7 +23,6 @@ router.get('/scheduleAppointment', (req, res) => {
 
 // handling schedule appointment details
 router.post('/scheduleAppointment', async (req, res) => {
-  // data will go to moongo
   const data = {
     eventTitle: req.body.eventTitle
   }
