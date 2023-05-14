@@ -1,0 +1,20 @@
+*{
+    box-sizing: border-box;
+    
+}
+
+
+
+.hero{
+   background-image: url(".SRC/Public/images/background.png");
+}
+.about{
+    text-align: center;
+}
+
+
+.about ul{
+    display: inline-block;
+    text-align: left;
+}
+

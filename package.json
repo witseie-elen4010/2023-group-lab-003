@@ -2,10 +2,10 @@
   "name": "2023-group-lab-003",
   "version": "1.0.0",
   "description": "## Code Contributors",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "devStart": "nodemon app.js"
+    "devStart": "nodemon index.js"
   },
   "repository": {
     "type": "git",

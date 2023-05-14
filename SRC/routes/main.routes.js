@@ -1,5 +1,5 @@
 const express = require('express')
-const Appointment = require('../../Models/appointmentSchema')
+const Appointment = require('../models/appointmentSchema')
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -10,13 +10,14 @@ router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
-router.get('/signin', (req, res) => {
-  res.render('signin')
+router.get('/signin',(req, res) =>
+{
+    res.render('Login');
 })
 
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
-const {emptyInput} = require('../../Public/scripts/backendAppointment')
+const {emptyInput} = require('../public/scripts/backendAppointment')
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
