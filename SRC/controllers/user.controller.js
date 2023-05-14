@@ -1,50 +1,57 @@
 'use strict';
 const User = require('../models/user.schema');
+const bodyParser = require('body-parser');
 
 //register a new user
-const register = (req, res, next)=>{
+const register = (req, res, next) => {
+    // Hash the password using a secure algorithm like bcrypt
+    const hashedPass = bcrypt.hashSync(req.body.password, 10);
+
     let user = new User({
         name: req.body.name,
-        email:req.body.email,
-        password:hashedPass
+        surname: req.body.surname,
+        role: req.body.role,
+        email: req.body.email,
+        password: hashedPass
+    });
+
+    user.save().then(() => {
+        res.redirect('/signin'); //redirect to the login page so the person can login    }).catch(error => {
+    }).catch(error => {
+        console.error(error);
     })
-    User.save().then(user=>{
-        res.json({message: 'User Added successfully'})
-    }).catch(error=>{
-        res.json({message: 'An error occured'})
-    })
-}
+};
 
 //update user information
 
-const updateUserInfo = (req, res, next)=>{
+const updateUserInfo = (req, res, next) => {
     let userId = req.body.employeeId;
-    
+
     let UpdatedUserInfo = {
         name: req.body.name,
         email: req.body.email,
         password: hashedPass
     }
 
-    User.findByIdAndUpdate(userId, {$set:UpdatedUserInfo})
-    .then(()=>{
-        res.json({
-            message: 'User information successfully updated '
+    User.findByIdAndUpdate(userId, { $set: UpdatedUserInfo })
+        .then(() => {
+            res.json({
+                message: 'User information successfully updated '
+            })
+        }).catch(error => {
+            res.json({
+                message: 'An error occured'
+            })
         })
-    }).catch(error=>{
-        res.json({
-            message:'An error occured'
-        })
-    })
 }
 
 
 
 
 const login = (req, res, next) => {
-    var username = req.body.username;
+    var email = req.body.email;
     var password = req.body.password;
-    User.findOne({ $or: [{ email: username }, { phone: username }] })
+    User.findOne({ $or: [{ email: email }, { phone: username }] })
         .then(user => {
             if (user) {
                 bycrypt.compare(password, user.password, function (err, result) {
@@ -79,6 +86,6 @@ const login = (req, res, next) => {
         })
 }
 
-module.exports ={
+module.exports = {
     updateUserInfo, register, login
 }

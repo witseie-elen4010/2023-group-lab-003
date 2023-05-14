@@ -10,7 +10,9 @@ const register = (req, res, next) => {
                 error: err
             })
         } let user = new User({
-            username: req.body.username,
+            name: req.body.name,
+            surname: req.body.surname,
+            role: req.body.role,
             email: req.body.email,
             password: hashedPass
 
@@ -24,9 +26,7 @@ const register = (req, res, next) => {
                 
             })
             .catch(error => {
-                res.json({
-                    message: 'An error occured'
-                })
+                
                 console.log(error)
             })
     })

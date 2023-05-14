@@ -1,6 +1,7 @@
 'use strict'
 const express = require("express");
 const app = express();
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const path = require("path");
 const mainroute= require("./SRC/routes/main.routes")
@@ -19,7 +20,7 @@ mongoose.connect(dbUrl).then((result) => {
 });
 
 
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, './SRC/views'));
 app.use(express.static(path.join(__dirname, './SRC/public')))
 app.use(express.json()); //use json to fetch data from user

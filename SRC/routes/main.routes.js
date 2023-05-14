@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const user = require('../models/user.schema');
+const authController = require('../controllers/auth.controller');
 
 
 errorHandler = (err) => {
@@ -15,18 +16,7 @@ router.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-router.post('/signup', async (req, res) => {
-    const { email, password } = req.body; // get email and password from user
-    try {
-        const User = await user.create({ email, password });
-        res.status(201).json(User);
-    }
-    catch (err) {
-
-        errorHandler(err);
-        res.status(400).send("Can't create user")
-    }
-});
+router.post('/signup',authController.register);
 
 
 router.get('/signin', (req, res) => {

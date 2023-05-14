@@ -29,24 +29,24 @@
             <div class='col-md-6 right-box'>
                 <h2>Create an account</h2>
                 <div class="row align-items-center">
-                    <form id="signupform" action="/register" method="post">
+                    <form id="signupform" action="/signup" method="post">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Name">
+                            <input name="name" type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Name">
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Surname">
+                            <input name="surname" type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Surname">
                         </div>
 
                         <div class="input-group mb-3">
-                            <input class="form-control" placeholder="Email" type="email" id="email-field"
+                            <input name="email" class="form-control" placeholder="Email" type="email" id="email-field"
                                 oninput="validateEmailWrapper(event)" />
                             <div id="email-error"></div>
                             <div class="input-group mb-3">
                                 <span id="email-error"></span>
                             </div>
                         <div class="input-group mb-3">
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                            <select name="role" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                 <option selected>Select your role</option>
                                 <option value="1">Student</option>
                                 <option value="2">Lecture</option>
