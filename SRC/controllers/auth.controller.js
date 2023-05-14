@@ -19,9 +19,8 @@ const register = (req, res, next) => {
         })
         user.save()
             .then(user => {
-                res.json({
-                    message: 'User Added Successfully'
-                })
+               
+                res.redirect('/signin');
                 console.log('New user added')
                 
             })
@@ -35,9 +34,9 @@ const register = (req, res, next) => {
 }
 
 const login = (req, res, next) => {
-    var username = req.body.username; 
+    var email = req.body.email; 
     var password = req.body.password;
-    User.findOne({ $or: [{ email: username }, { username: username }] })
+    User.findOne({ $or: [{ email: email }] })
         .then(user => {
             if (user) {
                 bcrypt.compare(password, user.password, function (err, results) {
@@ -48,12 +47,13 @@ const login = (req, res, next) => {
 
                     }
                     if (results) {
-                        let token = jwt.sign({ username: user.username }, 'verySecretValue')
-                        res.json({
+                        let token = jwt.sign({ email: user.email }, 'verySecretValue')
+                        res.redirect('/dummyDashboard');
+                        /*res.json({
                             message: 'Login Successful',
                             token
                         }
-                        )
+                        )*/
 
                     }
                     else {
