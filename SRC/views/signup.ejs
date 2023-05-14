@@ -29,7 +29,7 @@
             <div class='col-md-6 right-box'>
                 <h2>Create an account</h2>
                 <div class="row align-items-center">
-                    <form id="signupform">
+                    <form id="signupform" action="/register" method="post">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Name">
                         </div>
@@ -45,7 +45,14 @@
                             <div class="input-group mb-3">
                                 <span id="email-error"></span>
                             </div>
-
+                        <div class="input-group mb-3">
+                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                <option selected>Select your role</option>
+                                <option value="1">Student</option>
+                                <option value="2">Lecture</option>
+                               
+                              </select>
+                        </div>
                             <div class="input-group mb-3">
                                 <input class="form-control" type="password" id="password" placeholder="Password"
                                     name="password" oninput="validatePasswordWrapper(event)" />
@@ -73,8 +80,7 @@
                             </div>
                             <div class="button-group" style="display: flex; justify-content: center;">
                                 <div class="input-group mb-5" style="margin-right: 10px;">
-                                    <input type="submit" name="SignUpButton" id="SignUpButton"
-                                        value="Sign Up">
+                                    <input type="submit" name="SignUpButton" id="SignUpButton" value="Sign Up">
                                 </div>
                             </div>
                     </form>
