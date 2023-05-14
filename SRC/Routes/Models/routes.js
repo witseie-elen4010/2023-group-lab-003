@@ -1,5 +1,5 @@
 const express = require('express')
-const Appointment = require('../../Models/appointment')
+const Appointment = require('../../Models/appointmentSchema')
 const router = express.Router()
 
 router.get('/', (req, res) => {
