@@ -28,3 +28,8 @@ app.use(express.static(path.join(__dirname, './SRC/public')))
 
 app.use('/', mainroute)
 app.use('/signup', mainroute)
+// Add route to render test.ejs
+app.get('/lecturerDashboard', (req, res) => {
+    res.render('lecturerDashboard');
+  });
+  
