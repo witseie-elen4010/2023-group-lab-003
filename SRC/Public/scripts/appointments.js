@@ -8,9 +8,11 @@ const emptyInput = (input) => {
 const validateEventTitle = (input, eventTitleError) => {
   if(emptyInput(input)) {
       eventTitleError.innerHTML = 'Please fill in event title'
+      return false
   } 
   else {
       eventTitleError.innerHTML = ''
+      return true
   }
 }
 
@@ -58,4 +60,9 @@ function postJSON(data) {
   // response code is the reason for jumping to this
   // catch() function.
   })
+}
+
+// for tests:
+module.exports = {
+  validateEventTitle
 }
