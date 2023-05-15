@@ -22,12 +22,18 @@ const containNumbers = (input) => {
   return hasNumbers
 }
 
+const containCharacters = (input) => {
+  const characters = /[!\@\#\$\%\^\&\*\(\)\-\_\+\=\~\?\.\,\?\<\>\{\}\\]/
+  const hasCharacters = input.match(characters) ? true : false
+  return hasCharacters
+}
+
 const validateLecturerName = (lecturerName, lecturerNameError) => {
   if(emptyInput(lecturerName)){
     lecturerNameError.innerHTML = 'Please fill in the name of the lecturer'
     return false
   }
-  else if (containNumbers(lecturerName)){
+  else if (containNumbers(lecturerName) || containCharacters(lecturerName)){
     lecturerNameError.innerHTML = 'Lecturer name must contain letters only'
     return false
   }
