@@ -28,8 +28,8 @@ router.get('/signin', (req, res) => {
 router.get('/dummyDashboard', (req, res) => {
     res.render('dummyDashboard');
 });
-router.get('/dummystudentdashboard', (req, res) => {
-    res.render('dummystudentdashboard');
+router.get('/studentDashboard', (req, res) => {
+    res.render('studentDashboard');
 })
 router.post('/signin', authController.login);
 
