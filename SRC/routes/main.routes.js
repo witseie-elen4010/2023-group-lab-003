@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const user = require('../models/user.schema');
 const authController = require('../controllers/auth.controller');
+const { authenticate, authStudent, authLecture } = require('../middleware/authenticate.routes');
 
 
 errorHandler = (err) => {
@@ -26,6 +27,9 @@ router.get('/signin', (req, res) => {
 router.get('/dummyDashboard', (req, res) => {
     res.render('dummyDashboard');
 });
+router.get('/dummystudentdashboard', (req, res) => {
+    res.render('dummystudentdashboard');
+})
 router.post('/signin', authController.login);
 
 module.exports = router;
