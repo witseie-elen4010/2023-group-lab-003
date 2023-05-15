@@ -1,6 +1,7 @@
 'use strict'
 const express = require("express");
 const app = express();
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const path = require("path");
 const mainroute= require("./SRC/routes/main.routes")
@@ -19,17 +20,20 @@ mongoose.connect(dbUrl).then((result) => {
 });
 
 
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, './SRC/views'));
-app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, './SRC/public')))
+app.use(express.json()); //use json to fetch data from user
+app.set('view engine', 'ejs') //view engine is ejs
 
 
 
-app.use('/', mainroute)
-app.use('/signup', mainroute)
-// Add route to render test.ejs
+
+
 app.get('/lecturerDashboard', (req, res) => {
     res.render('lecturerDashboard');
   });
   
+app.use(mainroute)
+//app.use('/signup', mainroute)
+

@@ -15,7 +15,7 @@ function validateEmailWrapper(event) {
   return validateEmail(emailField, emailError);
 }
 
-function validatePassword (Passwords, PasswordsError) {
+function validatePassword(Passwords, PasswordsError) {
   let errorMessage = ''
 
   if (!Passwords.value.match(/[0-9]/)) {
@@ -41,7 +41,7 @@ function validatePassword (Passwords, PasswordsError) {
   if (errorMessage !== '') {
     PasswordsError.innerHTML = '<ul>' + errorMessage + '</ul>'
 
-// Gives error "Cannot read properties of undefined (reading 'add')" during testing, the if statement seems to deal with the issue
+    // Gives error "Cannot read properties of undefined (reading 'add')" during testing, the if statement seems to deal with the issue
     if (PasswordsError.classList) {
       PasswordsError.classList.add('error-message');
     }
@@ -54,29 +54,29 @@ function validatePassword (Passwords, PasswordsError) {
   }
 }
 
-function validatePasswordWrapper(event){
+function validatePasswordWrapper(event) {
   const password_error = document.getElementById('password-error')
   const password = document.getElementById('password')
   return validatePassword(password, password_error)
 }
 
-function confirmPassword (password1, password2, errormes) {
-if(password1.value !== password2.value){
-  errormes.innerHTML = 'Passwords do not match'
-  return false;
+function confirmPassword(password1, password2, errormes) {
+  if (password1.value !== password2.value) {
+    errormes.innerHTML = 'Passwords do not match'
+    return false;
 
-}else{
-  errormes.innerHTML = ''
-  return true;
+  } else {
+    errormes.innerHTML = ''
+    return true;
+  }
 }
-}
 
-function confirmPasswordWrapper(event){
-const password_confirm = document.getElementById('password_confirm')
-const password = document.getElementById('password')
-const password_fail = document.getElementById('password-fail')
+function confirmPasswordWrapper(event) {
+  const password_confirm = document.getElementById('password_confirm')
+  const password = document.getElementById('password')
+  const password_fail = document.getElementById('password-fail')
 
-return confirmPassword(password_confirm, password, password_fail)
+  return confirmPassword(password_confirm, password, password_fail)
 }
 
 document.addEventListener('DOMContentLoaded', function () {
