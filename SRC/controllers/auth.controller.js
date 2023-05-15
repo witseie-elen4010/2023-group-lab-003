@@ -51,10 +51,10 @@ const login = (req, res, next) => {
                         let token = jwt.sign({ email: user.email }, 'verySecretValue')
                         
                         if (user.role === 'lecture') {
-                            res.redirect('/dummyDashboard');
+                            res.redirect('/lecturerDashboard');
                         }
                         else if (user.role === 'student') {
-                            res.redirect('/dummystudentDashboard');
+                            res.redirect('/studentDashboard');
                         }
                         
                         /*res.json({
