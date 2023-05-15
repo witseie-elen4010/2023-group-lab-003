@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/witseie-elen4010/2023-group-lab-003#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.3",
     "cookie-session": "^2.0.0",
@@ -27,7 +28,8 @@
     "jsdom": "^22.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "jest": "^29.5.0",
