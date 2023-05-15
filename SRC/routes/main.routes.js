@@ -43,7 +43,8 @@ router.get('/scheduleAppointment', (req, res) => {
 // handling schedule appointment details
 router.post('/scheduleAppointment', async (req, res) => {
   const data = {
-    eventTitle: req.body.eventTitle
+    eventTitle: req.body.eventTitle,
+    lecturerName: req.body.lecturerName
   }
 
   // save data to database if it is valid
@@ -52,6 +53,7 @@ router.post('/scheduleAppointment', async (req, res) => {
   }
   else{
     // update database
+    console.log(data)
     Appointment.insertMany(data)
     res.status(200).json({message: 'Schedule successfully set'})
   }

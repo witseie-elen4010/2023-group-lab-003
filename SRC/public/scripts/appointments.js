@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
       validateLecturerName(lecturerName, lecturerNameError)
       
       const data = {
-        eventTitle: eventTitle
+        eventTitle: eventTitle,
+        lecturerName: lecturerName
       }
       postJSON(data)
     })
