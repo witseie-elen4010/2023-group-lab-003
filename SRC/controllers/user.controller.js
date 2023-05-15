@@ -63,12 +63,13 @@ const login = (req, res, next) => {
                     }
                     if (results) {
                         let token = jwt.sign({ name: user.name }, 'verySecretValue', { expireIn: '1h' })
-                        res.json({
+                        res.redirect('/dummyDashboard');
+                        /*res.json({
                             message: 'Login Successful',
                             token
                         }
                         )
-
+*/
                     }
                     else {
                         res.json({

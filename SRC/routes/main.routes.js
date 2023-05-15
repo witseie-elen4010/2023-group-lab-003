@@ -23,17 +23,9 @@ router.get('/signin', (req, res) => {
     res.render('Login');
 });
 
-
-router.post('/signin', async (req, res) => { //asynchronous function
-    const { email, password } = req.body; // get email and password from user
-    try {
-        const User = await user.create({ email, password });
-    }
-    catch (err) {
-        
-
-    }
+router.get('/dummyDashboard', (req, res) => {
+    res.render('dummyDashboard');
 });
-
+router.post('/signin', authController.login);
 
 module.exports = router;
