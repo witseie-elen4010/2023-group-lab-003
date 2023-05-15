@@ -52,21 +52,17 @@ const login = (req, res, next) => {
                         
                         if (user.role === 'lecture') {
                             res.redirect('/lecturerDashboard');
+                            token
                         }
                         else if (user.role === 'student') {
                             res.redirect('/studentDashboard');
+                            token
                         }
-                        
                         /*res.json({
                             message: 'Login Successful',
                             token
                         }
-                        )
-                             if user.role === 'student'{
-                            res.redirect('/dummystudentdashboard');
-                        }
-                        else if (user.role === 'lecturer'){
-                            res.redirect('/dummyDashboard');*/
+                       */
 
                     }
                     else {

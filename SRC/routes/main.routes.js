@@ -25,9 +25,11 @@ router.get('/signin', (req, res) => {
     res.render('Login');
 });
 
-router.get('/dummyDashboard', (req, res) => {
-    res.render('dummyDashboard');
+//lecturer dashboard route
+router.get('/lecturerDashboard', (req, res) => {
+    res.render('lecturerDashboard');
 });
+//student dashboard route
 router.get('/studentDashboard', (req, res) => {
     res.render('studentDashboard');
 })
