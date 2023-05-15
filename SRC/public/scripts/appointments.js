@@ -16,12 +16,22 @@ const validateEventTitle = (input, eventTitleError) => {
   }
 }
 
+const containNumbers = (input) => {
+  const numbers = /[0-9]/
+  const hasNumbers = input.match(numbers) ? true : false
+  return hasNumbers
+}
+
 const validateLecturerName = (lecturerName, lecturerNameError) => {
   if(emptyInput(lecturerName)){
     lecturerNameError.innerHTML = 'Please fill in the name of the lecturer'
     return false
   }
-  else {
+  else if (containNumbers(lecturerName)){
+    lecturerNameError.innerHTML = 'Lecturer name must contain letters only'
+    return false
+  }
+  else{
     lecturerNameError.innerHTML = ''
     return true
   }
