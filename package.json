@@ -4,7 +4,8 @@
   "description": "## Code Contributors",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "devStart": "nodemon index.js"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,6 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const Appointment = require('../models/appointmentSchema')
+const router = express.Router()
 const user = require('../models/user.schema');
 const authController = require('../controllers/auth.controller');
 const { authenticate, authStudent, authLecture } = require('../middleware/authenticate.routes');
@@ -32,4 +33,28 @@ router.get('/dummystudentdashboard', (req, res) => {
 })
 router.post('/signin', authController.login);
 
-module.exports = router;
+// ------------------- Schedule Appointment -----------------------
+// showing schedule appointment form
+const {emptyInput, validateEventTitle} = require('../public/scripts/backendAppointment')
+router.get('/scheduleAppointment', (req, res) => {
+  res.render('scheduleAppointment')
+})
+
+// handling schedule appointment details
+router.post('/scheduleAppointment', async (req, res) => {
+  const data = {
+    eventTitle: req.body.eventTitle
+  }
+
+  // save data to database if it is valid
+  if (emptyInput(data.eventTitle) && !validateEventTitle(data.eventTitle)){
+    res.status(400).send({message: 'Invalid event title'})
+  }
+  else{
+    // update database
+    Appointment.insertMany(data)
+    res.status(200).json({message: 'Schedule successfully set'})
+  }
+})
+
+module.exports = router

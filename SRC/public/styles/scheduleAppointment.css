@@ -1,0 +1,16 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#scheduleAppointmentForm {
+    background: #c9d3c9;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.form-errors {
+  color: rgb(250, 43, 43)
+}
