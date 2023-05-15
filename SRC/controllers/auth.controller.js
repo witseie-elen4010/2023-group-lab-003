@@ -2,6 +2,7 @@ const User = require('../models/user.schema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {builtinModules} = require('module');
+const { authLecture, authenticate } = require('../middleware/authenticate.routes');
 
 const register = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, function (err, hashedPass) {
@@ -48,12 +49,24 @@ const login = (req, res, next) => {
                     }
                     if (results) {
                         let token = jwt.sign({ email: user.email }, 'verySecretValue')
-                        res.redirect('/dummyDashboard');
+                        
+                        if (user.role === 'lecture') {
+                            res.redirect('/dummyDashboard');
+                        }
+                        else if (user.role === 'student') {
+                            res.redirect('/dummystudentDashboard');
+                        }
+                        
                         /*res.json({
                             message: 'Login Successful',
                             token
                         }
-                        )*/
+                        )
+                             if user.role === 'student'{
+                            res.redirect('/dummystudentdashboard');
+                        }
+                        else if (user.role === 'lecturer'){
+                            res.redirect('/dummyDashboard');*/
 
                     }
                     else {
