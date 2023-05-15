@@ -32,6 +32,7 @@ router.post('/scheduleAppointment', async (req, res) => {
     res.status(400).send({message: 'Invalid event title'})
   }
   else{
+    // update database
     Appointment.insertMany(data)
     res.status(200).json({message: 'Schedule successfully set'})
   }
