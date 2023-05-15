@@ -27,5 +27,13 @@ app.use(express.json()); //use json to fetch data from user
 app.set('view engine', 'ejs') //view engine is ejs
 
 
+
+
+
+app.get('/lecturerDashboard', (req, res) => {
+    res.render('lecturerDashboard');
+  });
+  
 app.use(mainroute)
 //app.use('/signup', mainroute)
+
