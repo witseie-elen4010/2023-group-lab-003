@@ -16,6 +16,17 @@ const validateEventTitle = (input, eventTitleError) => {
   }
 }
 
+const validateLecturerName = (lecturerName, lecturerNameError) => {
+  if(emptyInput(lecturerName)){
+    lecturerNameError.innerHTML = 'Please fill in the name of the lecturer'
+    return false
+  }
+  else {
+    lecturerNameError.innerHTML = ''
+    return true
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
@@ -23,8 +34,11 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault()
       const eventTitle = document.getElementById('eventTitle').value
       const eventTitleError = document.getElementById('eventTitleError')
-
       validateEventTitle(eventTitle, eventTitleError)
+
+      const lecturerName = document.getElementById('lecturerName').value
+      const lecturerNameError = document.getElementById('lecturerNameError')
+      validateLecturerName(lecturerName, lecturerNameError)
       
       const data = {
         eventTitle: eventTitle
