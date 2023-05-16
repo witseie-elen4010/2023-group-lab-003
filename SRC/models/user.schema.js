@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 
-const userSchema = new mongoose.Schema ({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -24,16 +24,22 @@ const userSchema = new mongoose.Schema ({
     password: {
         type: String,
         required: true,
-        minlength: 8, 
+        minlength: 8,
     },
     appointments: [ //link appointments set by a user
-    {
-        type: mongoose.Types.ObjectId,
-        ref: 'appointments'
-    }
-],
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'appointments'
+        }
+    ],
+    timeslots: [ //link timeslot set by a user
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'timeslots'
+        }
+    ]
 
-}, {timestamps: true});
+}, { timestamps: true });
 
 const User = mongoose.model('users', userSchema)
 
