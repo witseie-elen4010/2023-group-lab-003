@@ -40,6 +40,21 @@ router.get('/update', (req, res) => {
   res.render('update')
 })
 
+router.post('/updateConsultationTimes', async (req,res) =>{
+  const { startTime, endTime } = req.body;
+  const appointmentId = '64611f517fe73c1949111fa3';
+
+  try {
+    await Appointment.updateOne({ _id: appointmentId }, { startTime, endTime });
+    console.log('Times updated successfully');
+  } catch (error) {
+    console.error(error);
+    console.log('An error occurred');
+  }
+});
+
+//--------------------------------------------------------------------
+
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
 const {emptyInput, validateEventTitle} = require('../public/scripts/backendAppointment')
