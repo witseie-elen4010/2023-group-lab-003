@@ -99,4 +99,27 @@ router.post('/scheduleAppointment', async (req, res) => {
 })*/
 router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
 router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
+
+//display all scheduled appointment of the logged in user
+router.get('/studentDashboard', (req, res) => {
+  const userId = req.session.userId
+  console.log(userId)
+    User.findById(userId).populate('appointments').then(user => {
+    if(user){
+      //const userId = user._id;
+      const userAppointments = user.appointments
+      console.log(userAppointments)
+      //res.send(userAppointments)
+      
+    Appointment.find({_id:{ $in: userAppointments }}).then((appointments) => {
+        res.render('studentDashboard', {appointments})
+      })
+    }
+    else
+    {
+      res.send("User not found")
+    }
+  })
+})
+
 module.exports = router
