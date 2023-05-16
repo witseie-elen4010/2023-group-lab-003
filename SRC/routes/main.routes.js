@@ -25,11 +25,13 @@ router.get('/signin', (req, res) => {
     res.render('Login');
 });
 
-router.get('/dummyDashboard', (req, res) => {
-    res.render('dummyDashboard');
+//lecturer dashboard route
+router.get('/lecturerDashboard', (req, res) => {
+    res.render('lecturerDashboard');
 });
-router.get('/dummystudentdashboard', (req, res) => {
-    res.render('dummystudentdashboard');
+//student dashboard route
+router.get('/studentDashboard', (req, res) => {
+    res.render('studentDashboard');
 })
 router.post('/signin', authController.login);
 
