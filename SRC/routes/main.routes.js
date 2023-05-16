@@ -60,7 +60,7 @@ router.post('/updateConsultationTimes', async (req,res) =>{
 
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
-const {emptyInput, validateEventTitle} = require('../public/scripts/backendAppointment')
+const {emptyInput, validateEventTitle, validateLecturerName} = require('../public/scripts/backendAppointment')
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
@@ -68,12 +68,15 @@ router.get('/scheduleAppointment', (req, res) => {
 // handling schedule appointment details
 router.post('/scheduleAppointment', async (req, res) => {
   const data = {
-    eventTitle: req.body.eventTitle
+    eventTitle: req.body.eventTitle,
+    lecturerName: req.body.lecturerName
   }
-
   // save data to database if it is valid
-  if (emptyInput(data.eventTitle) && !validateEventTitle(data.eventTitle)){
+  if (emptyInput(data.eventTitle) || !validateEventTitle(data.eventTitle)){
     res.status(400).send({message: 'Invalid event title'})
+  }
+  else if (emptyInput(data.lecturerName) || !validateLecturerName(data.lecturerName)){
+    res.status(400).send({message: 'Invalid lecturers name'})
   }
   else{
     // update database

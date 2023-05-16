@@ -6,7 +6,7 @@ const emptyInput = (input) => {
 }
 
 const containCharacters = (input) => {
-  const characters = /[!\@\#\$\%\^\&\*\(\)\-\_\+\=\~\?\.\,\?\<\>\{\}\\]/
+  const characters = /[\!\@\#\$\%\^\&\*\(\)\_\+\=\~\?\.\,\?\<\>\{\}\\\-]/
   const hasCharacters = input.match(characters) ? true : false
   return hasCharacters
 }
@@ -27,8 +27,13 @@ const validateEventTitle = (input) => {
   const isValid = ( containAlphabets(input) || containCharacters(input) || containNumbers(input)) ? true : false
   return isValid
 }
+const validateLecturerName = (input) => {
+  const isValid = (((!containCharacters(input)) || (!containNumbers(input))) && containAlphabets(input)) ? true : false
+  return isValid
+}
 
 module.exports = {
   emptyInput,
-  validateEventTitle
+  validateEventTitle,
+  validateLecturerName
 }

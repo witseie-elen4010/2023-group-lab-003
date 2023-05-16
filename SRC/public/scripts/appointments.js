@@ -16,6 +16,33 @@ const validateEventTitle = (input, eventTitleError) => {
   }
 }
 
+const containNumbers = (input) => {
+  const numbers = /[0-9]/
+  const hasNumbers = input.match(numbers) ? true : false
+  return hasNumbers
+}
+
+const containCharacters = (input) => {
+  const characters = /[!\@\#\$\%\^\&\*\(\)\-\_\+\=\~\?\.\,\?\<\>\{\}\\]/
+  const hasCharacters = input.match(characters) ? true : false
+  return hasCharacters
+}
+
+const validateLecturerName = (lecturerName, lecturerNameError) => {
+  if(emptyInput(lecturerName)){
+    lecturerNameError.innerHTML = 'Please fill in the name of the lecturer'
+    return false
+  }
+  else if (containNumbers(lecturerName) || containCharacters(lecturerName)){
+    lecturerNameError.innerHTML = 'Lecturer name must contain letters only'
+    return false
+  }
+  else{
+    lecturerNameError.innerHTML = ''
+    return true
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
@@ -23,11 +50,15 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault()
       const eventTitle = document.getElementById('eventTitle').value
       const eventTitleError = document.getElementById('eventTitleError')
-
       validateEventTitle(eventTitle, eventTitleError)
+
+      const lecturerName = document.getElementById('lecturerName').value
+      const lecturerNameError = document.getElementById('lecturerNameError')
+      validateLecturerName(lecturerName, lecturerNameError)
       
       const data = {
-        eventTitle: eventTitle
+        eventTitle: eventTitle,
+        lecturerName: lecturerName
       }
       postJSON(data)
     })

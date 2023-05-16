@@ -5,16 +5,17 @@ const Schema = mongoose.Schema
 const appointmentSchema = new Schema({
   eventTitle: {
     type: String
+  }, 
+  lecturerName: {
+    type: String
   },
-
   startTime:{
     type : String
-    },
-   
-    endTime:{
-      type : String
-    }
-})
+  },
+  endTime:{
+    type : String
+  }
+}, {timestamps: true})
 
 const Appointment = mongoose.model('Appointment', appointmentSchema)
 
