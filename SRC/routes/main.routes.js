@@ -70,7 +70,7 @@ const {emptyInput, validateEventTitle, validateLecturerName} = require('../publi
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
-
+//-----The code below shoulde be edited and placed in the authController file------//
 // handling schedule appointment details
 /*
 router.post('/scheduleAppointment', async (req, res) => {
