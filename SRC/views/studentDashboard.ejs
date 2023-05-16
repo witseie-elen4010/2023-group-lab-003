@@ -66,24 +66,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2023-05-16</td>
-                                    <td>10:00 AM</td>
-                                    <td>John Doe</td>
-                                    <td>Confirmed</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-05-17</td>
-                                    <td>02:30 PM</td>
-                                    <td>Jane Smith</td>
-                                    <td>Pending</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-05-18</td>
-                                    <td>09:00 AM</td>
-                                    <td>David Johnson</td>
-                                    <td>Confirmed</td>
-                                </tr>
+                                <% if(appointments.length===0){ %>
+                                    <p>No appointments available.</p>
+                                    <% }else { %>
+                                        <% appointments.forEach(function(appointment){ %>
+                                            <tr>
+
+                                                <td>
+                                                    <%= appointment.date %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.eventTitle %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.lecturerName %>
+                                                </td>
+
+                                                <%}); %>
+
+
+                                                    <%}%>
+
+                                            </tr>
+
                             </tbody>
                         </table>
                     </div>
