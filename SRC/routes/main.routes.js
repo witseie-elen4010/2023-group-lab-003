@@ -74,6 +74,7 @@ router.get('/scheduleAppointment', (req, res) => {
 })
 
 // handling schedule appointment details
+/*
 router.post('/scheduleAppointment', async (req, res) => {
   const data = {
     eventTitle: req.body.eventTitle,
@@ -95,6 +96,7 @@ router.post('/scheduleAppointment', async (req, res) => {
     Appointment.insertMany(data)
     res.status(200).json({message: 'Schedule successfully set'})
   }
-})
+})*/
+router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
 
 module.exports = router

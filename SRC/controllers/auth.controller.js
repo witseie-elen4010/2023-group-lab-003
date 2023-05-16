@@ -1,6 +1,6 @@
 const User = require('../models/user.schema'); //user schema
 const Appointment = require('../models/appointmentSchema'); //appointment schema
-const Timeslot = require('../models/lectureTimeslots.schema'); //timeslot schema
+const Timeslot = require('../models/timeslots.schema'); //timeslot schema
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { builtinModules } = require('module');
