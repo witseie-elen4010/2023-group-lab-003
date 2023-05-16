@@ -56,12 +56,12 @@ const login = (req, res, next) => {
                         const userId = user._id; 
                         if (user.role === 'lecture') {
                             res.redirect('/lecturerDashboard');
-                            token
+                            //token
                             userId;
                         }
                         else if (user.role === 'student') {
                             res.redirect('/studentDashboard');
-                            token
+                            //token
                             userId;
                         }
                         

@@ -115,7 +115,7 @@ router.get('/studentDashboard', (req, res) => {
     }
     else
     {
-      res.send("User not found")
+      res.send("Please login")
     }
   })
 })
@@ -137,7 +137,7 @@ router.get('/lecturerDashboard', (req, res) => {
     }
     else
     {
-      res.send("User not found")
+      res.send("Please login")
     }
   })
  
