@@ -40,8 +40,11 @@ router.get('/update', (req, res) => {
   res.render('update')
 })
 
+
+
 router.post('/updateConsultationTimes', async (req,res) =>{
   const { startTime, endTime } = req.body;
+  //Will get appropraite ID document for user in the future
   const appointmentId = '64611f517fe73c1949111fa3';
 
   try {
