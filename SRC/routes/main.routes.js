@@ -35,7 +35,7 @@ router.post('/signin', authController.login);
 
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
-const {emptyInput, validateEventTitle} = require('../public/scripts/backendAppointment')
+const {emptyInput, validateEventTitle, validateLecturerName} = require('../public/scripts/backendAppointment')
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
@@ -50,6 +50,9 @@ router.post('/scheduleAppointment', async (req, res) => {
   // save data to database if it is valid
   if (emptyInput(data.eventTitle) && !validateEventTitle(data.eventTitle)){
     res.status(400).send({message: 'Invalid event title'})
+  }
+  else if (emptyInput(data.lecturerName) && !validateLecturerName(data.lecturerName)){
+    res.status(400).send({message: 'Invalid lecturers name'})
   }
   else{
     // update database

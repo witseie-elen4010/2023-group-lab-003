@@ -27,8 +27,13 @@ const validateEventTitle = (input) => {
   const isValid = ( containAlphabets(input) || containCharacters(input) || containNumbers(input)) ? true : false
   return isValid
 }
+const validateLecturerName = (input) => {
+  const isValid = ( !containCharacters(input) || !containNumbers(input)) ? true : false
+  return isValid
+}
 
 module.exports = {
   emptyInput,
-  validateEventTitle
+  validateEventTitle,
+  validateLecturerName
 }
