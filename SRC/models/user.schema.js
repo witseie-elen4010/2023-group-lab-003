@@ -26,6 +26,12 @@ const userSchema = new mongoose.Schema ({
         required: true,
         minlength: 8, 
     },
+    appointments: [ //link appointments set by a user
+    {
+        type: mongoose.Types.ObjectId,
+        ref: 'appointments'
+    }
+],
 
 }, {timestamps: true});
 
