@@ -46,17 +46,15 @@ router.post('/scheduleAppointment', async (req, res) => {
     eventTitle: req.body.eventTitle,
     lecturerName: req.body.lecturerName
   }
-
   // save data to database if it is valid
-  if (emptyInput(data.eventTitle) && !validateEventTitle(data.eventTitle)){
+  if (emptyInput(data.eventTitle) || !validateEventTitle(data.eventTitle)){
     res.status(400).send({message: 'Invalid event title'})
   }
-  else if (emptyInput(data.lecturerName) && !validateLecturerName(data.lecturerName)){
+  else if (emptyInput(data.lecturerName) || !validateLecturerName(data.lecturerName)){
     res.status(400).send({message: 'Invalid lecturers name'})
   }
   else{
     // update database
-    console.log(data)
     Appointment.insertMany(data)
     res.status(200).json({message: 'Schedule successfully set'})
   }
