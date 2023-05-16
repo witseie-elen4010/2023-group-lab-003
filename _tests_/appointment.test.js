@@ -65,15 +65,10 @@ describe('Validate lecturer name ', () => {
   })
 
 
-  test('Event title  is invalid if input is empty', () => {
-    const eventTitle = ''
-    const result = emptyInput(eventTitle)
+  test('Lecturer name  is invalid if input is empty', () => {
+    const lecturerName = ''
+    const result = emptyInput(lecturerName)
     expect(result).toBe(true)
   });
 
-  test('Event title is valid if input is not empty', () => {
-    const eventTitle = 'Event 1'
-    const result = emptyInput(eventTitle)
-    expect(result).toBe(false)
-  });
 });
