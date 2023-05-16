@@ -34,7 +34,10 @@ app.set('view engine', 'ejs') //view engine is ejs
 app.use(session({
     secret: 'VerySecretValue',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie:{
+        maxAge: 60 * 60 * 60, //session experiration time in milliseconds
+    },
 }));
 
 
