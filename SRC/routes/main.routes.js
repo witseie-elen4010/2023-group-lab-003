@@ -2,6 +2,7 @@ const express = require('express')
 const Appointment = require('../models/appointmentSchema')
 const router = express.Router()
 const user = require('../models/user.schema');
+const session = require('express-session')
 const authController = require('../controllers/auth.controller');
 const { authenticate, authStudent, authLecture } = require('../middleware/authenticate.routes');
 
