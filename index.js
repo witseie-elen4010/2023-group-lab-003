@@ -11,7 +11,8 @@ const dbUrl = 'mongodb+srv://sdiiigroup3:group3sd32023@cluster0.vjbvldr.mongodb.
 
 mongoose.set('strictQuery', true);
 mongoose.connect(dbUrl).then((result) => {
-    app.listen(3000, () => {
+    const port = process.env.PORT || 3000
+    app.listen(port, () => {
         console.log('Connected to the server');
     });
     console.log('Connected to Database');
