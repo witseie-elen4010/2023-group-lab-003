@@ -70,7 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
       
       const data = {
         eventTitle: eventTitle,
-        lecturerName: lecturerName
+        lecturerName: lecturerName,
+        date: date
       }
       postJSON(data)
     })

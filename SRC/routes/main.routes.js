@@ -69,7 +69,8 @@ router.get('/scheduleAppointment', (req, res) => {
 router.post('/scheduleAppointment', async (req, res) => {
   const data = {
     eventTitle: req.body.eventTitle,
-    lecturerName: req.body.lecturerName
+    lecturerName: req.body.lecturerName,
+    date: req.body.date
   }
   // save data to database if it is valid
   if (emptyInput(data.eventTitle) || !validateEventTitle(data.eventTitle)){
