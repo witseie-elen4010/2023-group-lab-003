@@ -2,8 +2,9 @@
 const mongoose = require('mongoose');
 
 
-const timeslots = new mongoose.Schema ({
-    timeslot: {
+const timeslotSchema = new mongoose.Schema ({
+    availabilityTime: {
+
         type: String,
         
     },
@@ -22,6 +23,6 @@ const timeslots = new mongoose.Schema ({
   
 }, {timestamps: true});
 
-const User = mongoose.model('timeslots', timeslots)
+const Timeslot = mongoose.model('timeslots', timeslotSchema)
 
-module.exports = User;
+module.exports = Timeslot;

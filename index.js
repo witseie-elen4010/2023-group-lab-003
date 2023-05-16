@@ -40,10 +40,7 @@ app.use(session({
 
 
 
-app.get('/lecturerDashboard', (req, res) => {
-    res.render('lecturerDashboard');
-  });
-  
+
 app.use(mainroute)
 
 

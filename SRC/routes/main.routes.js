@@ -1,5 +1,6 @@
 const express = require('express')
 const Appointment = require('../models/appointmentSchema')
+const Timeslot = require('../models/timeslots.schema')
 const router = express.Router()
 const User = require('../models/user.schema');
 const session = require('express-session')
@@ -27,9 +28,10 @@ router.get('/signin', (req, res) => {
 });
 
 //lecturer dashboard route
+/*
 router.get('/lecturerDashboard', (req, res) => {
     res.render('lecturerDashboard');
-});
+});*/
 //student dashboard route
 /*
 router.get('/studentDashboard', (req, res) => {
@@ -47,7 +49,7 @@ router.get('/update', (req, res) => {
 router.post('/updateConsultationTimes', async (req,res) =>{
   const { startTime, endTime } = req.body;
   //Will get appropraite ID document for user in the future
-  const appointmentId = '6463c9f40d08141f7072e3f6';
+  const appointmentId = '6463c9f40d08141f7072e3f6'; //Security issue
 
   try {
     await Appointment.updateOne({ _id: appointmentId }, { startTime, endTime });
@@ -105,7 +107,7 @@ router.post('/createTimeslot', authController.createTimeslot); // create time sl
 //display all scheduled appointment of the logged in user
 router.get('/studentDashboard', (req, res) => {
   const userId = req.session.userId
-  console.log(userId)
+  //console.log(userId)
     User.findById(userId).populate('appointments').then(user => {
     if(user){
       //const userId = user._id;
@@ -127,7 +129,7 @@ router.get('/studentDashboard', (req, res) => {
 //display all timeslots made by the logged in lecture
 router.get('/lecturerDashboard', (req, res) => {
   const userId = req.session.userId
-  console.log(userId)
+  //console.log(userId)
     User.findById(userId).populate('timeslots').then(user => {
     if(user){
       //const userId = user._id;
@@ -135,8 +137,8 @@ router.get('/lecturerDashboard', (req, res) => {
       console.log(userTimeslots)
       //res.send(userAppointments)
       
-    Appointment.find({_id:{ $in: userTimeslots }}).then((timeslots) => {
-        res.render('lecturerDashboard', {timeslots})
+    Timeslot.find({_id:{ $in: userTimeslots }}).then((timeslots) => {
+        res.render('lecturerDashboard', { timeslots })
       })
     }
     else
