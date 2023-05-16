@@ -4,12 +4,16 @@ const Schema = mongoose.Schema
 
 const appointmentSchema = new Schema({
   eventTitle: {
-    type: String,
-    required: true
-  },
+    type: String
+  }, 
   lecturerName: {
-    type: String,
-    required: true
+    type: String
+  },
+  startTime:{
+    type : String
+  },
+  endTime:{
+    type : String
   }
 }, {timestamps: true})
 
