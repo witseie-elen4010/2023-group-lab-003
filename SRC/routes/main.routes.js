@@ -62,8 +62,9 @@ router.post('/updateConsultationTimes', async (req,res) =>{
 
 
 //---------------------Availalbility----------------------------------
-router.get('/Availability', (req, res) => { 
-  res.render('Availability')
+//specify availability time slots
+router.get('/createTimeslot', (req, res) => { 
+  res.render('timeslot');
 })
 
 
@@ -123,4 +124,26 @@ router.get('/studentDashboard', (req, res) => {
   })
 })
 
+//display all timeslots made by the logged in lecture
+router.get('/lecturerDashboard', (req, res) => {
+  const userId = req.session.userId
+  console.log(userId)
+    User.findById(userId).populate('timeslots').then(user => {
+    if(user){
+      //const userId = user._id;
+      const userTimeslots = user.timeslots
+      console.log(userTimeslots)
+      //res.send(userAppointments)
+      
+    Appointment.find({_id:{ $in: userTimeslots }}).then((timeslots) => {
+        res.render('lecturerDashboard', {timeslots})
+      })
+    }
+    else
+    {
+      res.send("User not found")
+    }
+  })
+ 
+})
 module.exports = router
