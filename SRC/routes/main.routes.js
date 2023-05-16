@@ -58,6 +58,13 @@ router.post('/updateConsultationTimes', async (req,res) =>{
 
 //--------------------------------------------------------------------
 
+
+//---------------------Availalbility----------------------------------
+router.get('/Availability', (req, res) => { 
+  res.render('Availability')
+})
+
+
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
 const {emptyInput, validateEventTitle, validateLecturerName} = require('../public/scripts/backendAppointment')
