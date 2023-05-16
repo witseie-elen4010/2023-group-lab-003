@@ -15,6 +15,10 @@ const timeslots = new mongoose.Schema ({
         type: String,
         
     },
+    user: { //link the person who set an appointment
+        type: mongoose.Types.ObjectId,
+        ref: 'users'
+      }
   
 }, {timestamps: true});
 
