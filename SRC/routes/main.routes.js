@@ -79,6 +79,9 @@ router.post('/scheduleAppointment', async (req, res) => {
   else if (emptyInput(data.lecturerName) || !validateLecturerName(data.lecturerName)){
     res.status(400).send({message: 'Invalid lecturers name'})
   }
+  else if (emptyInput(data.date)){
+    res.status(400).send({message: 'Invalid date'})
+  }
   else{
     // update database
     Appointment.insertMany(data)
