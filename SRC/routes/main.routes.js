@@ -98,5 +98,5 @@ router.post('/scheduleAppointment', async (req, res) => {
   }
 })*/
 router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
-
+router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
 module.exports = router
