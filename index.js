@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const path = require("path");
+const session = require('express-session');
 const mainroute= require("./SRC/routes/main.routes")
 
 //connect to db url
@@ -23,10 +24,18 @@ mongoose.connect(dbUrl).then((result) => {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, './SRC/views'));
+
 app.use(express.static(path.join(__dirname, './SRC/public')))
+
 app.use(express.json()); //use json to fetch data from user
 app.set('view engine', 'ejs') //view engine is ejs
 
+//Express session middleware
+app.use(session({
+    secret: 'VerySecretValue',
+    resave: false,
+    saveUninitialized: true
+}));
 
 
 
@@ -36,5 +45,5 @@ app.get('/lecturerDashboard', (req, res) => {
   });
   
 app.use(mainroute)
-//app.use('/signup', mainroute)
+
 
