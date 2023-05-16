@@ -12,31 +12,25 @@ errorHandler = (err) => {
     console.error(err.message, err.code);
 };
 
+//get the landing page
 router.get('/', (req, res) => {
     res.render('index');
 });
 
+//get the sign up page
 router.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+//signup route, authentication done by authController
 router.post('/signup',authController.register);
 
-
+//get the sign in page
 router.get('/signin', (req, res) => {
     res.render('Login');
 });
 
-//lecturer dashboard route
-/*
-router.get('/lecturerDashboard', (req, res) => {
-    res.render('lecturerDashboard');
-});*/
-//student dashboard route
-/*
-router.get('/studentDashboard', (req, res) => {
-    res.render('studentDashboard');
-})*/
+//signin route, authentication done by authController
 router.post('/signin', authController.login);
 
 // ----------------- Update Appointment------------------------------
