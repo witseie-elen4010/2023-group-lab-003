@@ -61,11 +61,6 @@ const login = (req, res, next) => {
                             res.redirect('/studentDashboard');
                             token
                         }
-                        /*res.json({
-                            message: 'Login Successful',
-                            token
-                        }
-                       */
 
                     }
                     else {
@@ -83,6 +78,40 @@ const login = (req, res, next) => {
             }
         })
 }
+const createAppointment = (req, res, next) => {
+   
+    const userId = req.session.userId ; //get user id from session
+     
+    User.findOne({ $or: [{ userId: userId }] })
+        .then(user => {
+            if (user) {
+
+                let timeslot = new Timeslot({
+
+                    eventTitle: req.body.eventTitle,
+                    lecturerName: req.body.lecturerName,
+                    date: req.body.date,
+                    userId: userId
+                    
+                })
+                timeslot.save()
+                    .then(timeslot => { //associated logged in user with the appointment they schedule
+                        
+                        return User.findByIdAndUpdate(userId, { $push: { timeslot: timeslot} }, { new: true });
+                       
+                    }).then(user => {
+                        res.redirect('/studentDashboard');
+                        console.log('New appointment added');
+
+                    })
+                    .catch(error => {
+
+                        console.log(error)
+                    })
+            }
+
+        })
+    }
 
 
 
