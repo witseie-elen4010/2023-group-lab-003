@@ -43,6 +43,13 @@ const validateLecturerName = (lecturerName, lecturerNameError) => {
   }
 }
 
+const validateDate = (date, dateError) => {
+  if(emptyInput(date)){
+    dateError.innerHTML = 'Please choose a date and time'
+    return false
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
@@ -55,10 +62,16 @@ document.addEventListener('DOMContentLoaded', function () {
       const lecturerName = document.getElementById('lecturerName').value
       const lecturerNameError = document.getElementById('lecturerNameError')
       validateLecturerName(lecturerName, lecturerNameError)
+
+      const date = document.getElementById('date').value
+      console.log(date)
+      const dateError = document.getElementById('dateError')
+      validateDate(date, dateError)
       
       const data = {
         eventTitle: eventTitle,
-        lecturerName: lecturerName
+        lecturerName: lecturerName,
+        date: date
       }
       postJSON(data)
     })
