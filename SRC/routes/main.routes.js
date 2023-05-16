@@ -35,6 +35,11 @@ router.get('/studentDashboard', (req, res) => {
 })
 router.post('/signin', authController.login);
 
+// ----------------- Update Appointment------------------------------
+router.get('/update', (req, res) => { 
+  res.render('update')
+})
+
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
 const {emptyInput, validateEventTitle} = require('../public/scripts/backendAppointment')
