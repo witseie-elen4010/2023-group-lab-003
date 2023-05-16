@@ -1,7 +1,7 @@
 const express = require('express')
 const Appointment = require('../models/appointmentSchema')
 const router = express.Router()
-const user = require('../models/user.schema');
+const User = require('../models/user.schema');
 const session = require('express-session')
 const authController = require('../controllers/auth.controller');
 const { authenticate, authStudent, authLecture } = require('../middleware/authenticate.routes');
@@ -31,9 +31,10 @@ router.get('/lecturerDashboard', (req, res) => {
     res.render('lecturerDashboard');
 });
 //student dashboard route
+/*
 router.get('/studentDashboard', (req, res) => {
     res.render('studentDashboard');
-})
+})*/
 router.post('/signin', authController.login);
 
 // ----------------- Update Appointment------------------------------

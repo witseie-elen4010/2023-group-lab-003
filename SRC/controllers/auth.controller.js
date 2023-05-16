@@ -51,16 +51,20 @@ const login = (req, res, next) => {
 
                     }
                     if (results) {
+                        req.session.userId = user._id; //user session id
                         let token = jwt.sign({ email: user.email }, 'verySecretValue')
-
+                        const userId = user._id; 
                         if (user.role === 'lecture') {
                             res.redirect('/lecturerDashboard');
                             token
+                            userId;
                         }
                         else if (user.role === 'student') {
                             res.redirect('/studentDashboard');
                             token
+                            userId;
                         }
+                        
 
                     }
                     else {
@@ -86,7 +90,7 @@ const createAppointment = (req, res, next) => {
         .then(user => {
             if (user) {
 
-                let timeslot = new Timeslot({
+                let appointment = new Appointment({
 
                     eventTitle: req.body.eventTitle,
                     lecturerName: req.body.lecturerName,
@@ -94,10 +98,10 @@ const createAppointment = (req, res, next) => {
                     userId: userId
 
                 })
-                timeslot.save()
-                    .then(timeslot => { //associated logged in user with the appointment they schedule
+                appointment.save()
+                    .then(appointment => { //associated logged in user with the appointment they schedule
 
-                        return User.findByIdAndUpdate(userId, { $push: { timeslot: timeslot } }, { new: true });
+                        return User.findByIdAndUpdate(userId, { $push: { appointments: appointment } }, { new: true });
 
                     }).then(user => {
                         res.redirect('/studentDashboard');
