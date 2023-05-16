@@ -3,7 +3,7 @@ const Appointment = require('../models/appointmentSchema'); //appointment schema
 const Timeslot = require('../models/lectureTimeslots.schema'); //timeslot schema
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {builtinModules} = require('module');
+const { builtinModules } = require('module');
 const session = require('express-session');
 const { authLecture, authenticate } = require('../middleware/authenticate.routes');
 
@@ -23,13 +23,13 @@ const register = (req, res, next) => {
         })
         user.save()
             .then(user => {
-               
+
                 res.redirect('/signin');
                 console.log('New user added')
-                
+
             })
             .catch(error => {
-                
+
                 console.log(error)
             })
     })
@@ -38,7 +38,7 @@ const register = (req, res, next) => {
 }
 
 const login = (req, res, next) => {
-    var email = req.body.email; 
+    var email = req.body.email;
     var password = req.body.password;
     User.findOne({ $or: [{ email: email }] })
         .then(user => {
@@ -52,7 +52,7 @@ const login = (req, res, next) => {
                     }
                     if (results) {
                         let token = jwt.sign({ email: user.email }, 'verySecretValue')
-                        
+
                         if (user.role === 'lecture') {
                             res.redirect('/lecturerDashboard');
                             token
@@ -79,9 +79,9 @@ const login = (req, res, next) => {
         })
 }
 const createAppointment = (req, res, next) => {
-   
-    const userId = req.session.userId ; //get user id from session
-     
+
+    const userId = req.session.userId; //get user id from session
+
     User.findOne({ $or: [{ userId: userId }] })
         .then(user => {
             if (user) {
@@ -92,13 +92,13 @@ const createAppointment = (req, res, next) => {
                     lecturerName: req.body.lecturerName,
                     date: req.body.date,
                     userId: userId
-                    
+
                 })
                 timeslot.save()
                     .then(timeslot => { //associated logged in user with the appointment they schedule
-                        
-                        return User.findByIdAndUpdate(userId, { $push: { timeslot: timeslot} }, { new: true });
-                       
+
+                        return User.findByIdAndUpdate(userId, { $push: { timeslot: timeslot } }, { new: true });
+
                     }).then(user => {
                         res.redirect('/studentDashboard');
                         console.log('New appointment added');
@@ -111,42 +111,42 @@ const createAppointment = (req, res, next) => {
             }
 
         })
-    }
+}
 
-    const createTimeslot = (req, res, next) => {
-   
-        const userId = req.session.userId ; //get user id from session
-         
-        User.findOne({ $or: [{ userId: userId }] })
-            .then(user => {
-                if (user) {
-    
-                    let timeslot = new Timeslot({
-    
-                        availabilityTime: req.body.availabilityTime,
-                        numberOfStudents: req.body.numberOfStudents,
-                        date: req.body.date,
-                        userId: userId
-                        
+const createTimeslot = (req, res, next) => {
+
+    const userId = req.session.userId; //get user id from session
+
+    User.findOne({ $or: [{ userId: userId }] })
+        .then(user => {
+            if (user) {
+
+                let timeslot = new Timeslot({
+
+                    availabilityTime: req.body.availabilityTime,
+                    numberOfStudents: req.body.numberOfStudents,
+                    date: req.body.date,
+                    userId: userId
+
+                })
+                timeslot.save()
+                    .then(timeslot => { //associated logged in user with the appointment they schedule
+
+                        return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
+
+                    }).then(user => {
+                        res.redirect('/lecturerDashboard');
+                        console.log('New timeslot added');
+
                     })
-                    timeslot.save()
-                        .then(timeslot => { //associated logged in user with the appointment they schedule
-                            
-                            return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot} }, { new: true });
-                           
-                        }).then(user => {
-                            res.redirect('/lecturerDashboard');
-                            console.log('New timeslot added');
-    
-                        })
-                        .catch(error => {
-    
-                            console.log(error)
-                        })
-                }
-    
-            })
-        }
+                    .catch(error => {
+
+                        console.log(error)
+                    })
+            }
+
+        })
+}
 
 
 
@@ -155,5 +155,7 @@ const createAppointment = (req, res, next) => {
 
 module.exports = {
     register,
-    login
+    login,
+    createAppointment,
+    createTimeslot,
 }
