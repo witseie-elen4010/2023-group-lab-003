@@ -115,5 +115,6 @@ module.exports = {
   validateEmail,
   validatePassword,
   confirmPassword,
+  togglePasswordVisibility,
 };
 

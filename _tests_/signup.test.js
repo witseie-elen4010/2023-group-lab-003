@@ -1,7 +1,9 @@
 'use strict'
-const { validateEmail } = require('../SRC/public/scripts/signup');
-const { validatePassword } = require('../SRC/public/scripts/signup');
+const { validateEmail } = require('../SRC/public/scripts/signup')
+const { validatePassword } = require('../SRC/public/scripts/signup')
 const { confirmPassword } = require('../SRC/public/scripts/signup')
+const {togglePasswordVisibility} =  require('../SRC/public/scripts/signup')
+
 
 describe('ValidateEmail', () => {
   test('Should return true for valid email addresses', () => {
@@ -80,4 +82,28 @@ test('Should return true for valid Password',() =>{
     })
 
   })
+
+  
+  describe('togglePasswordVisibility', () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <input id="password" type="password" />
+        <button id="togglePassword" class="fa-eye"></button>
+      `;
+      togglePasswordVisibility('#password', '#togglePassword')
+    });
+  
+    it('toggles password visibility on click', () => {
+      const passwordElement = document.querySelector('#password')
+      const togglePasswordElement = document.querySelector('#togglePassword')
+      togglePasswordElement.click()
+  
+      expect(passwordElement.getAttribute('type')).toBe('text')
+      expect(togglePasswordElement.classList.contains('fa-eye-slash')).toBe(true)
+      togglePasswordElement.click()
+  
+      expect(passwordElement.getAttribute('type')).toBe('password')
+      expect(togglePasswordElement.classList.contains('fa-eye-slash')).toBe(false)
+    });
+  });
 
