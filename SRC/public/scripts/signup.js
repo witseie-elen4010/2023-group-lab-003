@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 
+
 // This is for testing purpose //
 module.exports = {
   validateEmail,
