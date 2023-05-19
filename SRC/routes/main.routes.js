@@ -198,8 +198,15 @@ router.get('/signout', (req, res) => {
         // Save the updated user object
         return user.save();
       })
-      .then(() => {
-        res.json({ message: 'Appointment canceled successfully' });
+      .then((user) => {
+        if (user.role === 'student'){
+          res.redirect('/studentDashboard');
+        }else
+        {
+          res.redirect('/lectuerDashboard');
+        }
+        
+
       })
       .catch(error => {
         console.log(error);
