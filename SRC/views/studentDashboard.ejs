@@ -64,6 +64,8 @@
                                     <th scope="col">Date & Time</th>
                                     <th scope="col">Event Title</th>
                                     <th scope="col">Lecturer Name</th>
+                                    <th scope="col">Modify Meeting</th>
+                                    <th scope="col">Cancel Meeting</th>
 
                                 </tr>
                             </thead>
@@ -72,20 +74,23 @@
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment){ %>
-                                            <a href="">
-                                            <tr>
 
-                                                <td>
-                                                    <%= appointment.date %>
-                                                </td>
-                                                <td>
-                                                    <%= appointment.eventTitle %>
-                                                </td>
-                                                <td>
-                                                    <%= appointment.lecturerName %>
-                                                </td>
+                                            <tr>
+                                                
+                                                    <td>
+                                                        <%= appointment.date %>
+                                                    </td>
+                                                    <td>
+                                                        <%= appointment.eventTitle %>
+                                                    </td>
+                                                    <td>
+                                                        <%= appointment.lecturerName %>
+                                                    </td>
+                                                    <td><a href="/studentAppointment/<%= appointment.id %>">Modify</a></td>
+                                                    <td><a href="/studentAppointment/<%= appointment.id %>">Cancel</a></td>
+
+                                               
                                             </tr>
-                                            </a>
                                             <%}); %>
 
 

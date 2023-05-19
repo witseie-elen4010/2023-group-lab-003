@@ -6,7 +6,7 @@
 
 
 .hero{
-   background-image: url(".SRC/Public/images/background.png");
+   background-image: url("/images/background.png");
 }
 .about{
     text-align: center;
@@ -17,4 +17,10 @@
     display: inline-block;
     text-align: left;
 }
+tr a {
+    display: table-row;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
 
