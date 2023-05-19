@@ -172,4 +172,42 @@ router.get('/signout', (req, res) => {
     })
 
   })
+  //Get router to cancel the appointment
+  router.get('/cancel/:id', (req, res) =>{
+    const appointmentId = req.params.id; //get appointment id from url
+    const userId = req.session.userId; // Get user id from session
+  
+    // Find the user and appointment
+    User.findById(userId)
+      .populate('appointments')
+      .exec()
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+  
+        // Find the appointment to be canceled
+        const appointment = user.appointments.find(appt => appt._id.toString() === appointmentId);
+        if (!appointment) {
+          return res.status(404).json({ error: 'Appointment not found' });
+        }
+  
+        // Remove the appointment from the user's appointments array
+        user.appointments.pull(appointment._id);
+  
+        // Save the updated user object
+        return user.save();
+      })
+      .then(() => {
+        res.json({ message: 'Appointment canceled successfully' });
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to cancel appointment' });
+      });
+  });
+
+  //delete the cancelled appointment
+ 
+
   module.exports = router
