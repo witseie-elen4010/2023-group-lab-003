@@ -117,7 +117,7 @@ router.get('/signout', (req, res) => {
       if (user) {
         //const userId = user._id;
         const userAppointments = user.appointments
-        console.log(userAppointments)
+        //console.log(userAppointments)
         //res.send(userAppointments)
 
         Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
@@ -131,6 +131,28 @@ router.get('/signout', (req, res) => {
   })
 
   //display all timeslots made by the logged in lecture
+  router.get('/lecturerDashboard', (req, res) => {
+    const userId = req.session.userId
+    //console.log(userId)
+    User.findById(userId).populate('appointments').then(user => {
+      if (user) {
+        //const userId = user._id;
+        const userAppointments = user.appointments
+        //console.log(userTimeslots)
+        //res.send(userAppointments)
+
+        Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+          res.render('lecturerDashboard', { appointments })
+        })
+      }
+      else {
+        res.send("Please login")
+      }
+    })
+
+  })
+  //copy for viewing created timeslots
+  /*
   router.get('/lecturerDashboard', (req, res) => {
     const userId = req.session.userId
     //console.log(userId)
@@ -150,5 +172,5 @@ router.get('/signout', (req, res) => {
       }
     })
 
-  })
+  })*/
   module.exports = router
