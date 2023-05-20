@@ -81,31 +81,7 @@ router.get('/signout', (req, res) => {
   router.get('/scheduleAppointment', (req, res) => {
     res.render('scheduleAppointment')
   })
-  //-----The code below shoulde be edited and placed in the authController file------//
-  // handling schedule appointment details
-  /*
-  router.post('/scheduleAppointment', async (req, res) => {
-    const data = {
-      eventTitle: req.body.eventTitle,
-      lecturerName: req.body.lecturerName,
-      date: req.body.date
-    }
-    // save data to database if it is valid
-    if (emptyInput(data.eventTitle) || !validateEventTitle(data.eventTitle)){
-      res.status(400).send({message: 'Invalid event title'})
-    }
-    else if (emptyInput(data.lecturerName) || !validateLecturerName(data.lecturerName)){
-      res.status(400).send({message: 'Invalid lecturers name'})
-    }
-    else if (emptyInput(data.date)){
-      res.status(400).send({message: 'Invalid date'})
-    }
-    else{
-      // update database
-      Appointment.insertMany(data)
-      res.status(200).json({message: 'Schedule successfully set'})
-    }
-  })*/
+
   router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
   router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
 
