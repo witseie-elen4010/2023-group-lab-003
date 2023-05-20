@@ -43,6 +43,18 @@ router.get('/settings',(req,res) => {
   res.render('settings')
 })
 
+router.get('/goodbye',(req,res) => {
+  res.render('goodbye')
+})
+
+router.get('/account',(req,res) => {
+  res.render('account')
+})
+
+router.get('/password',(req,res) => {
+  res.render('password')
+})
+
 //sign out the user
 router.get('/signout', (req, res) => {
 

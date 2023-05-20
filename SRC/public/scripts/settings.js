@@ -2,16 +2,16 @@
 
 document.getElementById('DeleteAccount').addEventListener('click', () => {
   if (window.confirm('Are you sure you want to delete your account?')) {
-    window.location.replace("goodbye.html")
+    window.location.replace("/goodbye")
   }
 })
 
 document.getElementById('accountButton').addEventListener('click', () => {
-  loadContent('account.html')
+  loadContent('/account')
 })
 
 document.getElementById('passwordButton').addEventListener('click', () => {
-  loadContent('password.html')
+  loadContent('password')
 })
 
 async function loadContent (filePath) {
