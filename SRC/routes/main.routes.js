@@ -151,9 +151,8 @@ router.get('/signout', (req, res) => {
     })
 
   })
-  //copy for viewing created timeslots
-  /*
-  router.get('/lecturerDashboard', (req, res) => {
+  
+  router.get('/timeslots', (req, res) => {
     const userId = req.session.userId
     //console.log(userId)
     User.findById(userId).populate('timeslots').then(user => {
@@ -164,7 +163,7 @@ router.get('/signout', (req, res) => {
         //res.send(userAppointments)
 
         Timeslot.find({ _id: { $in: userTimeslots } }).then((timeslots) => {
-          res.render('lecturerDashboard', { timeslots })
+          res.render('timeslots', { timeslots })
         })
       }
       else {
@@ -172,5 +171,5 @@ router.get('/signout', (req, res) => {
       }
     })
 
-  })*/
+  })
   module.exports = router
