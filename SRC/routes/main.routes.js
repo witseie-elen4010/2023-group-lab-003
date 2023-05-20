@@ -78,11 +78,13 @@ router.get('/signout', (req, res) => {
   // ------------------- Schedule Appointment -----------------------
   // showing schedule appointment form
   const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
+  const appointmentController = require('../controllers/appointment.controller')
+  
   router.get('/scheduleAppointment', (req, res) => {
     res.render('scheduleAppointment')
   })
 
-  router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
+  router.post('/scheduleAppointment', appointmentController.createAppointment); //updated schedule appointment linking appointment to the logged in user
   router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
 
   //display all scheduled appointment of the logged in user
