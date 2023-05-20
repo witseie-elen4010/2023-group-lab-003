@@ -38,6 +38,11 @@ router.get('/update', (req, res) => {
   res.render('update')
 })
 
+//----------------- Settings -------------------------------
+router.get('/settings',(req,res) => {
+  res.render('settings')
+})
+
 //sign out the user
 router.get('/signout', (req, res) => {
 
