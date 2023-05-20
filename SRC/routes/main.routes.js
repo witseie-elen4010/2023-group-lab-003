@@ -95,7 +95,7 @@ router.get('/signout', (req, res) => {
       if (user) {
         //const userId = user._id;
         const userAppointments = user.appointments
-        console.log(userAppointments)
+        //console.log(userAppointments)
         //res.send(userAppointments)
 
         Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
@@ -112,6 +112,27 @@ router.get('/signout', (req, res) => {
   router.get('/lecturerDashboard', (req, res) => {
     const userId = req.session.userId
     //console.log(userId)
+    User.findById(userId).populate('appointments').then(user => {
+      if (user) {
+        //const userId = user._id;
+        const userAppointments = user.appointments
+        //console.log(userTimeslots)
+        //res.send(userAppointments)
+
+        Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+          res.render('lecturerDashboard', { appointments })
+        })
+      }
+      else {
+        res.send("Please login")
+      }
+    })
+
+  })
+  
+  router.get('/timeslots', (req, res) => {
+    const userId = req.session.userId
+    //console.log(userId)
     User.findById(userId).populate('timeslots').then(user => {
       if (user) {
         //const userId = user._id;
@@ -120,7 +141,7 @@ router.get('/signout', (req, res) => {
         //res.send(userAppointments)
 
         Timeslot.find({ _id: { $in: userTimeslots } }).then((timeslots) => {
-          res.render('lecturerDashboard', { timeslots })
+          res.render('timeslots', { timeslots })
         })
       }
       else {
