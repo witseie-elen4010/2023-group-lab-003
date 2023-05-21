@@ -32,9 +32,37 @@
             <input type="submit" class="btn btn-primary" value="Save Email">
         </form>
       </div>
-    </div>
+    
+   <!----------------------Password----------------------------->
+    <div class="mb-3" id="paswordVerifide" style="display: none;">
+      <label for="currentPassword" class="form-label">Current Password</label>
+      <input type="password" class="form-control" id="currentPassword">
   </div>
 
+  <div class="mb-3" id="paswordNew" style="display: none;">
+      <label for="newPassword" class="form-label">New Password</label>
+      <input type="password" class="form-control" id="password"  oninput="validatePasswordWrapper(event)" />
+
+  </div>
+  <div class="password_requirements">
+      <ul>
+          <div class="input-group mb-3">
+              <span id="password-error"></span>
+          </div>
+      </ul>
+  </div>
+
+  <div class="mb-3" id="paswordConf" style="display: none;">
+      <label for="confirmPassword" class="form-label">Confirm New Password</label>
+      <input type="password" class="form-control" id="password_confirm"
+      oninput="confirmPasswordWrapper(event)" />
+      <div class="input-group mb-3">
+        <span id="password-fail"></span>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+  </div>
+  
+  </div>
 </body>
 
 </html>
