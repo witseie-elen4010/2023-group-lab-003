@@ -64,10 +64,8 @@
                     <div class="col-12 menu-container">
                         <nav class="nav flex-column">
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
-                            <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
-                            <a class= "nav-link" href="/Settings">Settings</a>
                             <a class="nav-link" id="Edit" href="\update">Edit Consultation</a>
-                            <a class="nav-link" href="/timeslots">View Timeslots</a>
+                            <a class="nav-link" href="/lecturerDashboard">View Appointments</a>
 
                         </nav>
                     </div>
@@ -75,35 +73,35 @@
             </div>
             <div class="col-12 col-md-10">
                 <section id="dashboard-heading">
-                    <h1>Lecturer Appointment Dashboard</h1>
+                    <h1>Lecturer Timeslot Dashboard</h1>
                 </section>
                 <div class="appointments-box">
-                    <h2>Lecturer Appointments</h2>
+                    <h2>Lecturer Timeslots</h2>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
 
-                                    <th scope="col">Date & Time</th>
-                                    <th scope="col">Event Title</th>
-                                    <th scope="col">Lecturer Name</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Number of Students</th>
+                                    <th scope="col">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if(appointments.length === 0){ %>
-                                    <td>No appointments available.</td>
+                                <% if(timeslots.length === 0){ %>
+                                    <td>No timeslots available.</td>
                                     <% }else { %>
-                                        <% appointments.forEach(function(appointment){ %>
+                                        <% timeslots.forEach(function(timeslot){ %>
                                             <tr>
 
                                                 <td>
-                                                    <%= appointment.date %>
+                                                    <%= timeslot.availabilityTime %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.eventTitle %>
+                                                    <%= timeslot.numberOfStudents %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.lecturerName%>
+                                                    <%= timeslot.date%>
                                                 </td>
                                             </tr>
                                             <%}); %>
