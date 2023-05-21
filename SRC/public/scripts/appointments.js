@@ -79,15 +79,14 @@ const lecturerName = () => {
 
     const selector = document.querySelector('select')
     selector.addEventListener('change', (event) => {
-    console.log('value ', selector.value)
+    console.log('value ', selector.value)}) 
 
-})
     return response})
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   lecturerName()
-  // query_()
+  
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
     form.addEventListener('submit', function (event) {
@@ -128,17 +127,13 @@ function postJSON(data) {
   .then(function(response) {
     if(response.ok){
       console.log('Success')
-      return response.json(); // Return the response parse as JSON if code is valid
-      // must redirect to dashboard
+      return response; // Return the response parse as JSON if code is valid
     }
     else{
       throw 'Invalid input'
     }
   }).catch(function (e) { // Process error for request
-  console.log(e) // Displays a browser alert with the error message.
-  // This will be the string thrown in line 7 IF the
-  // response code is the reason for jumping to this
-  // catch() function.
+  console.log(e) 
   })
 }
 
