@@ -55,7 +55,12 @@ const validateDate = (date, dateError) => {
   }
 }
 
+const lecturerDetails = () => {
+  fetch(baseURL + '/scheduleAppointment/lecturerDetails', {method: 'GET'})
+  .then(function(response) { return response.json()})
+}
 document.addEventListener('DOMContentLoaded', function () {
+  lecturerDetails()
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
     form.addEventListener('submit', function (event) {

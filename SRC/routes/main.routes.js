@@ -83,7 +83,16 @@ router.get('/signout', (req, res) => {
   router.get('/scheduleAppointment', (req, res) => {
     res.render('scheduleAppointment')
   })
-
+  router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
+    User.find({role: 'lecture',})
+    .then(
+      lecturers => {
+        console.log('registered lecturers ', lecturers)
+        if (!lecturers) res.status(400).send({message: 'No registered lecturers'})
+        else res.status(200).send({data: lecturers})
+      }
+    )
+  })
   router.post('/scheduleAppointment', appointmentController.createAppointment); //updated schedule appointment linking appointment to the logged in user
   router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
 
