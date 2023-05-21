@@ -153,6 +153,10 @@ const createTimeslot = (req, res, next) => {
 }
 
 
+const updateEmail = (req, res) => {
+    res.send('Email Submit routed');
+};
+
 
 
 
@@ -162,4 +166,5 @@ module.exports = {
     login,
     createAppointment,
     createTimeslot,
+    updateEmail,
 }

@@ -51,9 +51,17 @@ router.get('/account',(req,res) => {
   res.render('account')
 })
 
+
 router.get('/password',(req,res) => {
   res.render('password')
 })
+
+//router.post('/update-email', function (req, res) {
+//  res.send('Email Submit routed');
+//});
+
+router.post('/update-email', authController.updateEmail);
+
 
 //sign out the user
 router.get('/signout', (req, res) => {
@@ -91,6 +99,7 @@ router.get('/signout', (req, res) => {
     res.render('timeslot');
   })
 
+  
 
   // ------------------- Schedule Appointment -----------------------
   // showing schedule appointment form
