@@ -55,12 +55,22 @@ const validateDate = (date, dateError) => {
   }
 }
 
-const lecturerDetails = () => {
+const lecturerName = () => {
+  let name = []
   fetch(baseURL + '/scheduleAppointment/lecturerDetails', {method: 'GET'})
   .then(function(response) { return response.json()})
+  .then( function(response) {
+    const lecturerDetails = response.data
+    lecturerDetails.forEach(element => {
+      const fullName = `${element.name} ${element.surname}`
+      name.push(fullName)
+    })
+    console.log(name)
+    return response})
 }
+
 document.addEventListener('DOMContentLoaded', function () {
-  lecturerDetails()
+  lecturerName()
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
     form.addEventListener('submit', function (event) {
