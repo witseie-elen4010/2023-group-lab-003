@@ -60,8 +60,12 @@ router.get('/password',(req,res) => {
 //  res.send('Email Submit routed');
 //});
 
-router.post('/update-email', authController.updateEmail);
+//-------------------Settings-------------------------------
 
+router.post('/update-email', authController.updateEmail);
+router.post('/update-password', authController.updatePassword)
+
+//-----------------------------------------------------------
 
 //sign out the user
 router.get('/signout', (req, res) => {

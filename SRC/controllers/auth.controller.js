@@ -171,7 +171,7 @@ const updateEmail = async (req, res) => {
             }
         } catch (err) {
             console.log('Error: ', err);
-            res.status(500).send('Database error');
+            res.status(404).send('Database error');
         }
     } else {
         console.log('Email not provided');
@@ -179,7 +179,35 @@ const updateEmail = async (req, res) => {
     }
 };
 
+const updatePassword = async (req, res, next) => {
+    const userId = req.session.userId;
+    const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
 
+    const user = await User.findOne({ _id: userId });
+
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    
+    if (!isMatch) {
+        return res.status(404).json({ message: 'Incorrect current password' });
+    }
+
+    if(newPassword !== confirmPassword) {
+        return res.status(404).json({ message: 'Passwords do not match' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+    
+    res.status(200).json({ message: 'Password updated successfully' });
+}
 
 
 module.exports = {
@@ -188,4 +216,5 @@ module.exports = {
     createAppointment,
     createTimeslot,
     updateEmail,
+    updatePassword
 }
