@@ -155,7 +155,7 @@ const createTimeslot = (req, res, next) => {
                         return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
 
                     }).then(user => {
-                        res.redirect('/lecturerDashboard');
+                        res.redirect('/timeslots');
                         console.log('New timeslot added');
 
                     })

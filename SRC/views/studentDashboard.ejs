@@ -18,7 +18,7 @@
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="/">Remote PA</a>
+                    <a class="navbar-brand" href="/"><img style="width: 150px;" src="/images/LOGO.png" alt=""></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -64,6 +64,8 @@
                                     <th scope="col">Date & Time</th>
                                     <th scope="col">Event Title</th>
                                     <th scope="col">Lecturer Name</th>
+                                    <th scope="col">Modify Meeting</th>
+                                    <th scope="col">Cancel Meeting</th>
 
                                 </tr>
                             </thead>
@@ -72,17 +74,22 @@
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment){ %>
-                                            <tr>
 
-                                                <td>
-                                                    <%= appointment.date %>
-                                                </td>
-                                                <td>
-                                                    <%= appointment.eventTitle %>
-                                                </td>
-                                                <td>
-                                                    <%= appointment.lecturerName %>
-                                                </td>
+                                            <tr>
+                                                
+                                                    <td>
+                                                        <%= appointment.date %>
+                                                    </td>
+                                                    <td>
+                                                        <%= appointment.eventTitle %>
+                                                    </td>
+                                                    <td>
+                                                        <%= appointment.lecturerName %>
+                                                    </td>
+                                                    <td><a href="/updateConsultationTimes/<%= appointment.id %>">Modify</a></td>
+                                                    <td><a href="/cancel/<%= appointment.id %>">Cancel</a></td>
+
+                                               
                                             </tr>
                                             <%}); %>
 
