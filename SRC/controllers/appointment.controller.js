@@ -15,13 +15,17 @@ const createAppointment = (req, res, next) => {
           date: req.body.date,
           userId: userId
         })
-
+        let savedAppointment;
         appointment.save()
         .then(appointment => { //associated logged in user with the appointment they schedule
+          savedAppointment = appointment
           return User.findByIdAndUpdate(userId, { $push: { appointments: appointment } }, { new: true });
         })
         .then(student =>{
-          return User.findOne({ name: req.body.lecturerName, role: 'lecture' });
+          const lecturerFullName = req.body.lecturerName.split(' ')
+          const name = lecturerFullName.slice(0, -1).join(' ');
+          const surname = lecturerFullName.slice(-1).join(' ');
+          return User.findOne({ name: name, surname: surname, role: 'lecture' });
         })
         .then(lecturer => {
           if (!lecturer) {
