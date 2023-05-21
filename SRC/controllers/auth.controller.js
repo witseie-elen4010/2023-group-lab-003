@@ -153,6 +153,8 @@ const createTimeslot = (req, res, next) => {
 }
 
 
+
+// ------------------------------Settings-------------------------------------------------------------------------------------
 const updateEmail = async (req, res) => {
     var userId = req.session.userId; // retrieve user id from session
     var email = req.body.email;

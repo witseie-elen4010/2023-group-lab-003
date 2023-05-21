@@ -29,6 +29,7 @@
       document.getElementById('paswordConf').style.display = 'none';
     });
 
+    // Delete Account 
     document.getElementById('deleteButton').addEventListener('click', (event) => {
       if (window.confirm('Are you sure you want to delete your account?')) {
         document.getElementById('delete').submit();

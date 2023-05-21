@@ -49,21 +49,6 @@ router.get('/goodbye',(req,res) => {
   res.render('goodbye')
 })
 
-router.get('/account',(req,res) => {
-  res.render('account')
-})
-
-
-router.get('/password',(req,res) => {
-  res.render('password')
-})
-
-//router.post('/update-email', function (req, res) {
-//  res.send('Email Submit routed');
-//});
-
-//-------------------Settings-------------------------------
-
 router.post('/update-email', authController.updateEmail);
 router.post('/update-password', authController.updatePassword)
 router.post('/delete-account', authController.deleteAccount)
