@@ -87,7 +87,7 @@ router.get('/signout', (req, res) => {
     User.find({role: 'lecture',})
     .then(
       lecturers => {
-        console.log('registered lecturers ', lecturers)
+        // console.log('registered lecturers ', lecturers)
         if (!lecturers) res.status(400).send({message: 'No registered lecturers'})
         else res.status(200).send({data: lecturers})
       }

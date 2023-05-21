@@ -56,21 +56,38 @@ const validateDate = (date, dateError) => {
 }
 
 const lecturerName = () => {
-  let name = []
-  fetch(baseURL + '/scheduleAppointment/lecturerDetails', {method: 'GET'})
-  .then(function(response) { return response.json()})
+  let names = []
+  fetch( baseURL + '/scheduleAppointment/lecturerDetails', {method: 'GET'} )
+  .then( function(response) { return response.json()} )
   .then( function(response) {
     const lecturerDetails = response.data
-    lecturerDetails.forEach(element => {
+    lecturerDetails.forEach( element => {
       const fullName = `${element.name} ${element.surname}`
-      name.push(fullName)
+      names.push(fullName)
     })
-    console.log(name)
+    console.log( 'lecturer names' , names )
+    
+    const namesID = document.getElementById('lecturerName')
+    names.forEach( name => {
+      if(namesID.selectedIndex >=0) {
+        var option = document.createElement('option')
+        option.text = name
+        var sel = namesID.options[namesID.selectedIndex]
+        namesID.add(option, sel)
+      }
+    })
+
+    const selector = document.querySelector('select')
+    selector.addEventListener('change', (event) => {
+    console.log('value ', selector.value)
+
+})
     return response})
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   lecturerName()
+  // query_()
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
     form.addEventListener('submit', function (event) {
