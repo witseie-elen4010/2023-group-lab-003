@@ -78,6 +78,8 @@ router.get('/createTimeslot', (req, res) => {
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
 const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
+
+const timeslotsController = require('../controllers/timeslots.controller')
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
@@ -107,7 +109,7 @@ router.post('/scheduleAppointment', async (req, res) => {
   }
 })*/
 router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
-router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
+router.post('/createTimeslot', timeslotsController.createTimeslot); // create time slot by the logged in user
 
 //display all scheduled appointment of the logged in user
 router.get('/studentDashboard', (req, res) => {
