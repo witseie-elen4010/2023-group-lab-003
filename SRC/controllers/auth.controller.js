@@ -210,11 +210,26 @@ const updatePassword = async (req, res, next) => {
 }
 
 
+const deleteAccount = async (req, res) => {
+    const userId = req.session.userId;
+    
+      await User.findOneAndRemove({ _id: userId });  
+      req.session.destroy((err) => {
+        if (err) {
+          res.status(404).send('An error occurred while deleting the session');
+        } else {
+          res.redirect('/goodbye');
+        }
+      });
+  };
+  
+
 module.exports = {
     register,
     login,
     createAppointment,
     createTimeslot,
     updateEmail,
-    updatePassword
+    updatePassword,
+    deleteAccount,
 }

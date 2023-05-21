@@ -33,6 +33,8 @@ router.get('/signin', (req, res) => {
 //signin route, authentication done by authController
 router.post('/signin', authController.login);
 
+
+
 // ----------------- Update Appointment------------------------------
 router.get('/update', (req, res) => {
   res.render('update')
@@ -64,6 +66,7 @@ router.get('/password',(req,res) => {
 
 router.post('/update-email', authController.updateEmail);
 router.post('/update-password', authController.updatePassword)
+router.post('/delete-account', authController.deleteAccount)
 
 //-----------------------------------------------------------
 
