@@ -1,5 +1,10 @@
 'use strict'
 
+// Uncomment this base URL when coding  
+const baseURL = 'http://localhost:3000' 
+// Uncomment this base URL for deployment. It ensures to use the app URL instead of localhost
+// const baseURL = 'https://remotepa.azurewebsites.net/' 
+
 const emptyInput = (input) => {
   const isEmpty = (input === "") ? true : false
   return isEmpty
@@ -80,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function postJSON(data) {
-  const baseURL = 'http://localhost:3000'
   fetch(baseURL + '/scheduleAppointment', {
     method: 'post',
     headers: {
