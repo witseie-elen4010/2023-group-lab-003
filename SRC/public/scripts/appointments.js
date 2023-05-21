@@ -127,7 +127,8 @@ function postJSON(data) {
   .then(function(response) {
     if(response.ok){
       console.log('Success')
-      return response; // Return the response parse as JSON if code is valid
+      // return response; // Return the response parse as JSON if code is valid
+      window.location.replace(baseURL + '/studentDashboard')
     }
     else{
       throw 'Invalid input'
