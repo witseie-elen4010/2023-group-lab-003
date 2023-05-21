@@ -27,14 +27,14 @@
       <div class="mb-3" id="emailForm" style="display: none;">
         <form action="/update-email" method="post" id="email-form">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email-field" placeholder="example@example.com"
-            oninput="validateEmailWrapper(event)" />
+            <input type="email" class="form-control" id="email-field" name="email" placeholder="example@example.com" oninput="validateEmailWrapper(event)" />
             <div id="email-error"></div>
             <input type="submit" class="btn btn-primary" value="Save Email">
         </form>
       </div>
     </div>
   </div>
+
 </body>
 
 </html>

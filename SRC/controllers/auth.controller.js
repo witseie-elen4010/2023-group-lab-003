@@ -153,10 +153,31 @@ const createTimeslot = (req, res, next) => {
 }
 
 
-const updateEmail = (req, res) => {
-    res.send('Email Submit routed');
-};
+const updateEmail = async (req, res) => {
+    var userId = req.session.userId; // retrieve user id from session
+    var email = req.body.email;
 
+    if(email) {
+        try {
+            // Updating the user's email in the database
+            const updatedUser = await User.findOneAndUpdate({ _id: userId }, { email: email }, { new: true });
+
+            if (!updatedUser) {
+                console.log('No user found with this id');
+                res.status(404).send('No user found with this id');
+            } else {
+                console.log('Updated User: ', updatedUser);
+                res.send('Updated email: ' + updatedUser.email);
+            }
+        } catch (err) {
+            console.log('Error: ', err);
+            res.status(500).send('Database error');
+        }
+    } else {
+        console.log('Email not provided');
+        res.send('Email not provided');
+    }
+};
 
 
 
