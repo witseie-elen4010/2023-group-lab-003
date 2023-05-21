@@ -25,17 +25,21 @@
     <div class="right-container" id="contentContainer">
       <!-- Make email form initially hidden -->
       <div class="mb-3" id="emailForm" style="display: none;">
+        <h2>Update Email</h2>
         <form action="/update-email" method="post" id="email-form">
             <label for="email" class="form-label">Email address</label>
             <input type="email" class="form-control" id="email-field" name="email" placeholder="example@example.com" oninput="validateEmailWrapper(event)" />
             <div id="email-error"></div>
+            <div>
             <input type="submit" class="btn btn-primary" value="Save Email">
+            </div>
         </form>
       </div>
     
    <!----------------------Password----------------------------->
    <form action="/update-password" method="post" id="password-form">
     <div class="mb-3" id="paswordVerifide" style="display: none;">
+      <h2>Update Password</h2>
       <label for="currentPassword" class="form-label">Current Password</label>
       <input  name = "currentPassword" type="password" class="form-control" id="currentPassword">
   </div>
@@ -67,6 +71,7 @@
 <!----------------------------Delete Account---------------------------------->
 <form action = "/delete-account"  method="post" id="delete">
 <div class="mb-3" id="delete-form" style="display: none;">
+  <h3>Note that this action is irreversible</h3>
 <div id="delete-account">
   <button id="deleteButton" class="delete-button">Delete Account</button>
 </div>
