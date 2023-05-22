@@ -1,3 +1,6 @@
+const User = require('../models/user.schema'); //user schema
+const Timeslot = require('../models/timeslots.schema'); //timeslot schema
+
 const createTimeslot = (req, res, next) => {
 
     const userId = req.session.userId; //get user id from session
