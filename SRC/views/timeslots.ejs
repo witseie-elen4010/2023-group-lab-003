@@ -85,7 +85,7 @@
                                     <th scope="col">Time</th>
                                     <th scope="col">Number of Students</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Delete Consultation</th>
+                                    <th scope="col">Delete Timeslot</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,7 +105,8 @@
                                                     <%= timeslot.date%>
                                                 </td>
                                                 <td>
-                                                    <a class="nav-link" id="delete" href="#">delete</a>
+                                                    <a class="modify-timeslot" id="delete" 
+                                                    href="/cancel/timeslot/<%= timeslot.id %>">delete</a>
                                                 </td>
                                             </tr>
                                             <%}); %>

@@ -160,6 +160,10 @@ router.get('/timeslots', (req, res) => {
   })
 
 })
+
+// router to delete  timeslots
+router.get('/cancel/timeslot/:id', timeslotsController.deleteTimeslot)
+
 //Get router to cancel the appointment
 router.get('/cancel/:id', (req, res) => {
   const appointmentId = req.params.id; //get appointment id from url

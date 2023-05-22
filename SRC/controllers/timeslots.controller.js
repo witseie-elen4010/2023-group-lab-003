@@ -36,6 +36,11 @@ const createTimeslot = (req, res, next) => {
         })
 }
 
+const deleteTimeslot = (req, res) => {
+    console.log('Deleted timeslot')
+}
+
 module.exports = {
     createTimeslot,
+    deleteTimeslot
 }
