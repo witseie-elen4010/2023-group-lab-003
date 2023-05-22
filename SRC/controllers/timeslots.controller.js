@@ -37,8 +37,42 @@ const createTimeslot = (req, res, next) => {
 }
 
 const deleteTimeslot = (req, res) => {
-    console.log('Deleted timeslot')
-}
+    const timeslotId = req.params.id; //get appointment id from url
+    const userId = req.session.userId; // Get user id from session
+  
+    // Find the user and appointment
+    User.findById(userId)
+      .populate('appointments')
+      .exec()
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+  
+        // Find the time slot to be deleted
+        const timeslot = user.timeslots.find(appt => appt._id.toString() === timeslotId);
+        if (!timeslot) {
+          return res.status(404).json({ error: 'Time slot not found' });
+        }
+        // Remove the timeslot from the user's timeslots array
+        user.timeslots.pull(timeslot._id);
+        // Save the updated user object
+        return user.save();
+      })
+      .then((user) => {
+        if (user.role === 'student') {
+          res.redirect('/studentDashboard');
+        } else {
+          res.redirect('/timeslots');
+        }
+  
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to delete timeslot' });
+      });
+};
+  
 
 module.exports = {
     createTimeslot,
