@@ -48,31 +48,31 @@ router.get('/signout', (req, res) => {
     console.log("Signout successfully!")
     res.redirect('signin'); //go to the signin page
   });
-  });
+});
 
 
-  router.post('/updateConsultationTimes', async (req, res) => {
-    const { startTime, endTime } = req.body;
-    //Will get appropraite ID document for user in the future
-    const appointmentId = '6463c9f40d08141f7072e3f6'; //Security issue
+router.post('/updateConsultationTimes/:id', async (req, res) => {
+  const { startTime, endTime } = req.body;
+  //Will get appropraite ID document for user in the future
+  const appointmentId = req.params.id; //get appointment id from url
 
-    try {
-      await Appointment.updateOne({ _id: appointmentId }, { startTime, endTime });
-      console.log('Times updated successfully');
-    } catch (error) {
-      console.error(error);
-      console.log('An error occurred');
-    }
-  });
+  try {
+    await Appointment.updateOne({ _id: appointmentId }, { startTime, endTime });
+    console.log('Times updated successfully');
+  } catch (error) {
+    console.error(error);
+    console.log('An error occurred');
+  }
+});
 
-  //--------------------------------------------------------------------
+//--------------------------------------------------------------------
 
 
-  //---------------------Availalbility----------------------------------
-  //specify availability time slots
-  router.get('/createTimeslot', (req, res) => {
-    res.render('timeslot');
-  })
+//---------------------Availalbility----------------------------------
+//specify availability time slots
+router.get('/createTimeslot', (req, res) => {
+  res.render('timeslot');
+})
 
 
   // ------------------- Schedule Appointment -----------------------
@@ -96,67 +96,92 @@ router.get('/signout', (req, res) => {
   router.post('/scheduleAppointment', appointmentController.createAppointment); //updated schedule appointment linking appointment to the logged in user
   router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
 
-  //display all scheduled appointment of the logged in user
-  router.get('/studentDashboard', (req, res) => {
-    const userId = req.session.userId
-    //console.log(userId)
-    User.findById(userId).populate('appointments').then(user => {
-      if (user) {
-        //const userId = user._id;
-        const userAppointments = user.appointments
-        //console.log(userAppointments)
-        //res.send(userAppointments)
+//display all scheduled appointment of the logged in user
+router.get('/studentDashboard', (req, res) => {
+  const userId = req.session.userId //session user id
+  User.findById(userId).populate('appointments').then(user => {
+    if (user) {
+      const userAppointments = user.appointments
+      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+        res.render('studentDashboard', { appointments })
+      })
+    }
+    else {
+      res.send("Please login")
+    }
+  })
+})
 
-        Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-          res.render('studentDashboard', { appointments })
-        })
-      }
-      else {
-        res.send("Please login")
-      }
-    })
+//display all timeslots made by the logged in lecture
+router.get('/lecturerDashboard', (req, res) => {
+  const userId = req.session.userId; //session user id
+  User.findById(userId).populate('appointments').then(user => {
+    if (user) {
+      const userAppointments = user.appointments
+      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+        res.render('lecturerDashboard', { appointments })
+      })
+    }
+    else {
+      res.send("Please login")
+    }
   })
 
-  //display all timeslots made by the logged in lecture
-  router.get('/lecturerDashboard', (req, res) => {
-    const userId = req.session.userId
-    //console.log(userId)
-    User.findById(userId).populate('appointments').then(user => {
-      if (user) {
-        //const userId = user._id;
-        const userAppointments = user.appointments
-        //console.log(userTimeslots)
-        //res.send(userAppointments)
+})
 
-        Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-          res.render('lecturerDashboard', { appointments })
-        })
-      }
-      else {
-        res.send("Please login")
-      }
-    })
-
+router.get('/timeslots', (req, res) => {
+  const userId = req.session.userId;
+  User.findById(userId).populate('timeslots').then(user => {
+    if (user) {
+      const userTimeslots = user.timeslots
+      console.log(userTimeslots)
+      Timeslot.find({ _id: { $in: userTimeslots } }).then((timeslots) => {
+        res.render('timeslots', { timeslots })
+      })
+    }
+    else {
+      res.send("Please login")
+    }
   })
-  
-  router.get('/timeslots', (req, res) => {
-    const userId = req.session.userId
-    //console.log(userId)
-    User.findById(userId).populate('timeslots').then(user => {
-      if (user) {
-        //const userId = user._id;
-        const userTimeslots = user.timeslots
-        console.log(userTimeslots)
-        //res.send(userAppointments)
 
-        Timeslot.find({ _id: { $in: userTimeslots } }).then((timeslots) => {
-          res.render('timeslots', { timeslots })
-        })
+})
+//Get router to cancel the appointment
+router.get('/cancel/:id', (req, res) => {
+  const appointmentId = req.params.id; //get appointment id from url
+  const userId = req.session.userId; // Get user id from session
+
+  // Find the user and appointment
+  User.findById(userId)
+    .populate('appointments')
+    .exec()
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
       }
-      else {
-        res.send("Please login")
+
+      // Find the appointment to be canceled
+      const appointment = user.appointments.find(appt => appt._id.toString() === appointmentId);
+      if (!appointment) {
+        return res.status(404).json({ error: 'Appointment not found' });
       }
+      // Remove the appointment from the user's appointments array
+      user.appointments.pull(appointment._id);
+      // Save the updated user object
+      return user.save();
     })
+    .then((user) => {
+      if (user.role === 'student') {
+        res.redirect('/studentDashboard');
+      } else {
+        res.redirect('/lectuerDashboard');
+      }
 
-  })
-  module.exports = router
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ error: 'Failed to cancel appointment' });
+    });
+});
+
+
+module.exports = router
