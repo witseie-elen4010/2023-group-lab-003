@@ -108,7 +108,7 @@ router.get('/signout', (req, res) => {
   })*/
   router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
   router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
-
+  router.post('/createAnotherLecturer', authController.createAnotherLecturer); // TODO
   //display all scheduled appointment of the logged in user
   router.get('/studentDashboard', (req, res) => {
     const userId = req.session.userId
