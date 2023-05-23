@@ -158,4 +158,10 @@ router.get('/signout', (req, res) => {
     res.render('includeAnotherLecturer');
   })
 
+  //specify another lectruer
+  router.get('/createAnotherLecturer', (req, res) => {
+    res.render('timeslot');
+  })
+
+
   module.exports = router

@@ -165,5 +165,5 @@ module.exports = {
     login,
     createAppointment,
     createTimeslot,
-    includeAnotherLecturer,
+    createAnotherLecturer,
 }
