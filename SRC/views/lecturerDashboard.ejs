@@ -64,7 +64,6 @@
                     <div class="col-12 menu-container">
                         <nav class="nav flex-column">
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
-                            <a class="nav-link" id="Edit" href="\update">Edit Consultation</a>
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
 
                         </nav>
@@ -103,7 +102,12 @@
                                                 <td>
                                                     <%= appointment.lecturerName%>
                                                 </td>
+
+                                                <td>
+                                                    <a class="nav-link" id="Edit" href="/update/<%= appointment.id %>">Edit</a>
+                                                </td>
                                             </tr>
+
                                             <%}); %>
 
 
