@@ -62,13 +62,15 @@ router.get('/signout', (req, res) => {
 
 
   router.post('/updateConsultationTimes', async (req, res) => {
-    const { startTime, endTime } = req.body;
-    //Will get appropraite ID document for user in the future
-    const appointmentId = '6463c9f40d08141f7072e3f6'; //Security issue
+    const updateTime = req.body.update_date;
+    const appointmentId = req.body.appointment_id; 
 
     try {
-      await Appointment.updateOne({ _id: appointmentId }, { startTime, endTime });
-      console.log('Times updated successfully');
+      const update = { date: updateTime };
+      const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
+      if(updatedAppointment) {
+        console.log('Times updated successfully');
+      }
     } catch (error) {
       console.error(error);
       console.log('An error occurred');
