@@ -160,7 +160,7 @@ router.get('/signout', (req, res) => {
 
   //specify another lectruer
   router.get('/createAnotherLecturer', (req, res) => {
-    res.render('timeslot');
+    //res.render('timeslot'); TODO
   })
 
 
