@@ -34,9 +34,19 @@ router.get('/signin', (req, res) => {
 router.post('/signin', authController.login);
 
 // ----------------- Update Appointment------------------------------
-router.get('/update', (req, res) => {
-  res.render('update')
-})
+router.get('/update/:id', async (req, res) => {
+  try {
+      const appointment = await Appointment.findById(req.params.id);  
+      if (!appointment) {
+          return res.status(404).send('Appointment not found');
+      }
+
+      res.render('update', { appointment: appointment }); 
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+});
 
 //sign out the user
 router.get('/signout', (req, res) => {

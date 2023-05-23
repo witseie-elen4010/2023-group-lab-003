@@ -34,10 +34,12 @@
     <div class="container">
         <p>Update Times</p>
         <form action="/updateConsultationTimes" method="post">
-          <label for="newTime">New Consultation Time Range:</label><br>
-          <input type="time" id="newTime" name="startTime"> to 
-          <input type="time" id="endTime" name="endTime"><br>
-          <input type="submit" value="Submit">
+            <label class="form-label">Date
+                <input name="update_date" type="datetime-local" class="form-control" id="date" required>
+            </label><br>
+            <input type="hidden" name="appointment_id" value="<%= appointment.id %>"> <!-- hidden field -->
+            <p class="form-errors" id="dateError"></p>
+            <input type="submit" value="Submit">
         </form>
       </div>
     <div class="container">
