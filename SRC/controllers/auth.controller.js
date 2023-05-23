@@ -152,7 +152,10 @@ const createTimeslot = (req, res, next) => {
         })
 }
 
-
+const includeAnotherLecturer = (req, res, next) => {
+    const userId = req.session.userId; //get user id from session
+    res.redirect('/lecturerDashboard');
+}
 
 
 
@@ -162,4 +165,5 @@ module.exports = {
     login,
     createAppointment,
     createTimeslot,
+    includeAnotherLecturer,
 }
