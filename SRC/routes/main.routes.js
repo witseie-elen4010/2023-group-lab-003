@@ -155,6 +155,7 @@ router.get('/signout', (req, res) => {
   //---------------------Add another lecturer----------------------------------
  
   router.get('/includeAnotherLecturer', (req, res) => {
+    res.render('includeAnotherLecturer');
   })
 
   module.exports = router
