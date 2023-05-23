@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/searchAppointment.css">
     <title>Search Appointment</title>
 </head>
 <body>
@@ -16,6 +17,24 @@
         <form action="/searchAppointments" method="post" id="searchAppointment">
           <input name="search" type="text" id="search" placeholder="Search Appointments">
           <button type="submit">Search</button>
+           
+          <% if (typeof appointments !== 'undefined' && appointments.length > 0) { %>
+            <h3>Search Results:</h3>
+            <% appointments.forEach(appointment => { %>
+              <div class="appointment-container">
+                <div class="individual-appointment">
+                  <h4><%= appointment.eventTitle %></h4>
+                  <p>Lecturer Name: <%= appointment.lecturerName %></p>
+                  <p>Date: <%= appointment.date %></p>
+                  <a class="join-button">Join</a>
+                </div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p></p>
+          <% } %>
+          
+
           </form>
     </div>
 </body>

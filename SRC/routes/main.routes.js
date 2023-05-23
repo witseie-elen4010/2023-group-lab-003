@@ -101,7 +101,7 @@ router.post('/searchAppointments', async (req, res, next) => {
 
     const appointments = await Appointment.find(condition);
 
-    res.status(200).json({ appointments });
+    res.render('searchAppointment', { appointments });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
