@@ -151,4 +151,9 @@ router.get('/signout', (req, res) => {
     })
 
   })
+
+  //---------------------Add another lecturer----------------------------------
+ 
+ 
+
   module.exports = router
