@@ -112,6 +112,7 @@ router.post('/createTimeslot', authController.createTimeslot); // create time sl
 //display all scheduled appointment of the logged in user
 router.get('/studentDashboard', (req, res) => {
   const userId = req.session.userId //session user id
+  console.log(userId)
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
@@ -158,6 +159,25 @@ router.get('/timeslots', (req, res) => {
   })
 
 })
+
+router.get('/timeslots/getAll', (req, res) => {
+  const userId = req.session.userId;
+  console.log(userId)
+  User.findById(userId).populate('timeslots')
+  .then(user => {
+    if (user) {
+      // find all timeslots available
+      Timeslot.find().then((timeslots) => {
+        console.log('timeslots ', timeslots)
+        res.render('timeslots', { timeslots })
+      })
+    }
+    else {
+      res.send("Please login")
+    }
+  })
+})
+
 //Get router to cancel the appointment
 router.get('/cancel/:id', (req, res) => {
   const appointmentId = req.params.id; //get appointment id from url
