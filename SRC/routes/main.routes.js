@@ -69,11 +69,11 @@ router.get('/signout', (req, res) => {
       const update = { date: updateTime };
       const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
       if(updatedAppointment) {
-        console.log('Times updated successfully');
+        res.json({ message: 'Times updated successfully' });
       }
     } catch (error) {
       console.error(error);
-      console.log('An error occurred');
+      res.status(500).json({ error: 'An error occurred' });
     }
   });
 
