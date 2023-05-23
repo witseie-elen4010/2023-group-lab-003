@@ -74,6 +74,10 @@ router.get('/createTimeslot', (req, res) => {
   res.render('timeslot');
 })
 
+router.get('/searchAppointment', (req, res) => {
+  res.render('searchAppointment');
+})
+
 
 // ------------------- Schedule Appointment -----------------------
 // showing schedule appointment form
