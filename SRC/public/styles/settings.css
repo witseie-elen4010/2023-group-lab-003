@@ -9,3 +9,20 @@
 .right-container {
   flex: 3;
 }
+
+.delete-button {
+  background-color: #ff0000; /* red */
+  border: none;
+  color: white; /* text color */
+  padding: 15px 32px; /* size of the button */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+#delete-account {
+  margin-top: 20px; /* adjust this value as needed */
+}
