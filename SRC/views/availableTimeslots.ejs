@@ -46,8 +46,6 @@
                                 Appointment</a>
                             <a class="nav-link" href="/availableTimeslots">View Available Time slots</a>
                             <a class="nav-link" href="#">Cancel Appointments</a>
-                            <a class="nav-link active" aria-current="page" href="/searchAppointment">Search
-                                Appointment</a>
                             <a class="nav-link" href="/Settings">Settings</a>
                         </nav>
                     </div>
@@ -58,49 +56,34 @@
                     <h1>Student appointment dashboard</h1>
                 </section>
                 <div class="appointments-box">
-                    <h2>Upcoming Appointments</h2>
+                    <h2>Available Time Slots</h2>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-
-                                    <th scope="col">Date & Time</th>
-                                    <th scope="col">Event Title</th>
-                                    <th scope="col">Lecturer Name</th>
-                                    <th scope="col">Modify Meeting</th>
-                                    <th scope="col">Cancel Meeting</th>
-
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Number of allowed students</th>
+                                    <th scope="col">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if(appointments.length===0){ %>
-                                    <td>No appointments available.</td>
-                                    <% }else { %>
-                                        <% appointments.forEach(function(appointment){ %>
-
+                                <% if(timeslots.length === 0){ %>
+                                    <td>No timeslots available.</td>
+                                    <% } else { %>
+                                        <% timeslots.forEach(function(timeslot){ %>
                                             <tr>
-                                                
-                                                    <td>
-                                                        <%= appointment.date %>
-                                                    </td>
-                                                    <td>
-                                                        <%= appointment.eventTitle %>
-                                                    </td>
-                                                    <td>
-                                                        <%= appointment.lecturerName %>
-                                                    </td>
-                                                    <td><a href="/updateConsultationTimes/<%= appointment.id %>">Modify</a></td>
-                                                    <td><a href="/cancel/<%= appointment.id %>">Cancel</a></td>
-
-                                               
+                                                <td>
+                                                    <%= timeslot.availabilityTime %>
+                                                </td>
+                                                <td>
+                                                    <%= timeslot.numberOfStudents %>
+                                                </td>
+                                                <td>
+                                                    <%= timeslot.date%>
+                                                </td>
                                             </tr>
                                             <%}); %>
-
-
                                                 <%}%>
-
-
-
                             </tbody>
                         </table>
                     </div>
