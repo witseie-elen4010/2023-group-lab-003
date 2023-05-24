@@ -133,49 +133,84 @@ const createAppointment = (req, res, next) => {
 
 };
 
-const createTimeslot = (req, res, next) => {
 
-    const userId = req.session.userId; //get user id from session
+// ------------------------------Settings-------------------------------------------------------------------------------------
+const updateEmail = async (req, res) => {
+    var userId = req.session.userId; // retrieve user id from session
+    var email = req.body.email;
 
-    User.findOne({ $or: [{ userId: userId }] })
-        .then(user => {
-            if (user) {
+    if(email) {
+        try {
+            // Updating the user's email in the database
+            const updatedUser = await User.findOneAndUpdate({ _id: userId }, { email: email }, { new: true });
 
-                let timeslot = new Timeslot({
-
-                    availabilityTime: req.body.availabilityTime,
-                    numberOfStudents: req.body.numberOfStudents,
-                    date: req.body.date,
-                    userId: userId
-
-                })
-                timeslot.save()
-                    .then(timeslot => { //associated logged in user with the appointment they schedule
-
-                        return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
-
-                    }).then(user => {
-                        res.redirect('/timeslots');
-                        console.log('New timeslot added');
-
-                    })
-                    .catch(error => {
-
-                        console.log(error)
-                    })
+            if (!updatedUser) {
+                console.log('No user found with this id');
+                res.status(404).send('No user found with this id');
+            } else {
+                console.log('Updated User: ', updatedUser);
+                res.send('Updated email: ' + updatedUser.email);
             }
+        } catch (err) {
+            console.log('Error: ', err);
+            res.status(404).send('Database error');
+        }
+    } else {
+        console.log('Email not provided');
+        res.send('Email not provided');
+    }
+};
 
-        })
+const updatePassword = async (req, res, next) => {
+    const userId = req.session.userId;
+    const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
+
+    const user = await User.findOne({ _id: userId });
+
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    
+    if (!isMatch) {
+        return res.status(404).json({ message: 'Incorrect current password' });
+    }
+
+    if(newPassword !== confirmPassword) {
+        return res.status(404).json({ message: 'Passwords do not match' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+    
+    res.status(200).json({ message: 'Password updated successfully' });
 }
 
 
-
-
-
+const deleteAccount = async (req, res) => {
+    const userId = req.session.userId;
+    
+      await User.findOneAndRemove({ _id: userId });  
+      req.session.destroy((err) => {
+        if (err) {
+          res.status(404).send('An error occurred while deleting the session');
+        } else {
+          res.redirect('/goodbye');
+        }
+      });
+  };
+  
 
 module.exports = {
     register,
     login,
     createAppointment,
-    createTimeslot,
+    updateEmail,
+    updatePassword,
+    deleteAccount,
 }
