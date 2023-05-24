@@ -250,8 +250,10 @@ router.get('/Join', async (req, res) => {
     if (user.appointments.includes(appointmentId)) {
       return res.status(400).send({ message: 'User already in the appointment' });
     }
+    
 
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
+    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } });
 
     res.send({ message: 'Joined the appointment successfully' });
   } catch (error) {

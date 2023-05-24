@@ -18,6 +18,12 @@ const appointmentSchema = new Schema({
   endTime:{
     type : String
   },
+
+  participantCount: {
+    type: Number,
+    default: 1
+  },
+
   user: { //link the person who set an appointment
     type: mongoose.Types.ObjectId,
     ref: 'users'
