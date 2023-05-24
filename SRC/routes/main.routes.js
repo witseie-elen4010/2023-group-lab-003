@@ -33,6 +33,8 @@ router.get('/signin', (req, res) => {
 //signin route, authentication done by authController
 router.post('/signin', authController.login);
 
+
+
 // ----------------- Update Appointment------------------------------
 router.get('/update/:id', async (req, res) => {
   try {
@@ -47,6 +49,21 @@ router.get('/update/:id', async (req, res) => {
       res.status(500).send('Server Error');
   }
 });
+
+//----------------- Settings -------------------------------
+router.get('/settings',(req,res) => {
+  res.render('settings')
+})
+
+router.get('/goodbye',(req,res) => {
+  res.render('goodbye')
+})
+
+router.post('/update-email', authController.updateEmail);
+router.post('/update-password', authController.updatePassword)
+router.post('/delete-account', authController.deleteAccount)
+
+//-----------------------------------------------------------
 
 //sign out the user
 router.get('/signout', (req, res) => {
@@ -85,6 +102,8 @@ router.get('/signout', (req, res) => {
 router.get('/createTimeslot', (req, res) => {
   res.render('timeslot');
 })
+
+  
 
 
 // ------------------- Schedule Appointment -----------------------
