@@ -11,8 +11,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/scheduleAppointment.css">
 
-
-    <!--<script defer src="../scripts/appointments.js"></script> -->
+    <script defer src="../scripts/appointments.js"></script>
 </head>
 
 <body>
@@ -25,8 +24,10 @@
                 </label><br>
                 <p class="form-errors" id="eventTitleError"></p>
 
-                <label class="form-label">Lecturer's Name
-                    <input name="lecturerName" type="text" class="form-control" id="lecturerName" required>
+                <label class="form-label select-label">Lecturer's Name
+                    <select class="form-control select" data-mdb-filter="true" id="lecturerName">
+                      <option value="" disabled selected> Select a lecturer's name </option>
+                    </select>
                 </label><br>
                 <p class="form-errors" id="lecturerNameError"></p>
 

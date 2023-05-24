@@ -1,5 +1,10 @@
 'use strict'
 
+// Uncomment this base URL when coding  
+// const baseURL = 'http://localhost:3000' 
+// Uncomment this base URL for deployment. It ensures to use the app URL instead of localhost
+const baseURL = 'https://remotepa.azurewebsites.net' 
+
 const emptyInput = (input) => {
   const isEmpty = (input === "") ? true : false
   return isEmpty
@@ -50,7 +55,38 @@ const validateDate = (date, dateError) => {
   }
 }
 
+const lecturerName = () => {
+  let names = []
+  fetch( baseURL + '/scheduleAppointment/lecturerDetails', {method: 'GET'} )
+  .then( function(response) { return response.json()} )
+  .then( function(response) {
+    const lecturerDetails = response.data
+    lecturerDetails.forEach( element => {
+      const fullName = `${element.name} ${element.surname}`
+      names.push(fullName)
+    })
+    console.log( 'lecturer names' , names )
+    
+    const namesID = document.getElementById('lecturerName')
+    names.forEach( name => {
+      if(namesID.selectedIndex >=0) {
+        var option = document.createElement('option')
+        option.text = name
+        var sel = namesID.options[namesID.selectedIndex]
+        namesID.add(option, sel)
+      }
+    })
+
+    const selector = document.querySelector('select')
+    selector.addEventListener('change', (event) => {
+    console.log('value ', selector.value)}) 
+
+    return response})
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+  lecturerName()
+  
   const form = document.getElementById('scheduleAppointmentForm')
   if (form) {
     form.addEventListener('submit', function (event) {
@@ -80,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function postJSON(data) {
-  const baseURL = 'http://localhost:3000'
   fetch(baseURL + '/scheduleAppointment', {
     method: 'post',
     headers: {
@@ -92,17 +127,14 @@ function postJSON(data) {
   .then(function(response) {
     if(response.ok){
       console.log('Success')
-      return response.json(); // Return the response parse as JSON if code is valid
-      // must redirect to dashboard
+      // return response; // Return the response parse as JSON if code is valid
+      window.location.replace(baseURL + '/studentDashboard')
     }
     else{
       throw 'Invalid input'
     }
   }).catch(function (e) { // Process error for request
-  console.log(e) // Displays a browser alert with the error message.
-  // This will be the string thrown in line 7 IF the
-  // response code is the reason for jumping to this
-  // catch() function.
+  console.log(e) 
   })
 }
 
