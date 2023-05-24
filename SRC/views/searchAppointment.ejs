@@ -26,7 +26,7 @@
                   <h4><%= appointment.eventTitle %></h4>
                   <p>Lecturer Name: <%= appointment.lecturerName %></p>
                   <p>Date: <%= appointment.date %></p>
-                  <P>Number of Students joined: <%=appointment.participantCount %></P>
+                  <P>Number of Students joined: <%= (20 - appointment.participantCount) %></P>
                   <a class="join-button" aria-current="page" href="/Join?appointmentId=<%= appointment._id %>">Join</a>
                 </div>
               </div>

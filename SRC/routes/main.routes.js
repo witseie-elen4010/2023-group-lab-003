@@ -237,6 +237,7 @@ router.get('/cancel/:id', (req, res) => {
       // Remove the appointment from the user's appointments array
       user.appointments.pull(appointment._id);
       // Save the updated user object
+      Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: -1} }, { new: true });
       return user.save();
     })
     .then((user) => {
@@ -259,7 +260,6 @@ router.get('/Join', async (req, res) => {
   const userId = req.session.userId;
 
   try {
-
      const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send({ message: 'User not found' });
@@ -274,9 +274,10 @@ router.get('/Join', async (req, res) => {
       return res.status(400).send({ message: 'User already in the appointment' });
     }
     
-
+    
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
-    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } });
+
+   await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1} }, { new: true });
 
     res.send({ message: 'Joined the appointment successfully' });
   } catch (error) {
