@@ -1,0 +1,16 @@
+.individual-appointment {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .join-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+  }
+  

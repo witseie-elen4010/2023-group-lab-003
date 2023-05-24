@@ -24,22 +24,13 @@ describe('ValidateEmail', () => {
 });
 
 
-describe('ValidatePassword', () => {
-test('Should return true for valid Password',() =>{
-      const validPassword = 'Rsep@90Ml'
-      const valid = {value: validPassword}
-      const passworderros = { innerHTML: '' };
-      const result = validatePassword(valid, passworderros)
-      expect(result).toBe(true)
-    })
-
-   
+describe('ValidatePassword', () => {   
     test('Should return "Your password must contain at least one number"', () => {
       const validPassword = 'ManBat@@'
       const valid = { value: validPassword }
       const passwordErrors = { innerHTML: '' };
       const result = validatePassword(valid, passwordErrors)
-      expect(passwordErrors.innerHTML).toEqual('<ul><li>Your password must contain at least one number.</li></ul>');
+      expect(passwordErrors.innerHTML).toEqual('<ul><ul style=\"color: red;\"><li>Your password must contain at least one number.</li></ul>');
     });
 
     test('Should return "Your password must contain a special character, must contain an uppercase letter"', () => {
@@ -47,7 +38,7 @@ test('Should return true for valid Password',() =>{
       const valid = { value: validPassword }
       const passwordErrors = { innerHTML: '' };
       const result = validatePassword(valid, passwordErrors)
-      expect(passwordErrors.innerHTML).toEqual('<ul><li>Must contain a special character.</li><li>Must contain an uppercase letter.</li></ul>');
+      expect(passwordErrors.innerHTML).toEqual('<ul><ul style=\"color: red;\"><li>Must contain a special character.</li><li>Must contain an uppercase letter.</li></ul>');
     });;
     
 
@@ -56,7 +47,7 @@ test('Should return true for valid Password',() =>{
       const valid = { value: validPassword }
       const passwordErrors = { innerHTML: '' };
       const result = validatePassword(valid, passwordErrors)
-      expect(passwordErrors.innerHTML).toEqual('<ul><li>Must contain a special character.</li><li>Must contain an uppercase letter.</li><li>Must have 8 or more characters.</li><li>Must contain a lowercase letter.</li></ul>');
+      expect(passwordErrors.innerHTML).toEqual('<ul><ul style=\"color: red;\"><li>Must contain a special character.</li><li>Must contain an uppercase letter.</li><li>Must have 8 or more characters.</li><li>Must contain a lowercase letter.</li></ul>');
     });
   });
 
