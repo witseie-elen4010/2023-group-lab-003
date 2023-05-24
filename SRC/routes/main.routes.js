@@ -103,7 +103,39 @@ router.get('/createTimeslot', (req, res) => {
   res.render('timeslot');
 })
 
-  
+router.get('/searchAppointment', (req, res) => {
+  res.render('searchAppointment');
+})
+
+router.post('/searchAppointments', async (req, res, next) => {
+  const userId = req.session.userId;
+  const searchQuery = req.body.search;
+
+  try {
+    const user = await User.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(404).render('error', { message: 'User not found' });
+    }
+
+    let condition = {};
+    if (searchQuery) {
+      condition = {
+        $or: [
+          { eventTitle: { $regex: new RegExp(searchQuery, "i") } },
+          { lecturerName: { $regex: new RegExp(searchQuery, "i") } }
+        ]
+      };
+    }
+
+    const appointments = await Appointment.find(condition);
+
+    res.render('searchAppointment', { appointments });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
   // ------------------- Schedule Appointment -----------------------
@@ -204,6 +236,7 @@ router.get('/cancel/:id', (req, res) => {
       // Remove the appointment from the user's appointments array
       user.appointments.pull(appointment._id);
       // Save the updated user object
+      Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: -1} }, { new: true });
       return user.save();
     })
     .then((user) => {
@@ -219,6 +252,40 @@ router.get('/cancel/:id', (req, res) => {
       res.status(500).json({ error: 'Failed to cancel appointment' });
     });
 });
+
+//Join Appointment
+router.get('/Join', async (req, res) => {
+  const appointmentId = req.query.appointmentId;
+  const userId = req.session.userId;
+
+  try {
+     const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    const appointment = await Appointment.findById(appointmentId);
+    if (!appointment) {
+      return res.status(404).send({ message: 'Appointment not found' });
+    }
+
+    if (user.appointments.includes(appointmentId)) {
+      return res.status(400).send({ message: 'User already in the appointment' });
+    }
+    
+    
+    await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
+
+   await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1} }, { new: true });
+
+    res.send({ message: 'Joined the appointment successfully' });
+  } catch (error) {
+    res.status(500).send({ message: 'Server error' });
+  }
+
+  
+});
+
 
 
   //---------------------Add another lecturer----------------------------------
