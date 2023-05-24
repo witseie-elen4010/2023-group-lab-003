@@ -165,9 +165,6 @@ const deleteAccount = async (req, res) => {
 module.exports = {
     register,
     login,
-
-    createAppointment,
-    createTimeslot,
     createAnotherLecturer,
     updateEmail,
     updatePassword,
