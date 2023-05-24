@@ -189,7 +189,7 @@ router.get('/timeslots/getAll', (req, res) => {
       // find all timeslots available
       Timeslot.find().then((timeslots) => {
         console.log('timeslots ', timeslots)
-        res.render('timeslots', { timeslots })
+        res.render('allTimeslots', { timeslots })
       })
     }
     else {
