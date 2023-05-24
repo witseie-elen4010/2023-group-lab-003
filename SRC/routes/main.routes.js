@@ -236,14 +236,19 @@ router.get('/Join', async (req, res) => {
   const userId = req.session.userId;
 
   try {
+
+     const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
     const appointment = await Appointment.findById(appointmentId);
     if (!appointment) {
       return res.status(404).send({ message: 'Appointment not found' });
     }
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).send({ message: 'User not found' });
+    if (user.appointments.includes(appointmentId)) {
+      return res.status(400).send({ message: 'User already in the appointment' });
     }
 
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
