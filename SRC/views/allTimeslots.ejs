@@ -62,11 +62,29 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Time</th>
-                                    <th scope="col">Number of Students</th>
+                                    <th scope="col">Number of Allowed students</th>
                                     <th scope="col">Date</th>
                                 </tr>
                             </thead>
- 
+                            <tbody>
+                                <% if(timeslots.length === 0){ %>
+                                    <td>No timeslots available.</td>
+                                    <% } else { %>
+                                        <% timeslots.forEach(function(timeslot){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= timeslot.availabilityTime %>
+                                                </td>
+                                                <td>
+                                                    <%= timeslot.numberOfStudents %>
+                                                </td>
+                                                <td>
+                                                    <%= timeslot.date%>
+                                                </td>
+                                            </tr>
+                                            <%}); %>
+                                                <%}%>
+                            </tbody>
                         </table>
                     </div>
                 </div>
