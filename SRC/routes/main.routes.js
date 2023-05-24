@@ -36,9 +36,19 @@ router.post('/signin', authController.login);
 
 
 // ----------------- Update Appointment------------------------------
-router.get('/update', (req, res) => {
-  res.render('update')
-})
+router.get('/update/:id', async (req, res) => {
+  try {
+      const appointment = await Appointment.findById(req.params.id);  
+      if (!appointment) {
+          return res.status(404).send('Appointment not found');
+      }
+
+      res.render('update', { appointment: appointment }); 
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+});
 
 //----------------- Settings -------------------------------
 router.get('/settings',(req,res) => {
@@ -68,19 +78,21 @@ router.get('/signout', (req, res) => {
 });
 
 
-router.post('/updateConsultationTimes/:id', async (req, res) => {
-  const { startTime, endTime } = req.body;
-  //Will get appropraite ID document for user in the future
-  const appointmentId = req.params.id; //get appointment id from url
+  router.post('/updateConsultationTimes', async (req, res) => {
+    const updateTime = req.body.update_date;
+    const appointmentId = req.body.appointment_id; 
 
-  try {
-    await Appointment.updateOne({ _id: appointmentId }, { startTime, endTime });
-    console.log('Times updated successfully');
-  } catch (error) {
-    console.error(error);
-    console.log('An error occurred');
-  }
-});
+    try {
+      const update = { date: updateTime };
+      const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
+      if(updatedAppointment) {
+        res.json({ message: 'Times updated successfully' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+  });
 
 //--------------------------------------------------------------------
 
