@@ -141,6 +141,12 @@ const updatePassword = async (req, res, next) => {
 }
 
 
+const createAnotherLecturer = (req, res, next) => {
+    const userId = req.session.userId; //get user id from session
+    res.redirect('/lecturerDashboard');
+}
+
+
 const deleteAccount = async (req, res) => {
     const userId = req.session.userId;
     
@@ -155,10 +161,13 @@ const deleteAccount = async (req, res) => {
   };
   
 
+
 module.exports = {
     register,
     login,
+    createAnotherLecturer,
     updateEmail,
     updatePassword,
     deleteAccount,
+
 }

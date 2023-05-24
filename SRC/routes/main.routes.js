@@ -126,8 +126,8 @@ router.get('/createTimeslot', (req, res) => {
       }
     )
   })
-  router.post('/scheduleAppointment', appointmentController.createAppointment); //updated schedule appointment linking appointment to the logged in user
-  router.post('/createTimeslot', timeslotsController.createTimeslot); // create time slot by the logged in user
+router.post('/scheduleAppointment', appointmentController.createAppointment); //updated schedule appointment linking appointment to the logged in user
+router.post('/createTimeslot', timeslotsController.createTimeslot); // create time slot by the logged in user
 
 //display all scheduled appointment of the logged in user
 router.get('/studentDashboard', (req, res) => {
@@ -219,6 +219,18 @@ router.get('/cancel/:id', (req, res) => {
       res.status(500).json({ error: 'Failed to cancel appointment' });
     });
 });
+
+
+  //---------------------Add another lecturer----------------------------------
+ 
+  router.get('/includeAnotherLecturer', (req, res) => {
+    res.render('includeAnotherLecturer');
+  })
+ router.post('/createAnotherLecturer', authController.createAnotherLecturer); // TODO
+  //specify another lectruer
+  router.get('/createAnotherLecturer', (req, res) => {
+    //res.render('timeslot'); TODO
+  })
 
 
 module.exports = router
