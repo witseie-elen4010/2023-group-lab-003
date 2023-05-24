@@ -2,7 +2,7 @@
 
 function validateEmail(emailField, emailError) {
   if (!emailField.value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-    emailError.innerHTML = 'Please enter a valid email'
+    emailError.innerHTML = '<span style="color: red;">Please enter a valid email</span>'
     return false;
   }
   emailError.innerHTML = ''
@@ -16,7 +16,7 @@ function validateEmailWrapper(event) {
 }
 
 function validatePassword(Passwords, PasswordsError) {
-  let errorMessage = ''
+  let errorMessage = '<ul style="color: red;">'
 
   if (!Passwords.value.match(/[0-9]/)) {
     errorMessage += '<li>Your password must contain at least one number.</li>'
@@ -62,7 +62,7 @@ function validatePasswordWrapper(event) {
 
 function confirmPassword(password1, password2, errormes) {
   if (password1.value !== password2.value) {
-    errormes.innerHTML = 'Passwords do not match'
+    errormes.innerHTML = '<span style="color: red;"> Passwords do not match ! </span>'
     return false;
 
   } else {
