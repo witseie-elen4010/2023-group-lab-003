@@ -106,14 +106,6 @@ router.get('/createTimeslot', (req, res) => {
   
 
 
-// showing schedule appointment form
-const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
-router.get('/scheduleAppointment', (req, res) => {
-  res.render('scheduleAppointment')
-})
-
-
-
   // ------------------- Schedule Appointment -----------------------
   // showing schedule appointment form
   const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
