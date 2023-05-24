@@ -230,5 +230,11 @@ router.get('/cancel/:id', (req, res) => {
     });
 });
 
+//Join Appointment
+router.get('/Join',(req, res) => {
+  const appointmentId = req.query.appointmentId;
+  console.log(appointmentId);
+});
+
 
 module.exports = router
