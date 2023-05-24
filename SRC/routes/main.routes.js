@@ -33,10 +33,37 @@ router.get('/signin', (req, res) => {
 //signin route, authentication done by authController
 router.post('/signin', authController.login);
 
+
+
 // ----------------- Update Appointment------------------------------
-router.get('/update', (req, res) => {
-  res.render('update')
+router.get('/update/:id', async (req, res) => {
+  try {
+      const appointment = await Appointment.findById(req.params.id);  
+      if (!appointment) {
+          return res.status(404).send('Appointment not found');
+      }
+
+      res.render('update', { appointment: appointment }); 
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+});
+
+//----------------- Settings -------------------------------
+router.get('/settings',(req,res) => {
+  res.render('settings')
 })
+
+router.get('/goodbye',(req,res) => {
+  res.render('goodbye')
+})
+
+router.post('/update-email', authController.updateEmail);
+router.post('/update-password', authController.updatePassword)
+router.post('/delete-account', authController.deleteAccount)
+
+//-----------------------------------------------------------
 
 //sign out the user
 router.get('/signout', (req, res) => {
@@ -51,19 +78,21 @@ router.get('/signout', (req, res) => {
 });
 
 
-router.post('/updateConsultationTimes/:id', async (req, res) => {
-  const { startTime, endTime } = req.body;
-  //Will get appropraite ID document for user in the future
-  const appointmentId = req.params.id; //get appointment id from url
+  router.post('/updateConsultationTimes', async (req, res) => {
+    const updateTime = req.body.update_date;
+    const appointmentId = req.body.appointment_id; 
 
-  try {
-    await Appointment.updateOne({ _id: appointmentId }, { startTime, endTime });
-    console.log('Times updated successfully');
-  } catch (error) {
-    console.error(error);
-    console.log('An error occurred');
-  }
-});
+    try {
+      const update = { date: updateTime };
+      const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
+      if(updatedAppointment) {
+        res.json({ message: 'Times updated successfully' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+  });
 
 //--------------------------------------------------------------------
 
@@ -74,41 +103,39 @@ router.get('/createTimeslot', (req, res) => {
   res.render('timeslot');
 })
 
+  
 
-// ------------------- Schedule Appointment -----------------------
+
 // showing schedule appointment form
 const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
 router.get('/scheduleAppointment', (req, res) => {
   res.render('scheduleAppointment')
 })
-//-----The code below shoulde be edited and placed in the authController file------//
-// handling schedule appointment details
-/*
-router.post('/scheduleAppointment', async (req, res) => {
-  const data = {
-    eventTitle: req.body.eventTitle,
-    lecturerName: req.body.lecturerName,
-    date: req.body.date
-  }
-  // save data to database if it is valid
-  if (emptyInput(data.eventTitle) || !validateEventTitle(data.eventTitle)){
-    res.status(400).send({message: 'Invalid event title'})
-  }
-  else if (emptyInput(data.lecturerName) || !validateLecturerName(data.lecturerName)){
-    res.status(400).send({message: 'Invalid lecturers name'})
-  }
-  else if (emptyInput(data.date)){
-    res.status(400).send({message: 'Invalid date'})
-  }
-  else{
-    // update database
-    Appointment.insertMany(data)
-    res.status(200).json({message: 'Schedule successfully set'})
-  }
-})*/
-router.post('/scheduleAppointment', authController.createAppointment); //updated schedule appointment linking appointment to the logged in user
-router.post('/createTimeslot', authController.createTimeslot); // create time slot by the logged in user
-router.post('/createAnotherLecturer', authController.createAnotherLecturer); // TODO
+
+
+
+  // ------------------- Schedule Appointment -----------------------
+  // showing schedule appointment form
+  const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
+  const appointmentController = require('../controllers/appointment.controller')
+  const timeslotsController = require('../controllers/timeslots.controller')
+  
+  router.get('/scheduleAppointment', (req, res) => {
+    res.render('scheduleAppointment')
+  })
+  
+  router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
+    User.find({role: 'lecture',})
+    .then(
+      lecturers => {
+        // console.log('registered lecturers ', lecturers)
+        if (!lecturers) res.status(400).send({message: 'No registered lecturers'})
+        else res.status(200).send({data: lecturers})
+      }
+    )
+  })
+router.post('/scheduleAppointment', appointmentController.createAppointment); //updated schedule appointment linking appointment to the logged in user
+router.post('/createTimeslot', timeslotsController.createTimeslot); // create time slot by the logged in user
 
 //display all scheduled appointment of the logged in user
 router.get('/studentDashboard', (req, res) => {
@@ -159,6 +186,10 @@ router.get('/timeslots', (req, res) => {
   })
 
 })
+
+// router to delete  timeslots
+router.get('/cancel/timeslot/:id', timeslotsController.deleteTimeslot)
+
 //Get router to cancel the appointment
 router.get('/cancel/:id', (req, res) => {
   const appointmentId = req.params.id; //get appointment id from url
@@ -203,7 +234,7 @@ router.get('/cancel/:id', (req, res) => {
   router.get('/includeAnotherLecturer', (req, res) => {
     res.render('includeAnotherLecturer');
   })
-
+ router.post('/createAnotherLecturer', authController.createAnotherLecturer); // TODO
   //specify another lectruer
   router.get('/createAnotherLecturer', (req, res) => {
     //res.render('timeslot'); TODO
