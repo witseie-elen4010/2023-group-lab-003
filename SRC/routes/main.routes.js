@@ -180,7 +180,7 @@ router.get('/timeslots', (req, res) => {
 
 })
 
-router.get('/timeslots/getAll', (req, res) => {
+router.get('/availableTimeslots', (req, res) => {
   const userId = req.session.userId;
   console.log(userId)
   User.findById(userId).populate('timeslots')
@@ -189,7 +189,7 @@ router.get('/timeslots/getAll', (req, res) => {
       // find all timeslots available
       Timeslot.find().then((timeslots) => {
         console.log('timeslots ', timeslots)
-        res.render('allTimeslots', { timeslots })
+        res.render('availableTimeslots', { timeslots })
       })
     }
     else {
