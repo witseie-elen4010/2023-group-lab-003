@@ -49,8 +49,6 @@
                             <a class="nav-link active" aria-current="page" href="/searchAppointment">Search
                                 Appointment</a>
                             <a class="nav-link" href="/Settings">Settings</a>
-                            <a class="nav-link" href="/student-cancelled-appointments">Cancelled Appointments</a>
-
                         </nav>
                     </div>
                 </div>
@@ -70,8 +68,8 @@
                                     <th scope="col">Event Title</th>
                                     <th scope="col">Lecturer Name</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Modify Meeting</th>
-                                    <th scope="col">Cancel Meeting</th>
+                                  
+                                    
 
                                 </tr>
                             </thead>
@@ -80,7 +78,7 @@
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment) { %>
-                                            <%if (appointment.status === 'Upcoming') { %>
+                                            <%if (appointment.status === 'Cancelled') { %>
                                             <tr>
 
                                                 <td>
@@ -95,13 +93,8 @@
                                                 <td>
                                                     <%= appointment.status%>
                                                 </td>
-                                                <td><a href="/updateConsultationTimes/<%= appointment.id %>">Modify</a>
-                                                </td>
-                                                <td>
-                                                <% if(appointment.status === "Upcoming"){ %>
-                                                <a href="/cancel/<%= appointment.id %>">Cancel</a>
-                                                    <%}%>
-                                                </td>
+                                               
+                                               
 
                                             </tr>
                                             <%}%>
