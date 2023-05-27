@@ -77,8 +77,8 @@
                                 <% if(appointments.length===0){ %>
                                     <td>No appointments available.</td>
                                     <% }else { %>
-                                        <% appointments.forEach(function(appointment){ %>
-
+                                        <% appointments.forEach(function(appointment) { %>
+                                            <%if (appointment.status === 'Upcoming') { %>
                                             <tr>
 
                                                 <td>
@@ -102,6 +102,7 @@
                                                 </td>
 
                                             </tr>
+                                            <%}%>
                                             <%}); %>
 
 
