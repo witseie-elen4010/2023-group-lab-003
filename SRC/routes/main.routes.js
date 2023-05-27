@@ -189,7 +189,8 @@ router.get('/lecturerDashboard', (req, res) => {
       })
     }
     else {
-      res.send("Please login")
+      const message = req.flash("Please Login");
+      res.redirect('/signin');
     }
   })
 
