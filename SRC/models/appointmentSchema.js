@@ -23,7 +23,12 @@ const appointmentSchema = new Schema({
     type: Number,
     default: 1
   },
-
+  status: {
+    type: String,
+    enum: ['upcoming', 'cancelled', 'completed'],
+    default: 'upcoming'
+  }
+,
   user: { //link the person who set an appointment
     type: mongoose.Types.ObjectId,
     ref: 'users'
