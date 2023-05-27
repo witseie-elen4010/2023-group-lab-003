@@ -11,10 +11,39 @@ const createTimeslot = (req, res, next) => {
 
                 let timeslot = new Timeslot({
 
-                    availabilityTime: req.body.availabilityTime,
+                  Monday: {
+                    Time:  `${req.body.MondayTimeBegin} - ${req.body.MondayTimeEnd}`,
+                    numberOfStudents: req.body.numberOfStudentsMon,
+                    MaxNumberOfConsulation: req.body.MondayMaxConsulation
+                },
+
+                Tuesday: {
+                  Time:  `${req.body.TuesdayTimeBegin} - ${req.body.TuesdayTimeEnd}`,
+                  numberOfStudents: req.body.numberOfStudentsTues,
+                  MaxNumberOfConsulation: req.body.TuesdayMaxConsulation
+                },
+
+                Wednesday: {
+                  Time:  `${req.body.WednesdayTimeBegin} - ${req.body.WednesdayTimeEnd}`,
+                  numberOfStudents: req.body.numberOfStudentsWed,
+                  MaxNumberOfConsulation: req.body.WednesdayMaxConsulation
+                },
+
+                Thursday: {
+                  Time:  `${req.body.ThursdayTimeBegin} - ${req.body.ThursdayTimeEnd}`,
+                  numberOfStudents: req.body.numberOfStudentsThurs,
+                  MaxNumberOfConsulation: req.body.ThursdayMaxConsulation
+                },
+                Friday: {
+                  Time:  `${req.body.FridayTimeBegin} - ${req.body.FridayTimeEnd}`,
+                  numberOfStudents: req.body.numberOfStudentsFri,
+                  MaxNumberOfConsulation: req.body.FridayMaxConsulation
+                },
+
+                   /* availabilityTime: req.body.availabilityTime,
                     numberOfStudents: req.body.numberOfStudents,
                     date: req.body.date,
-                    userId: userId
+                    userId: userId*/
 
                 })
                 timeslot.save()
