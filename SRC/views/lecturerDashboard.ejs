@@ -102,6 +102,8 @@
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment){ %>
+                                            <%if (appointment.status === 'Upcoming') { %>
+
                                             <tr>
 
                                                 <td>
@@ -123,7 +125,7 @@
                                                 </td>
                                                 <td><a href="/cancel/<%= appointment.id %>">Cancel</a></td>
                                             </tr>
-
+                                            <%}%>
                                             <%}); %>
 
 
