@@ -25,8 +25,8 @@ const appointmentSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['upcoming', 'cancelled', 'completed'],
-    default: 'upcoming'
+    enum: ['Upcoming', 'Cancelled', 'Completed'],
+    default: 'Upcoming'
   }
 ,
   user: { //link the person who set an appointment
