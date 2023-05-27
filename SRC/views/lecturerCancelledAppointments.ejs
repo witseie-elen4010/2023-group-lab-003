@@ -7,14 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Student</title>
+    <style>
+        .menu-container {
+            border-right: 1px solid #ccc;
+            height: 100%;
+        }
 
+        .menu-container .nav-link {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .appointments-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+    </style>
+    <title>Lecturer Dashboard</title>
 </head>
 
 <body>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <section id="header">
-        <!--navbar-->
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -35,30 +56,35 @@
             </nav>
         </header>
     </section>
-    <!--Body-->
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-2">
                 <div class="row h-100">
                     <div class="col-12 menu-container">
                         <nav class="nav flex-column">
-                            <a class="nav-link active" aria-current="page" href="/scheduleAppointment">Set
-                                Appointment</a>
-                            <a class="nav-link" href="/availableTimeslots">View Available Time slots</a>
-                            <a class="nav-link" href="#">Cancel Appointments</a>
-                            <a class="nav-link active" aria-current="page" href="/searchAppointment">Search
-                                Appointment</a>
+                            <a class="nav-link" href="/createTimeslot">Set Availability times</a>
+
+                            <a class="nav-link" id="Edit" href="\update">Edit Consultation</a>
+
+                            <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
+
+                            <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
                             <a class="nav-link" href="/Settings">Settings</a>
+
+                            <a class="nav-link" href="/timeslots">View Timeslots</a>
+                            <a class="nav-link" href="/lecturer-cancelled-appointments">Cancelled Appointments</a>
+
                         </nav>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-10">
                 <section id="dashboard-heading">
-                    <h1>Student Cancelled Appointments Dashboard</h1>
+                    <h1>Lecturer Appointment Dashboard</h1>
                 </section>
                 <div class="appointments-box">
-                    <h2>Cancelled Appointments</h2>
+                    <h2>Lecturer Appointments</h2>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -68,8 +94,6 @@
                                     <th scope="col">Event Title</th>
                                     <th scope="col">Lecturer Name</th>
                                     <th scope="col">Status</th>
-                                  
-                                    
 
                                 </tr>
                             </thead>
@@ -77,8 +101,9 @@
                                 <% if(appointments.length===0){ %>
                                     <td>No appointments available.</td>
                                     <% }else { %>
-                                        <% appointments.forEach(function(appointment) { %>
+                                        <% appointments.forEach(function(appointment){ %>
                                             <%if (appointment.status === 'Cancelled') { %>
+
                                             <tr>
 
                                                 <td>
@@ -88,13 +113,12 @@
                                                     <%= appointment.eventTitle %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.lecturerName %>
+                                                    <%= appointment.lecturerName%>
+                                                        <!--name of the student who created the appointment-->
                                                 </td>
                                                 <td>
                                                     <%= appointment.status%>
                                                 </td>
-                                               
-                                               
 
                                             </tr>
                                             <%}%>
@@ -103,8 +127,6 @@
 
                                                 <%}%>
 
-
-
                             </tbody>
                         </table>
                     </div>
@@ -112,15 +134,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -316,15 +316,15 @@ router.get('/Join', async (req, res) => {
  
   router.get('/includeAnotherLecturer', (req, res) => {
     res.render('includeAnotherLecturer');
-  })
+  });
  router.post('/createAnotherLecturer', authController.createAnotherLecturer); // TODO
   //specify another lectruer
   router.get('/createAnotherLecturer', (req, res) => {
     //res.render('timeslot'); TODO
-  })
+  });
 
 
-  //Lecturer Cancelled appoinments
+  //Student Cancelled appoinments
   router.get('/student-cancelled-appointments', (req, res) =>{
     const userId = req.session.userId //session user id
     console.log(userId)
@@ -338,9 +338,25 @@ router.get('/Join', async (req, res) => {
       else {
         res.send("Please login")
       }
-    })
+    })});
 
-  })
+      //Lecturer Cancelled appoinments
+  router.get('/lecturer-cancelled-appointments', (req, res) =>{
+    const userId = req.session.userId //session user id
+    console.log(userId)
+    User.findById(userId).populate('appointments').then(user => {
+      if (user) {
+        const userAppointments = user.appointments
+        Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+          res.render('lecturerCancelledAppointments', { appointments })
+        })
+      }
+      else {
+        res.send("Please login")
+      }
+    });
+
+  });
 
 
 module.exports = router
