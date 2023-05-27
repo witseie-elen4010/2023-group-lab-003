@@ -20,8 +20,71 @@
     <div class="card text-center">
         <form id="scheduleAppointmentForm" action="/createTimeslot" method="post">
             <div class="mb-3">
+
+                <label class="form-label">Monday<br>
+                    Times : <input type="time" id="MondayTimeBegin" name="MondayTimeBegin">to
+                    <input type="time" id="MondayTimeEnd" name="MondayTimeEnd"><br>
+                    <label class="form-label">Number of students allowed
+                        <input name="numberOfStudentsMon" type="text" class="form-control" >
+                    </label><br>
+                    <label class="form-label">Max Number of bookings
+                        <input name="MondayMaxConsulation" type="text" class="form-control" >
+                    </label><br>
+                </label><br>
+                <p class="form-errors" id="eventTitleError"></p>
+
+                <label class="form-label">Tuesday<br>
+                   Times : <input type="time" id="MondayTimeBegin" name="TuesdayTimeBegin">to
+                    <input type="time" id="MondayTimeEnd" name="TuesdayTimeEnd"><br>
+                    <label class="form-label">Number of students allowed
+                        <input name="numberOfStudentsTues" type="text" class="form-control" >
+                    </label><br>
+                    <label class="form-label">Max Number of bookings
+                        <input name="TuesdayMaxConsulation" type="text" class="form-control" >
+                    </label><br>
+                </label><br>
+                <p class="form-errors" id="eventTitleError"></p>
+
+                <label class="form-label">Wednesday<br>
+                    Times : <input type="time" id="MondayTimeBegin" name="WednesdayTimeBegin">to
+                    <input type="time" id="MondayTimeEnd" name="WednesdayTimeEnd"><br>
+                    <label class="form-label">Number of students allowed
+                        <input name="numberOfStudentsWed" type="text" class="form-control" >
+                    </label><br>
+                    <label class="form-label">Max Number of bookings
+                        <input name="WednesdayMaxConsulation" type="text" class="form-control" >
+                    </label><br>
+                </label><br>
+                <p class="form-errors" id="eventTitleError"></p>
+
+                <label class="form-label">Thursday<br>
+                    Times : <input type="time" id="MondayTimeBegin" name="ThursdayTimeBegin">to
+                    <input type="time" id="MondayTimeEnd" name="ThursdayTimeEnd"><br>
+                    <label class="form-label">Number of students allowed
+                        <input name="numberOfStudentsThurs" type="text" class="form-control" >
+                    </label><br>
+                    <label class="form-label">Max Number of bookings
+                        <input name="ThursdayMaxConsulation" type="text" class="form-control" >
+                    </label><br>
+                </label><br>
+                <p class="form-errors" id="eventTitleError"></p>
+
+                <label class="form-label">Friday<br>
+                    Times : <input type="time" id="MondayTimeBegin" name="FridayTimeBegin">to
+                    <input type="time" id="MondayTimeEnd" name="FridayTimeEnd"><br>
+                    <label class="form-label">Number of students allowed
+                        <input name="numberOfStudentsFri" type="text" class="form-control">
+                    </label><br>
+                    <label class="form-label">Max Number of bookings
+                        <input name="FridayMaxConsulation" type="text" class="form-control">
+                    </label><br>
+                </label><br>
+                <p class="form-errors" id="eventTitleError"></p>
+
+
+
         
-                <label class="form-label">Availability time
+              <!-------------------<label class="form-label">Availability time
                     <input name="availabilityTime" type="text" class="form-control" required>
                 </label><br>
                 <p class="form-errors" id="eventTitleError"></p>
@@ -31,7 +94,7 @@
                 </label><br>
                   <label class="form-label">Date
                     <input name="date" type="text" class="form-control" required >
-                </label><br>
+                </label><br>---------------------->
     
         
                 <input type="submit">
