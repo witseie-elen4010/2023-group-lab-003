@@ -82,10 +82,15 @@
                             <thead>
                                 <tr>
 
-                                    <th scope="col">Time</th>
+                                    <th scope="col">Day</th>
+                                    <th scope="col">Times</th>
+                                    <th scope="col">Number of Students</th>
+                                    <th scope="col">Max Number of Consultation</th>
+
+                                    <!----------<th scope="col">Time</th>
                                     <th scope="col">Number of Students</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Delete Timeslot</th>
+                                    <th scope="col">Delete Timeslot</th>------------>
                                 </tr>
                             </thead>
                             <tbody>
@@ -96,6 +101,39 @@
                                             <tr>
 
                                                 <td>
+                                                    <div>Monday: </div>
+                                                    <div>Tuesday: </div>
+                                                    <div>Wednesday: </div>
+                                                    <div>Thursday: </div>
+                                                    <div>Friday: </div> 
+                                                </td>
+
+                                                 
+                                                <td>
+                                                    <div><%= timeslot.Monday.Time %></div>
+                                                    <div> <%= timeslot.Tuesday.Time%></div>
+                                                    <div><%= timeslot.Wednesday.Time %></div>
+                                                    <div><%= timeslot.Thursday.Time %></div>
+                                                    <div><%= timeslot.Friday.Time %></div>
+                                                </td>
+
+                                                <td>
+                                                    <div><%= timeslot.Monday.numberOfStudents %></div>
+                                                    <div> <%= timeslot.Tuesday.numberOfStudents%></div>
+                                                    <div><%= timeslot.Wednesday.numberOfStudents %></div>
+                                                    <div><%= timeslot.Thursday.numberOfStudents %></div>
+                                                    <div><%= timeslot.Friday.numberOfStudents %></div>
+                                                </td>
+
+                                                <td>
+                                                    <div><%= timeslot.Monday.MaxNumberOfConsulation %></div>
+                                                    <div> <%= timeslot.Tuesday.MaxNumberOfConsulation%></div>
+                                                    <div><%= timeslot.Wednesday.MaxNumberOfConsulation %></div>
+                                                    <div><%= timeslot.Thursday.MaxNumberOfConsulation %></div>
+                                                    <div><%= timeslot.Friday.MaxNumberOfConsulation %></div>
+                                                </td>
+
+                                               <!------------- <td>
                                                     <%= timeslot.availabilityTime %>
                                                 </td>
                                                 <td>
@@ -103,7 +141,7 @@
                                                 </td>
                                                 <td>
                                                     <%= timeslot.date%>
-                                                </td>
+                                                </td>---------->
                                                 <td>
                                                     <a class="modify-timeslot" id="delete" 
                                                     href="/cancel/timeslot/<%= timeslot.id %>">delete</a>
