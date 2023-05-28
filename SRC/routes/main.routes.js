@@ -189,7 +189,8 @@ router.get('/lecturerDashboard', (req, res) => {
       })
     }
     else {
-      res.send("Please login")
+      const message = req.flash("Please Login");
+      res.redirect('/signin');
     }
   })
 
@@ -238,7 +239,6 @@ router.get('/cancel/timeslot/:id', timeslotsController.deleteTimeslot)
 router.get('/cancel/:id', (req, res) => {
   const appointmentId = req.params.id; //get appointment id from url
   const userId = req.session.userId; // Get user id from session
-
   // Find the user and appointment
   User.findById(userId)
     .populate('appointments')
@@ -246,24 +246,25 @@ router.get('/cancel/:id', (req, res) => {
     .then(user => {
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
+  
       }
+      //Appointment.findByIdAndUpdate(appointmentId, { status: 'Cancelled' }, { new: true });
 
       // Find the appointment to be canceled
       const appointment = user.appointments.find(appt => appt._id.toString() === appointmentId);
       if (!appointment) {
         return res.status(404).json({ error: 'Appointment not found' });
       }
-      // Remove the appointment from the user's appointments array
-      user.appointments.pull(appointment._id);
-      // Save the updated user object
-      Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: -1} }, { new: true });
-      return user.save();
+      appointment.status = 'Cancelled'; //update the appointment status to
+    
+      // Save the updated appointment object
+      return appointment.save();
     })
     .then((user) => {
       if (user.role === 'student') {
         res.redirect('/studentDashboard');
       } else {
-        res.redirect('/lectuerDashboard');
+        res.redirect('/lecturerDashboard');
       }
 
     })
@@ -272,6 +273,9 @@ router.get('/cancel/:id', (req, res) => {
       res.status(500).json({ error: 'Failed to cancel appointment' });
     });
 });
+
+
+
 
 //Join Appointment
 router.get('/Join', async (req, res) => {

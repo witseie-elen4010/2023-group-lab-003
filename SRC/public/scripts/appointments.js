@@ -1,9 +1,9 @@
 'use strict'
 
 // Uncomment this base URL when coding  
-// const baseURL = 'http://localhost:3000' 
+const baseURL = 'http://localhost:3000' 
 // Uncomment this base URL for deployment. It ensures to use the app URL instead of localhost
-const baseURL = 'https://remotepa.azurewebsites.net' 
+//const baseURL = 'https://remotepa.azurewebsites.net' 
 
 const emptyInput = (input) => {
   const isEmpty = (input === "") ? true : false

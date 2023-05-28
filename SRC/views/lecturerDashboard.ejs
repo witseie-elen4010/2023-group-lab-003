@@ -70,7 +70,7 @@
                             <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
 
                             <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
-                            <a class= "nav-link" href="/Settings">Settings</a>
+                            <a class="nav-link" href="/Settings">Settings</a>
 
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
 
@@ -92,10 +92,13 @@
                                     <th scope="col">Date & Time</th>
                                     <th scope="col">Event Title</th>
                                     <th scope="col">Lecturer Name</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Modify Meeting</th>
+                                    <th scope="col">Cancel Meeting</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if(appointments.length === 0){ %>
+                                <% if(appointments.length===0){ %>
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment){ %>
@@ -109,11 +112,16 @@
                                                 </td>
                                                 <td>
                                                     <%= appointment.lecturerName%>
+                                                        <!--name of the student who created the appointment-->
                                                 </td>
-
                                                 <td>
-                                                    <a class="nav-link" id="Edit" href="/update/<%= appointment.id %>">Edit</a>
+                                                    <%= appointment.status%>
                                                 </td>
+                                                <td>
+                                                    <a class="nav-link" id="Edit"
+                                                        href="/update/<%= appointment.id %>">Edit</a>
+                                                </td>
+                                                <td><a href="/cancel/<%= appointment.id %>">Cancel</a></td>
                                             </tr>
 
                                             <%}); %>
