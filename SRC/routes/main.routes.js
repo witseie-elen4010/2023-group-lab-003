@@ -197,8 +197,9 @@ router.get('/lecturerDashboard', (req, res) => {
       })
     }
     else {
-      const message = req.flash("Please Login");
-      res.redirect('/signin');
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+    
     }
   })
 
@@ -215,7 +216,9 @@ router.get('/timeslots', (req, res) => {
       })
     }
     else {
-      res.send("Please login")
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+     
     }
   })
 
@@ -234,7 +237,9 @@ router.get('/availableTimeslots', (req, res) => {
       })
     }
     else {
-      res.send("Please login")
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+     
     }
   })
 })
@@ -344,7 +349,9 @@ router.get('/Join', async (req, res) => {
         })
       }
       else {
-        res.send("Please login")
+        req.flash('danger', 'Please sign in'); //flash success message
+        res.redirect('/signin'); // redirect to sigin page
+       
       }
     })});
 
@@ -360,7 +367,9 @@ router.get('/Join', async (req, res) => {
         })
       }
       else {
-        res.send("Please login")
+        req.flash('danger', 'Please sign in'); //flash success message
+        res.redirect('/signin'); // redirect to sigin page
+       
       }
     });
 
