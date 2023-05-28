@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="../styles/hideflashmessage.css">
     <title>Lecturer Dashboard</title>
 </head>
+
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -71,14 +72,10 @@
                     <div class="col-12 menu-container">
                         <nav class="nav flex-column">
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
-
                             <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
-
                             <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
                             <a class="nav-link" href="/Settings">Settings</a>
-
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
-
                         </nav>
                     </div>
                 </div>
@@ -107,39 +104,47 @@
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment){ %>
+                                            
                                             <tr>
                                                 <td>                                                       
                                                         <%= appointment.timeslot.date%>
                                                         &
                                                         <%= appointment.timeslot.availabilityTime%>                                                   
-                                                    </td>
-                                                <td>    
+                                                </td>
+
+                                                <td>
+                                                    
                                                     <%= appointment.eventTitle %>
                                                 </td>
+
                                                 <td><!--Coming soon-->
                                                     <!--<%= appointment.lecturerName%>-->
                                                         <!--name of the student who created the appointment-->
                                                 </td>
+
                                                 <td>
                                                     <%= appointment.status%>
                                                 </td>
+
                                                 <td>
                                                     <% if(appointment.status==="Upcoming" ){ %>
                                                         <a id="Edit"
                                                         href="/update/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
                                                         <%}%>
                                                 </td>
+
                                                 <td>
                                                         <% if(appointment.status==="Upcoming" ){ %>
                                                             <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
                                                         <%}%>
-                                                 </td>
+                                                </td>
+
                                             </tr>
                                             
                                             <%}); %>
 
 
-                                                <%}%>
+                                            <%}%>
 
                             </tbody>
                         </table>
