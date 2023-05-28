@@ -102,7 +102,26 @@
                                     <th scope="col">Cancel Meeting</th>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
+                                <% if(appointments.length===0){ %>
+                                    <td>No appointments available.</td>
+                                    <% }else { %>
+                                        <% appointments.forEach(function(appointment){ %>
+                                            <tr>
+                                                <td>                                                       
+                                                        <%= appointment.timeslot.date%>
+                                                        &
+                                                        <%= appointment.timeslot.availabilityTime%>                                                   
+                                                    </td>
+                                               
+                                            </tr>
+                                            
+                                            <%}); %>
+
+
+                                                <%}%>
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
