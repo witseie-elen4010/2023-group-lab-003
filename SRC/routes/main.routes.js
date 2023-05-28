@@ -30,8 +30,7 @@ router.get('/signin', (req, res) => {
   
   const passwordMessage = req.flash('danger');
   const emailMessage = req.flash('e-danger');
-  const flashDuration = 5000; //set the flash duration for the message to disappear
-  res.render('Login', {passwordMessage, emailMessage, flashDuration});
+  res.render('Login', {passwordMessage, emailMessage});
 });
 
 //signin route, authentication done by authController
@@ -44,7 +43,10 @@ router.get('/update/:id', async (req, res) => {
   try {
       const appointment = await Appointment.findById(req.params.id);  
       if (!appointment) {
-          return res.status(404).send('Appointment not found');
+        req.flash('danger', 'Appointment not found'); //flash danger message
+        res.redirect('/lecturerDashboard'); // redirect to sigin page
+       
+          //return res.status(404).send('Appointment not found');
       }
 
       res.render('update', { appointment: appointment }); 
