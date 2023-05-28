@@ -5,7 +5,6 @@ const router = express.Router()
 const User = require('../models/user.schema');
 const session = require('express-session')
 const authController = require('../controllers/auth.controller');
-const { authenticate, authStudent, authLecture } = require('../middleware/authenticate.routes');
 const flash = require('connect-flash');
 
 errorHandler = (err) => {
@@ -29,7 +28,7 @@ router.post('/signup', authController.register);
 router.get('/signin', (req, res) => {
   
   const passwordMessage = req.flash('danger');
-  const emailMessage = req.flash('e-danger');
+  const emailMessage = req.flash('danger');
   res.render('Login', {passwordMessage, emailMessage});
 });
 
@@ -170,7 +169,6 @@ router.post('/createTimeslot', timeslotsController.createTimeslot); // create ti
 //display all scheduled appointment of the logged in user
 router.get('/studentDashboard', (req, res) => {
   const userId = req.session.userId //session user id
-  console.log(userId)
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
@@ -360,7 +358,6 @@ router.get('/Join', async (req, res) => {
       //Lecturer Cancelled appoinments
   router.get('/lecturer-cancelled-appointments', (req, res) =>{
     const userId = req.session.userId //session user id
-    console.log(userId)
     User.findById(userId).populate('appointments').then(user => {
       if (user) {
         const userAppointments = user.appointments
