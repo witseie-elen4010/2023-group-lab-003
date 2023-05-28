@@ -80,9 +80,33 @@ const lecturerName = () => {
     const selector = document.querySelector('select')
     selector.addEventListener('change', (event) => {
     console.log('value ', selector.value)}) 
+    /////////
+    namesID.addEventListener('change', function(event) {
+      const selectedLecturer = lecturerDetails.find(
+        lecturer => `${lecturer.name} ${lecturer.surname}` === event.target.value
+      );
 
-    return response})
+      const timeslots = selectedLecturer ? selectedLecturer.timeslots : [];
+
+        // Clear existing timeslot options
+        const timeslotID = document.getElementById('timeslot');
+        timeslotID.innerHTML = '';
+        
+        // Populate the timeslot options
+        timeslots.forEach(timeslot => {
+          const time = `${timeslot.date} ${timeslot.availabilityTime}`
+          const option = document.createElement('option');
+          //option.value = timeslot.date;
+          option.text = timeslot;
+          timeslotID.add(option);
+        });
+      });
+
+
+   return response})
 }
+//timeslots
+
 
 document.addEventListener('DOMContentLoaded', function () {
   lecturerName()

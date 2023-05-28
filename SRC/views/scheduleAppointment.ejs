@@ -26,21 +26,55 @@
 
                 <label class="form-label select-label">Lecturer's Name
                     <select class="form-control select" data-mdb-filter="true" id="lecturerName">
-                      <option value="" disabled selected> Select a lecturer's name </option>
+                        <option value="" disabled selected> Select a lecturer's name </option>
                     </select>
                 </label><br>
                 <p class="form-errors" id="lecturerNameError"></p>
+
+                <label class="form-label select-label">Timeslot
+                    <select class="form-control select" data-mdb-filter="true" id="timeslot" name="timeslot">
+                        <option value="" disabled selected> Select a lecturer's timeslot </option>
+
+                        <!-- Options will be populated dynamically based on the selected lecturer -->
+                    </select>
+                </label> <br>
 
                 <label class="form-label">Date
                     <input name="date" type="datetime-local" class="form-control" id="date" required>
                 </label><br>
                 <p class="form-errors" id="dateError"></p>
-            
+
                 <button type="submit" class="btn btn-outline-dark" id="scheduleAppointmentButton">Schedule
                     Appointment</button>
             </div>
         </form>
     </div>
+    <!--<div id="lecturersData" data-lecturers="%= JSON.stringify(lecturers) %>"></div>
+    -->
+   <!-- <script>
+       
+        // JavaScript/jQuery to handle dynamic timeslot options based on selected lecturer
+
+    $(document).ready(function() {
+    var lecturersData = JSON.parse($('#lecturersData').attr('data-lecturers'));
+    var lecturerSelect = $('#lecturerName');
+    var timeslotSelect = $('#timeslot');
+    
+    lecturerSelect.on('change', function() {
+      var lecturerId = $(this).val();
+      var selectedLecturer = lecturersData.find(lecturerName);
+      var timeslots = selectedLecturer ? selectedLecturer.timeslots : [];
+      
+      // Clear existing options
+      timeslotSelect.empty();
+      
+      // Add new timeslot options
+      timeslots.forEach(timeslot => {
+        timeslotSelect.append($('<option>'));
+      });
+    });
+  })
+    </script>-->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

@@ -27,10 +27,10 @@ router.post('/signup', authController.register);
 
 //get the sign in page
 router.get('/signin', (req, res) => {
-  
+
   const passwordMessage = req.flash('danger');
   const emailMessage = req.flash('e-danger');
-  res.render('Login', {passwordMessage, emailMessage});
+  res.render('Login', { passwordMessage, emailMessage });
 });
 
 //signin route, authentication done by authController
@@ -41,27 +41,27 @@ router.post('/signin', authController.login);
 // ----------------- Update Appointment------------------------------
 router.get('/update/:id', async (req, res) => {
   try {
-      const appointment = await Appointment.findById(req.params.id);  
-      if (!appointment) {
-        req.flash('danger', 'Appointment not found'); //flash danger message
-        res.redirect('/lecturerDashboard'); // redirect to sigin page
-       
-          //return res.status(404).send('Appointment not found');
-      }
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      req.flash('danger', 'Appointment not found'); //flash danger message
+      res.redirect('/lecturerDashboard'); // redirect to sigin page
 
-      res.render('update', { appointment: appointment }); 
+      //return res.status(404).send('Appointment not found');
+    }
+
+    res.render('update', { appointment: appointment });
   } catch (err) {
-      console.error(err);
-      res.status(500).send('Server Error');
+    console.error(err);
+    res.status(500).send('Server Error');
   }
 });
 
 //----------------- Settings -------------------------------
-router.get('/settings',(req,res) => {
+router.get('/settings', (req, res) => {
   res.render('settings')
 })
 
-router.get('/goodbye',(req,res) => {
+router.get('/goodbye', (req, res) => {
   res.render('goodbye')
 })
 
@@ -84,21 +84,21 @@ router.get('/signout', (req, res) => {
 });
 
 
-  router.post('/updateConsultationTimes', async (req, res) => {
-    const updateTime = req.body.update_date;
-    const appointmentId = req.body.appointment_id; 
+router.post('/updateConsultationTimes', async (req, res) => {
+  const updateTime = req.body.update_date;
+  const appointmentId = req.body.appointment_id;
 
-    try {
-      const update = { date: updateTime };
-      const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
-      if(updatedAppointment) {
-        res.json({ message: 'Times updated successfully' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred' });
+  try {
+    const update = { date: updateTime };
+    const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
+    if (updatedAppointment) {
+      res.json({ message: 'Times updated successfully' });
     }
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
 
 //--------------------------------------------------------------------
 
@@ -144,26 +144,33 @@ router.post('/searchAppointments', async (req, res, next) => {
 });
 
 
-  // ------------------- Schedule Appointment -----------------------
-  // showing schedule appointment form
-  const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
-  const appointmentController = require('../controllers/appointment.controller')
-  const timeslotsController = require('../controllers/timeslots.controller')
-  
-  router.get('/scheduleAppointment', (req, res) => {
-    res.render('scheduleAppointment')
-  })
-  
-  router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
-    User.find({role: 'lecture',})
+// ------------------- Schedule Appointment -----------------------
+// showing schedule appointment form
+const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
+const appointmentController = require('../controllers/appointment.controller')
+const timeslotsController = require('../controllers/timeslots.controller')
+
+router.get('/scheduleAppointment', (req, res) => {
+//fetch lecturer names and timeslots from the database
+//User.find({role:'lecture'},'name timeslots')
+//.populate('timeslots')
+//.then(lecturers =>{
+  res.render('scheduleAppointment');
+//})
+
+})
+//get lectuers for selection 
+router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
+  User.find({ role: 'lecture', })
     .then(
       lecturers => {
         // console.log('registered lecturers ', lecturers)
-        if (!lecturers) res.status(400).send({message: 'No registered lecturers'})
-        else res.status(200).send({data: lecturers})
+        if (!lecturers) res.status(400).send({ message: 'No registered lecturers' })
+        else res.status(200).send({ data: lecturers })
       }
     )
-  })
+})
+
 router.post('/scheduleAppointment', appointmentController.createAppointment); //updated schedule appointment linking appointment to the logged in user
 router.post('/createTimeslot', timeslotsController.createTimeslot); // create time slot by the logged in user
 
@@ -182,7 +189,7 @@ router.get('/studentDashboard', (req, res) => {
     else {
       req.flash('danger', 'Please sign in'); //flash success message
       res.redirect('/signin'); // redirect to sigin page
-     
+
     }
   })
 })
@@ -195,13 +202,13 @@ router.get('/lecturerDashboard', (req, res) => {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
         const successMessage = req.flash('success'); //flash success message
-        res.render('lecturerDashboard', { appointments, successMessage})
+        res.render('lecturerDashboard', { appointments, successMessage })
       })
     }
     else {
       req.flash('danger', 'Please sign in'); //flash success message
       res.redirect('/signin'); // redirect to sigin page
-    
+
     }
   })
 
@@ -220,7 +227,7 @@ router.get('/timeslots', (req, res) => {
     else {
       req.flash('danger', 'Please sign in'); //flash success message
       res.redirect('/signin'); // redirect to sigin page
-     
+
     }
   })
 
@@ -230,20 +237,20 @@ router.get('/availableTimeslots', (req, res) => {
   const userId = req.session.userId;
   console.log(userId)
   User.findById(userId).populate('timeslots')
-  .then(user => {
-    if (user) {
-      // find all timeslots available
-      Timeslot.find().then((timeslots) => {
-        console.log('timeslots ', timeslots)
-        res.render('availableTimeslots', { timeslots })
-      })
-    }
-    else {
-      req.flash('danger', 'Please sign in'); //flash success message
-      res.redirect('/signin'); // redirect to sigin page
-     
-    }
-  })
+    .then(user => {
+      if (user) {
+        // find all timeslots available
+        Timeslot.find().then((timeslots) => {
+          console.log('timeslots ', timeslots)
+          res.render('availableTimeslots', { timeslots })
+        })
+      }
+      else {
+        req.flash('danger', 'Please sign in'); //flash success message
+        res.redirect('/signin'); // redirect to sigin page
+
+      }
+    })
 })
 
 
@@ -261,7 +268,7 @@ router.get('/cancel/:id', (req, res) => {
     .then(user => {
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
-  
+
       }
       //Appointment.findByIdAndUpdate(appointmentId, { status: 'Cancelled' }, { new: true });
 
@@ -271,7 +278,7 @@ router.get('/cancel/:id', (req, res) => {
         return res.status(404).json({ error: 'Appointment not found' });
       }
       appointment.status = 'Cancelled'; //update the appointment status to
-    
+
       // Save the updated appointment object
       return appointment.save();
     })
@@ -298,7 +305,7 @@ router.get('/Join', async (req, res) => {
   const userId = req.session.userId;
 
   try {
-     const user = await User.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send({ message: 'User not found' });
     }
@@ -311,71 +318,72 @@ router.get('/Join', async (req, res) => {
     if (user.appointments.includes(appointmentId)) {
       return res.status(400).send({ message: 'User already in the appointment' });
     }
-    
-    
+
+
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
 
-   await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1} }, { new: true });
+    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true });
 
     res.send({ message: 'Joined the appointment successfully' });
   } catch (error) {
     res.status(500).send({ message: 'Server error' });
   }
 
-  
+
 });
 
 
 
-  //---------------------Add another lecturer----------------------------------
- 
-  router.get('/includeAnotherLecturer', (req, res) => {
-    res.render('includeAnotherLecturer');
+//---------------------Add another lecturer----------------------------------
+
+router.get('/includeAnotherLecturer', (req, res) => {
+  res.render('includeAnotherLecturer');
+});
+router.post('/createAnotherLecturer', authController.createAnotherLecturer); // TODO
+//specify another lectruer
+router.get('/createAnotherLecturer', (req, res) => {
+  //res.render('timeslot'); TODO
+});
+
+
+//Student Cancelled appoinments
+router.get('/student-cancelled-appointments', (req, res) => {
+  const userId = req.session.userId //session user id
+  console.log(userId)
+  User.findById(userId).populate('appointments').then(user => {
+    if (user) {
+      const userAppointments = user.appointments
+      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+        res.render('studentCancelledAppointments', { appointments })
+      })
+    }
+    else {
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+
+    }
+  })
+});
+
+//Lecturer Cancelled appoinments
+router.get('/lecturer-cancelled-appointments', (req, res) => {
+  const userId = req.session.userId //session user id
+  console.log(userId)
+  User.findById(userId).populate('appointments').then(user => {
+    if (user) {
+      const userAppointments = user.appointments
+      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+        res.render('lecturerCancelledAppointments', { appointments })
+      })
+    }
+    else {
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+
+    }
   });
- router.post('/createAnotherLecturer', authController.createAnotherLecturer); // TODO
-  //specify another lectruer
-  router.get('/createAnotherLecturer', (req, res) => {
-    //res.render('timeslot'); TODO
-  });
 
-
-  //Student Cancelled appoinments
-  router.get('/student-cancelled-appointments', (req, res) =>{
-    const userId = req.session.userId //session user id
-    console.log(userId)
-    User.findById(userId).populate('appointments').then(user => {
-      if (user) {
-        const userAppointments = user.appointments
-        Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-          res.render('studentCancelledAppointments', { appointments })
-        })
-      }
-      else {
-        req.flash('danger', 'Please sign in'); //flash success message
-        res.redirect('/signin'); // redirect to sigin page
-       
-      }
-    })});
-
-      //Lecturer Cancelled appoinments
-  router.get('/lecturer-cancelled-appointments', (req, res) =>{
-    const userId = req.session.userId //session user id
-    console.log(userId)
-    User.findById(userId).populate('appointments').then(user => {
-      if (user) {
-        const userAppointments = user.appointments
-        Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-          res.render('lecturerCancelledAppointments', { appointments })
-        })
-      }
-      else {
-        req.flash('danger', 'Please sign in'); //flash success message
-        res.redirect('/signin'); // redirect to sigin page
-       
-      }
-    });
-
-  });
+});
 
 
 module.exports = router
