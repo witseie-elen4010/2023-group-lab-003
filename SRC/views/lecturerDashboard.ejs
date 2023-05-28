@@ -56,7 +56,37 @@
             </nav>
         </header>
     </section>
-   
+    <section>
+        <% if (successMessage && successMessage.length > 0) { %>
+            <div class="alert alert-success">
+              <%= successMessage %>
+            </div>
+          <% } %>
+          
+    </section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-2">
+                <div class="row h-100">
+                    <div class="col-12 menu-container">
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="/createTimeslot">Set Availability times</a>
+
+                            <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
+
+                            <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
+                            <a class="nav-link" href="/Settings">Settings</a>
+
+                            <a class="nav-link" href="/timeslots">View Timeslots</a>
+                            <a class="nav-link" href="/lecturer-cancelled-appointments">Cancelled Appointments</a>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
     <script src="../scripts/hideflashmessage.js"></script>
 </body>
 
