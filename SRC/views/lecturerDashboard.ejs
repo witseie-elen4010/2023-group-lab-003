@@ -73,6 +73,7 @@
                             <a class="nav-link" href="/Settings">Settings</a>
 
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
+                            <a class="nav-link" href="/lecturer-cancelled-appointments">Cancelled Appointments</a>
 
                         </nav>
                     </div>
@@ -102,6 +103,8 @@
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment){ %>
+                                            <%if (appointment.status === 'Upcoming') { %>
+
                                             <tr>
 
                                                 <td>
@@ -123,7 +126,7 @@
                                                 </td>
                                                 <td><a href="/cancel/<%= appointment.id %>">Cancel</a></td>
                                             </tr>
-
+                                            <%}%>
                                             <%}); %>
 
 
