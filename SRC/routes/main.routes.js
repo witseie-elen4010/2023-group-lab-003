@@ -5,8 +5,7 @@ const router = express.Router()
 const User = require('../models/user.schema');
 const session = require('express-session')
 const authController = require('../controllers/auth.controller');
-const { authenticate, authStudent, authLecture } = require('../middleware/authenticate.routes');
-
+const flash = require('connect-flash');
 
 errorHandler = (err) => {
   console.error(err.message, err.code);
@@ -27,7 +26,10 @@ router.post('/signup', authController.register);
 
 //get the sign in page
 router.get('/signin', (req, res) => {
-  res.render('Login');
+  
+  const passwordMessage = req.flash('danger');
+  const emailMessage = req.flash('danger');
+  res.render('Login', {passwordMessage, emailMessage});
 });
 
 //signin route, authentication done by authController
@@ -40,7 +42,10 @@ router.get('/update/:id', async (req, res) => {
   try {
       const appointment = await Appointment.findById(req.params.id);  
       if (!appointment) {
-          return res.status(404).send('Appointment not found');
+        req.flash('danger', 'Appointment not found'); //flash danger message
+        res.redirect('/lecturerDashboard'); // redirect to sigin page
+       
+          //return res.status(404).send('Appointment not found');
       }
 
       res.render('update', { appointment: appointment }); 
@@ -164,16 +169,18 @@ router.post('/createTimeslot', timeslotsController.createTimeslot); // create ti
 //display all scheduled appointment of the logged in user
 router.get('/studentDashboard', (req, res) => {
   const userId = req.session.userId //session user id
-  console.log(userId)
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-        res.render('studentDashboard', { appointments })
+        const successMessage = req.flash('success'); //flash success message
+        res.render('studentDashboard', { appointments, successMessage });
       })
     }
     else {
-      res.send("Please login")
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+     
     }
   })
 })
@@ -185,12 +192,14 @@ router.get('/lecturerDashboard', (req, res) => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-        res.render('lecturerDashboard', { appointments })
+        const successMessage = req.flash('success'); //flash success message
+        res.render('lecturerDashboard', { appointments, successMessage})
       })
     }
     else {
-      const message = req.flash("Please Login");
-      res.redirect('/signin');
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+    
     }
   })
 
@@ -207,7 +216,9 @@ router.get('/timeslots', (req, res) => {
       })
     }
     else {
-      res.send("Please login")
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+     
     }
   })
 
@@ -226,7 +237,9 @@ router.get('/availableTimeslots', (req, res) => {
       })
     }
     else {
-      res.send("Please login")
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+     
     }
   })
 })
@@ -336,14 +349,15 @@ router.get('/Join', async (req, res) => {
         })
       }
       else {
-        res.send("Please login")
+        req.flash('danger', 'Please sign in'); //flash success message
+        res.redirect('/signin'); // redirect to sigin page
+       
       }
     })});
 
       //Lecturer Cancelled appoinments
   router.get('/lecturer-cancelled-appointments', (req, res) =>{
     const userId = req.session.userId //session user id
-    console.log(userId)
     User.findById(userId).populate('appointments').then(user => {
       if (user) {
         const userAppointments = user.appointments
@@ -352,7 +366,9 @@ router.get('/Join', async (req, res) => {
         })
       }
       else {
-        res.send("Please login")
+        req.flash('danger', 'Please sign in'); //flash success message
+        res.redirect('/signin'); // redirect to sigin page
+       
       }
     });
 

@@ -6,7 +6,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 const session = require('express-session');
 const mainroute= require("./SRC/routes/main.routes")
-const flash = require("express-flash");
+//const flash = require("express-flash");
+const flash = require("connect-flash");
+
 
 //connect to db url
 const dbUrl = 'mongodb+srv://sdiiigroup3:group3sd32023@cluster0.vjbvldr.mongodb.net/?retryWrites=true&w=majority';
