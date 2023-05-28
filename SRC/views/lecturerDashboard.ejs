@@ -123,7 +123,13 @@
                                                 <td>
                                                     <%= appointment.status%>
                                                 </td>
-                                               
+                                                <td>
+                                                    <% if(appointment.status==="Upcoming" ){ %>
+                                                        <a id="Edit"
+                                                        href="/update/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
+                                                        <%}%>
+                                                </td>
+                    
                                             </tr>
                                             
                                             <%}); %>
