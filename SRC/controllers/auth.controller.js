@@ -55,30 +55,30 @@ const login = (req, res, next) => {
                         let token = jwt.sign({ email: user.email }, 'verySecretValue')
                         const userId = user._id; 
                         if (user.role === 'lecture') {
+                            req.flash('success', 'Login successful');
                             res.redirect('/lecturerDashboard');
-                            //token
                             userId;
                         }
                         else if (user.role === 'student') {
+                            req.flash('success', 'Login successful');
                             res.redirect('/studentDashboard');
-                            //token
                             userId;
                         }
                         
 
                     }
                     else {
-                        res.json({
-                            message: 'Password does not match!'
-                        })
+                        req.flash('danger', "Password does not match!");
+                        res.redirect('/signin');
+                     
                     }
 
                 })
             }
             else {
-                res.json({
-                    message: 'No user found!'
-                })
+                req.flash('e-danger', "No user with this email!");
+
+
             }
         })
 }

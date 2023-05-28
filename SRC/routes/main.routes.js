@@ -6,7 +6,7 @@ const User = require('../models/user.schema');
 const session = require('express-session')
 const authController = require('../controllers/auth.controller');
 const { authenticate, authStudent, authLecture } = require('../middleware/authenticate.routes');
-
+const flash = require('connect-flash');
 
 errorHandler = (err) => {
   console.error(err.message, err.code);
@@ -27,7 +27,11 @@ router.post('/signup', authController.register);
 
 //get the sign in page
 router.get('/signin', (req, res) => {
-  res.render('Login');
+  
+  const passwordMessage = req.flash('danger');
+  const emailMessage = req.flash('e-danger');
+  const flashDuration = 5000; //set the flash duration for the message to disappear
+  res.render('Login', {passwordMessage, emailMessage, flashDuration});
 });
 
 //signin route, authentication done by authController
@@ -169,10 +173,12 @@ router.get('/studentDashboard', (req, res) => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-        res.render('studentDashboard', { appointments })
+        const successMessage = req.flash('success'); //flash success message
+        res.render('studentDashboard', { appointments, successMessage });
       })
     }
     else {
+      
       res.send("Please login")
     }
   })
@@ -185,7 +191,8 @@ router.get('/lecturerDashboard', (req, res) => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
-        res.render('lecturerDashboard', { appointments })
+        const successMessage = req.flash('success'); //flash success message
+        res.render('lecturerDashboard', { appointments, successMessage})
       })
     }
     else {
