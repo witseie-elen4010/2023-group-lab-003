@@ -178,8 +178,9 @@ router.get('/studentDashboard', (req, res) => {
       })
     }
     else {
-      
-      res.send("Please login")
+      req.flash('danger', 'Please sign in'); //flash success message
+      res.redirect('/signin'); // redirect to sigin page
+     
     }
   })
 })
