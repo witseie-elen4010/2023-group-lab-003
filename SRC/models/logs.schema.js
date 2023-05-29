@@ -17,3 +17,4 @@ const loggingSchema = new mongoose.Schema({
 });
 
 const Log = mongoose.model('Log', loggingSchema);
+module.exports = Log;
