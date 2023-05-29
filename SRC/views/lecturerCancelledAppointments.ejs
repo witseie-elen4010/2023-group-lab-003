@@ -68,6 +68,8 @@
                             <a class="nav-link" href="/Settings">Settings</a>
 
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
+                            <a class="nav-link" href="/logs">User logs</a>
+
                             
 
                         </nav>
@@ -100,11 +102,9 @@
                                             <%if (appointment.status === 'Cancelled') { %>
 
                                             <tr>
-                                                <td>                                                       
-                                                    <%= appointment.timeslot.date%>
-                                                    &
-                                                    <%= appointment.timeslot.availabilityTime%>                                                   
-                                    
+
+                                                <td>
+                                                    <%= appointment.date %>
                                                 </td>
                                                 <td>
                                                     <%= appointment.eventTitle %>
