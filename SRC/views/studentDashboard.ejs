@@ -90,10 +90,10 @@
                                         <% appointments.forEach(function(appointment) { %>
                                             <%if (appointment.status==='Upcoming' ) { %>
                                                 <tr>
-
                                                     <td>
-                                                        <%= appointment.date %>
+                                                        <%= appointment.timeslot%>
                                                     </td>
+
                                                     <td>
                                                         <%= appointment.eventTitle %>
                                                     </td>
@@ -111,6 +111,7 @@
                                                             <a href="/cancel/<%= appointment.id %>">Cancel</a>
                                                             <%}%>
                                                     </td>
+
 
                                                 </tr>
                                                 <%}%>
