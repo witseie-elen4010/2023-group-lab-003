@@ -9,7 +9,7 @@ const appointmentSchema = new Schema({
   lecturerName: {
     type: String
   },
-  date: {
+  timeslot: {
     type: String
   },
   startTime:{

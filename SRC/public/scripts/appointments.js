@@ -88,23 +88,14 @@ const lecturerName = () => {
         );
 
         const timeslots = selectedLecturer ? selectedLecturer.timeslots : []; // find all timeslots of the selected lectuer
-        const timeslotDetails = timeslots.map(timeslot => {
-          return {
-            date: timeslot.date,
-            availabilityTime: timeslot.availabilityTime,
-          };
-        });
 
         // Clear existing timeslot options
         const timeslotID = document.getElementById('timeslot');
-        //timeslotID.innerHTML = '';
-
         // Populate the timeslot options
-        timeslots.forEach(elem => {
-          console.log(elem)
+        timeslots.forEach(timeslot => {
           const option = document.createElement('option');
-          option.value = elem._id;
-          option.text = `Time: ${elem.availabilityTime}, Date: ${elem.date}`;
+          option.value = timeslot._id;
+          option.text = `Time: ${timeslot.availabilityTime}, Date: ${timeslot.date}`;
           timeslotID.add(option);
         });
       });
@@ -131,15 +122,15 @@ document.addEventListener('DOMContentLoaded', function () {
       const lecturerNameError = document.getElementById('lecturerNameError')
       validateLecturerName(lecturerName, lecturerNameError)
 
-      const date = document.getElementById('date').value
-      console.log(date)
+      const timeslot = document.getElementById('timeslot').value
+      console.log(timeslot)
       const dateError = document.getElementById('dateError')
-      validateDate(date, dateError)
+      validateDate(timeslot, dateError)
 
       const data = {
         eventTitle: eventTitle,
         lecturerName: lecturerName,
-        date: date
+        timeslot: timeslot
       }
       postJSON(data)
     })
