@@ -48,6 +48,8 @@
                             <a class="nav-link active" aria-current="page" href="/searchAppointment">Search
                                 Appointment</a>
                             <a class="nav-link" href="/Settings">Settings</a>
+                            <a class="nav-link" href="/logs">User logs</a>
+
                         </nav>
                     </div>
                 </div>
@@ -80,10 +82,8 @@
                                             <%if (appointment.status === 'Cancelled') { %>
                                             <tr>
 
-                                                <td>                                                       
-                                                    <%= appointment.timeslot.date%>
-                                                    &
-                                                    <%= appointment.timeslot.availabilityTime%>  
+                                                <td>
+                                                    <%= appointment.date %>
                                                 </td>
                                                 <td>
                                                     <%= appointment.eventTitle %>
