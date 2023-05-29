@@ -25,17 +25,21 @@
                 <p class="form-errors" id="eventTitleError"></p>
 
                 <label class="form-label select-label">Lecturer's Name
-                    <select class="form-control select" data-mdb-filter="true" id="lecturerName">
-                      <option value="" disabled selected> Select a lecturer's name </option>
+                    <select class="form-control select" data-mdb-filter="true" id="lecturerName" name="lecturerName">
+                        <option  value="" disabled selected> Select a lecturer's name </option>
                     </select>
                 </label><br>
                 <p class="form-errors" id="lecturerNameError"></p>
 
-                <label class="form-label">Date
-                    <input name="date" type="datetime-local" class="form-control" id="date" required>
-                </label><br>
+                <label class="form-label select-label">Timeslot
+                    <select class="form-control select" data-mdb-filter="true" id="timeslot" name="timeslot">
+                        <option  value="" disabled selected> Select a lecturer's timeslot </option>
+                        <!-- Options will be populated dynamically based on the selected lecturer -->
+                    </select>
+                </label> <br>
+
                 <p class="form-errors" id="dateError"></p>
-            
+<!--FOR MEMBERS, The timeslot contains time and date, therefore date is removed-->
                 <button type="submit" class="btn btn-outline-dark" id="scheduleAppointmentButton">Schedule
                     Appointment</button>
             </div>

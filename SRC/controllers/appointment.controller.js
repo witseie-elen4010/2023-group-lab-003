@@ -12,7 +12,7 @@ const createAppointment = (req, res, next) => {
         let appointment = new Appointment({
           eventTitle: req.body.eventTitle,
           lecturerName: req.body.lecturerName,
-          date: req.body.date,
+          timeslot: req.body.timeslot,
           userId: userId
         })
         let savedAppointment;
