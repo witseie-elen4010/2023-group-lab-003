@@ -76,7 +76,8 @@ const login = (req, res, next) => {
                 })
             }
             else {
-                req.flash('e-danger', "No user with this email!");
+                req.flash('danger', "No user with this email!");
+                res.redirect('/signin');
 
 
             }
