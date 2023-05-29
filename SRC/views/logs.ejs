@@ -72,7 +72,43 @@
                     <h2>Upcoming Appointments</h2>
                     <div class="table-responsive">
                         <table class="table">
-                         
+                            <thead>
+                                <tr>
+
+                               
+                                    <th scope="col">Action</th>
+                                    <th scope="col">Timestamp</th>
+                     
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(logs.length===0){ %>
+                                    <td>No Logs available.</td>
+                                    <% }else { %>
+                                        <% logs.forEach(function(log) { %>
+                                            
+                                                <tr>
+                                                    <td>
+                                                        <%= log.action%>
+                                                        <!--Must be edited to show timeslot attributes instead of the id-->
+                                                    </td>
+
+                                                    <td>
+                                                        <%= log.timestamp %>
+                                                    </td>
+                                    
+
+                                                </tr>
+                                                <%})%>
+                                                    
+
+
+                                                        <%}%>
+
+
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
