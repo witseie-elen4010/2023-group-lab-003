@@ -35,7 +35,15 @@
             </nav>
         </header>
     </section>
-    
+    <section>
+        <% if (successMessage && successMessage.length> 0) { %>
+            <div class="alert alert-success">
+                <%= successMessage %>
+            </div>
+            <% } %>
+
+    </section>
+   
 </body>
 
 </html>
