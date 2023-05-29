@@ -162,6 +162,7 @@ router.get('/scheduleAppointment', (req, res) => {
 //get lectuers for selection 
 router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
   User.find({ role: 'lecture', })
+  .populate('timeslots')
     .then(
       lecturers => {
         // console.log('registered lecturers ', lecturers)
