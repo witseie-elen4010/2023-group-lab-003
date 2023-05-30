@@ -29,7 +29,7 @@ router.get('/signin', (req, res) => {
 
   const passwordMessage = req.flash('danger');
   const emailMessage = req.flash('danger');
-  res.render('Login', {passwordMessage, emailMessage});
+  res.render('Login', { passwordMessage, emailMessage });
 });
 
 //signin route, authentication done by authController
@@ -150,18 +150,18 @@ const appointmentController = require('../controllers/appointment.controller')
 const timeslotsController = require('../controllers/timeslots.controller')
 
 router.get('/scheduleAppointment', (req, res) => {
-//fetch lecturer names and timeslots from the database
-//User.find({role:'lecture'},'name timeslots')
-//.populate('timeslots')
-//.then(lecturers =>{
+  //fetch lecturer names and timeslots from the database
+  //User.find({role:'lecture'},'name timeslots')
+  //.populate('timeslots')
+  //.then(lecturers =>{
   res.render('scheduleAppointment');
-//})
+  //})
 
 })
 //get lectuers for selection 
 router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
   User.find({ role: 'lecture', })
-  .populate('timeslots')
+    .populate('timeslots')
     .then(
       lecturers => {
         // console.log('registered lecturers ', lecturers)
@@ -180,7 +180,9 @@ router.get('/studentDashboard', (req, res) => {
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
-      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+      Appointment.find({ _id: { $in: userAppointments } })
+      .populate('timeslot')
+      .then((appointments) => {
         const successMessage = req.flash('success'); //flash success message
         res.render('studentDashboard', { appointments, successMessage });
       })
@@ -201,7 +203,8 @@ router.get('/lecturerDashboard', (req, res) => {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
         const successMessage = req.flash('success'); //flash success message
-        res.render('lecturerDashboard', { appointments, successMessage })
+        //if (user.role === 'lecture')
+          res.render('lecturerDashboard', { appointments, successMessage })
       })
     }
     else {

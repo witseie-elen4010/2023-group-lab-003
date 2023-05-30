@@ -91,8 +91,12 @@
                                             <%if (appointment.status==='Upcoming' ) { %>
                                                 <tr>
                                                     <td>
-                                                        <%= appointment.timeslot%>
+                                                       
+                                                        <%= appointment.timeslot.date%>
+                                                        &
+                                                        <%= appointment.timeslot.availabilityTime%>
                                                         <!--Must be edited to show timeslot attributes instead of the id-->
+                                                   
                                                     </td>
 
                                                     <td>
