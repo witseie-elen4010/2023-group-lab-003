@@ -133,7 +133,7 @@ router.post('/searchAppointments', async (req, res, next) => {
       };
     }
 
-    const appointments = await Appointment.find(condition);
+    const appointments = await Appointment.find(condition).populate('timeslot')
 
     res.render('searchAppointment', { appointments });
   } catch (error) {
@@ -318,7 +318,7 @@ router.get('/Join', async (req, res) => {
      return res.status(400).send({ message: 'User already in the appointment' });
    }
 
-   const timeslot = appointment.timeslot[0];
+   const timeslot = appointment.timeslot;
 
    if (!timeslot) {
        return res.status(404).send({ message: 'Timeslot not found for this appointment' });
@@ -336,13 +336,13 @@ router.get('/Join', async (req, res) => {
 
     console.log(numberOfStudents)
     
-    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true });
+    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true }).populate('timeslot');
 
     const currentSeatNum = (numberOfStudents - appointment.participantCount)
     
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
 
-    await Appointment.findByIdAndUpdate(appointmentId, {NumberOfSeats : currentSeatNum }, { new: true });
+    await Appointment.findByIdAndUpdate(appointmentId, {NumberOfSeats : currentSeatNum }, { new: true }).populate('timeslot');
 
     res.send({ message: 'Joined the appointment successfully' });
   } catch (error) {
