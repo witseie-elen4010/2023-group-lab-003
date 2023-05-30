@@ -90,13 +90,10 @@
                                         <% appointments.forEach(function(appointment) { %>
                                             <%if (appointment.status==='Upcoming' ) { %>
                                                 <tr>
-                                                    <td>
-                                                       
+                                                    <td>                                                       
                                                         <%= appointment.timeslot.date%>
                                                         &
                                                         <%= appointment.timeslot.availabilityTime%>
-                                                        <!--Must be edited to show timeslot attributes instead of the id-->
-                                                   
                                                     </td>
 
                                                     <td>

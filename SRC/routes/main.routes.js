@@ -274,8 +274,7 @@ router.get('/cancel/:id', (req, res) => {
         return res.status(404).json({ error: 'User not found' });
 
       }
-      //Appointment.findByIdAndUpdate(appointmentId, { status: 'Cancelled' }, { new: true });
-
+    
       // Find the appointment to be canceled
       const appointment = user.appointments.find(appt => appt._id.toString() === appointmentId);
       if (!appointment) {
@@ -286,8 +285,12 @@ router.get('/cancel/:id', (req, res) => {
       // Save the updated appointment object
       return appointment.save();
     })
+    .then(() => {
+      return User.findById(userId)
+    })
     .then((user) => {
       if (user.role === 'student') {
+        
         res.redirect('/studentDashboard');
       } else {
         res.redirect('/lecturerDashboard');
