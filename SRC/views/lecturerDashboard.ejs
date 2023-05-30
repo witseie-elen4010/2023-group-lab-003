@@ -100,7 +100,7 @@
 
                                     <th scope="col">Date & Time</th>
                                     <th scope="col">Event Title</th>
-                                    <th scope="col">Lecturer Name</th>
+                                    <th scope="col">Joined Students</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Modify Meeting</th>
                                     <th scope="col">Cancel Meeting</th>
@@ -116,23 +116,29 @@
                                             <tr>
 
                                                 <td>
-                                                    <%= appointment.date %>
+                                                    <%= appointment.timeslot%>
                                                 </td>
                                                 <td>
+                                                    
                                                     <%= appointment.eventTitle %>
                                                 </td>
-                                                <td>
-                                                    <%= appointment.lecturerName%>
+                                                <td><!--Coming soon-->
+                                                    <!--<%= appointment.lecturerName%>-->
                                                         <!--name of the student who created the appointment-->
                                                 </td>
                                                 <td>
                                                     <%= appointment.status%>
                                                 </td>
                                                 <td>
-                                                    <a class="nav-link" id="Edit"
-                                                        href="/update/<%= appointment.id %>">Edit</a>
+                                                    <a id="Edit"
+                                                        href="/update/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
                                                 </td>
-                                                <td><a href="/cancel/<%= appointment.id %>">Cancel</a></td>
+                                                                                               <td>
+                                                        <% if(appointment.status==="Upcoming" ){ %>
+                                                            <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
+
+                                                            <%}%>
+                                                    </td>
                                             </tr>
                                             <%}%>
                                             <%}); %>
