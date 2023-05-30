@@ -11,7 +11,8 @@ const createTimeslot = (req, res, next) => {
 
                 let timeslot = new Timeslot({
 
-                    availabilityTime: req.body.availabilityTime,
+                    startTime: req.body.startTime,
+                    endTime: req.body.endTime,
                     numberOfStudents: req.body.numberOfStudents,
                     date: req.body.date,
                     userId: userId

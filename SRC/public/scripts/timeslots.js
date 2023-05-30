@@ -5,7 +5,7 @@ const validateTime = (startTime, endTime) => {
 }
 
 document.addEventListener('DOMContentLoaded', function () {  
-  const date = document.getElementById('date')
+  const date = document.getElementById('eventDate')
   // set minimum date as 'today'
   date.min = new Date().toISOString().split("T")[0];  
 

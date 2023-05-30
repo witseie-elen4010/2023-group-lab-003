@@ -22,10 +22,9 @@
         <form id="scheduleAppointmentForm" action="/createTimeslot" method="post">
             <div class="mb-3">
         
-                <label class="form-label">Availability time
-                    <br>
-                    <input id="startTime" type="time" required>
-                    to <input id="endTime" type="time" required>
+                <label class="form-label">Availability time<br>
+                    <input name="startTime" id="startTime" type="time" class="form-control" required> to
+                    <input name="endTime" id="endTime" type="time" class="form-control" required>
                 </label><br>
                 <p class="form-errors" id="eventTitleError"></p>
     
@@ -33,7 +32,7 @@
                     <input name="numberOfStudents" type="text" class="form-control" required>
                 </label><br>
                   <label class="form-label">Date
-                    <input id="date" type="date" class="form-control" required >
+                    <input name="date" id="eventDate" type="date" class="form-control" required >
                 </label><br>
     
         
