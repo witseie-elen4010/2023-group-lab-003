@@ -115,9 +115,12 @@
 
                                             <tr>
 
-                                                <td>
-                                                    <%= appointment.timeslot%>
-                                                </td>
+                                                <td>                                                       
+                                                        <%= appointment.timeslot.date%>
+                                                        &
+                                                        <%= appointment.timeslot.availabilityTime%>                                                   
+                                        
+                                                    </td>
                                                 <td>
                                                     
                                                     <%= appointment.eventTitle %>

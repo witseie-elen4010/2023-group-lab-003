@@ -201,7 +201,9 @@ router.get('/lecturerDashboard', (req, res) => {
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
-      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+      Appointment.find({ _id: { $in: userAppointments } })
+      .populate('timeslot')
+      .then((appointments) => {
         const successMessage = req.flash('success'); //flash success message
         //if (user.role === 'lecture')
           res.render('lecturerDashboard', { appointments, successMessage })
