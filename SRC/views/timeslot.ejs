@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="../styles/scheduleAppointment.css">
 
     <script defer src="../scripts/timeslots.js"></script>
-
-
 </head>
 
 <body>
@@ -22,11 +20,11 @@
         <form id="scheduleAppointmentForm" action="/createTimeslot" method="post">
             <div class="mb-3">
         
-                <label class="form-label">Availability time<br><br>
+                <label class="form-label">Availability time<br>
                     <input name="startTime" id="startTime" type="time" class="form-control-sm" required> to
                     <input name="endTime" id="endTime" type="time" class="form-control-sm" required>
                 </label><br>
-                <p class="form-errors" id="eventTitleError"></p>
+                <p class="form-errors" id="timeError"></p>
     
                 <label class="form-label">Number of students allowed
                     <input name="numberOfStudents" type="text" class="form-control" required>
