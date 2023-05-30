@@ -314,9 +314,9 @@ router.get('/Join', async (req, res) => {
       return res.status(404).send({ message: 'Appointment not found' });
     }
 
-   // if (user.appointments.includes(appointmentId)) {
-   //   return res.status(400).send({ message: 'User already in the appointment' });
-   // }
+    if (user.appointments.includes(appointmentId)) {
+     return res.status(400).send({ message: 'User already in the appointment' });
+   }
 
    const timeslot = appointment.timeslot[0];
 
@@ -335,10 +335,14 @@ router.get('/Join', async (req, res) => {
     }
 
     console.log(numberOfStudents)
+    
+    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true });
 
+    const currentSeatNum = (numberOfStudents - appointment.participantCount)
+    
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
 
-    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true });
+    await Appointment.findByIdAndUpdate(appointmentId, {NumberOfSeats : currentSeatNum }, { new: true });
 
     res.send({ message: 'Joined the appointment successfully' });
   } catch (error) {
