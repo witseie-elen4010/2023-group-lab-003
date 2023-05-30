@@ -9,9 +9,10 @@ const appointmentSchema = new Schema({
   lecturerName: {
     type: String
   },
-  timeslot: {
-    type: String
-  },
+  timeslot: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'timeslots'
+  }],
   startTime:{
     type : String
   },

@@ -309,15 +309,32 @@ router.get('/Join', async (req, res) => {
       return res.status(404).send({ message: 'User not found' });
     }
 
-    const appointment = await Appointment.findById(appointmentId);
+    const appointment = await Appointment.findById(appointmentId).populate('timeslot');
     if (!appointment) {
       return res.status(404).send({ message: 'Appointment not found' });
     }
 
-    if (user.appointments.includes(appointmentId)) {
-      return res.status(400).send({ message: 'User already in the appointment' });
+   // if (user.appointments.includes(appointmentId)) {
+   //   return res.status(400).send({ message: 'User already in the appointment' });
+   // }
+
+   const timeslot = appointment.timeslot[0];
+
+   if (!timeslot) {
+       return res.status(404).send({ message: 'Timeslot not found for this appointment' });
+   }
+
+   const numberOfStudents = timeslot.numberOfStudents;
+
+   if (numberOfStudents === undefined) {
+       console.log('Timeslot does not have a numberOfStudents property');
+   }
+
+    if (!timeslot) {
+        return res.status(404).send({ message: 'Timeslot not found for this appointment' });
     }
 
+    console.log(numberOfStudents)
 
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
 
