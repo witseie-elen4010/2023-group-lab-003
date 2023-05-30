@@ -9,10 +9,10 @@ const appointmentSchema = new Schema({
   lecturerName: {
     type: String
   },
-  timeslot: [{
-    type: mongoose.Types.ObjectId,
+  timeslot: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'timeslots'
-  }],
+  },
   startTime:{
     type : String
   },
