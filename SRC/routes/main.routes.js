@@ -237,25 +237,6 @@ router.get('/timeslots', (req, res) => {
 
 })
 
-router.get('/availableTimeslots', (req, res) => {
-  const userId = req.session.userId;
-  console.log(userId)
-  User.findById(userId).populate('timeslots')
-    .then(user => {
-      if (user) {
-        // find all timeslots available
-        Timeslot.find().then((timeslots) => {
-          console.log('timeslots ', timeslots)
-          res.render('availableTimeslots', { timeslots })
-        })
-      }
-      else {
-        req.flash('danger', 'Please sign in'); //flash success message
-        res.redirect('/signin'); // redirect to sigin page
-
-      }
-    })
-})
 
 
 // router to delete  timeslots
