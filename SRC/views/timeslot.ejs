@@ -11,6 +11,7 @@
     crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/scheduleAppointment.css">
 
+    <script defer src="../scripts/timeslots.js"></script>
 
 
 </head>
@@ -22,7 +23,9 @@
             <div class="mb-3">
         
                 <label class="form-label">Availability time
-                    <input name="availabilityTime" type="text" class="form-control" required>
+                    <br>
+                    <input id="startTime" type="time" required>
+                    to <input id="endTime" type="time" required>
                 </label><br>
                 <p class="form-errors" id="eventTitleError"></p>
     
@@ -30,7 +33,7 @@
                     <input name="numberOfStudents" type="text" class="form-control" required>
                 </label><br>
                   <label class="form-label">Date
-                    <input name="date" type="text" class="form-control" required >
+                    <input id="date" type="date" class="form-control" required >
                 </label><br>
     
         
