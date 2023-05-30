@@ -29,7 +29,7 @@ router.get('/signin', (req, res) => {
 
   const passwordMessage = req.flash('danger');
   const emailMessage = req.flash('danger');
-  res.render('Login', {passwordMessage, emailMessage});
+  res.render('Login', { passwordMessage, emailMessage });
 });
 
 //signin route, authentication done by authController
@@ -150,18 +150,18 @@ const appointmentController = require('../controllers/appointment.controller')
 const timeslotsController = require('../controllers/timeslots.controller')
 
 router.get('/scheduleAppointment', (req, res) => {
-//fetch lecturer names and timeslots from the database
-//User.find({role:'lecture'},'name timeslots')
-//.populate('timeslots')
-//.then(lecturers =>{
+  //fetch lecturer names and timeslots from the database
+  //User.find({role:'lecture'},'name timeslots')
+  //.populate('timeslots')
+  //.then(lecturers =>{
   res.render('scheduleAppointment');
-//})
+  //})
 
 })
 //get lectuers for selection 
 router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
   User.find({ role: 'lecture', })
-  .populate('timeslots')
+    .populate('timeslots')
     .then(
       lecturers => {
         // console.log('registered lecturers ', lecturers)
@@ -180,7 +180,9 @@ router.get('/studentDashboard', (req, res) => {
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
-      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+      Appointment.find({ _id: { $in: userAppointments } })
+      .populate('timeslot')
+      .then((appointments) => {
         const successMessage = req.flash('success'); //flash success message
         res.render('studentDashboard', { appointments, successMessage });
       })
@@ -199,9 +201,12 @@ router.get('/lecturerDashboard', (req, res) => {
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
-      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+      Appointment.find({ _id: { $in: userAppointments } })
+      .populate('timeslot')
+      .then((appointments) => {
         const successMessage = req.flash('success'); //flash success message
-        res.render('lecturerDashboard', { appointments, successMessage })
+        
+          res.render('lecturerDashboard', { appointments, successMessage })
       })
     }
     else {
@@ -209,9 +214,9 @@ router.get('/lecturerDashboard', (req, res) => {
       res.redirect('/signin'); // redirect to sigin page
 
     }
-  })
+  });
 
-})
+});
 
 router.get('/timeslots', (req, res) => {
   const userId = req.session.userId;
@@ -232,25 +237,6 @@ router.get('/timeslots', (req, res) => {
 
 })
 
-router.get('/availableTimeslots', (req, res) => {
-  const userId = req.session.userId;
-  console.log(userId)
-  User.findById(userId).populate('timeslots')
-    .then(user => {
-      if (user) {
-        // find all timeslots available
-        Timeslot.find().then((timeslots) => {
-          console.log('timeslots ', timeslots)
-          res.render('availableTimeslots', { timeslots })
-        })
-      }
-      else {
-        req.flash('danger', 'Please sign in'); //flash success message
-        res.redirect('/signin'); // redirect to sigin page
-
-      }
-    })
-})
 
 
 // router to delete  timeslots
@@ -269,8 +255,7 @@ router.get('/cancel/:id', (req, res) => {
         return res.status(404).json({ error: 'User not found' });
 
       }
-      //Appointment.findByIdAndUpdate(appointmentId, { status: 'Cancelled' }, { new: true });
-
+    
       // Find the appointment to be canceled
       const appointment = user.appointments.find(appt => appt._id.toString() === appointmentId);
       if (!appointment) {
@@ -281,8 +266,12 @@ router.get('/cancel/:id', (req, res) => {
       // Save the updated appointment object
       return appointment.save();
     })
+    .then(() => {
+      return User.findById(userId)
+    })
     .then((user) => {
       if (user.role === 'student') {
+        
         res.redirect('/studentDashboard');
       } else {
         res.redirect('/lecturerDashboard');
@@ -352,7 +341,9 @@ router.get('/student-cancelled-appointments', (req, res) => {
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
-      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+      Appointment.find({ _id: { $in: userAppointments } })
+      .populate('timeslot')
+      .then((appointments) => {
         res.render('studentCancelledAppointments', { appointments })
       })
     }
@@ -367,11 +358,12 @@ router.get('/student-cancelled-appointments', (req, res) => {
 //Lecturer Cancelled appoinments
 router.get('/lecturer-cancelled-appointments', (req, res) => {
   const userId = req.session.userId //session user id
-  console.log(userId)
   User.findById(userId).populate('appointments').then(user => {
     if (user) {
       const userAppointments = user.appointments
-      Appointment.find({ _id: { $in: userAppointments } }).then((appointments) => {
+      Appointment.find({ _id: { $in: userAppointments } })
+      .populate('timeslot')
+      .then((appointments) => {
         res.render('lecturerCancelledAppointments', { appointments })
       })
     }

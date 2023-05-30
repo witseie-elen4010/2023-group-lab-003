@@ -10,7 +10,8 @@ const appointmentSchema = new Schema({
     type: String
   },
   timeslot: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'timeslots'
   },
   startTime:{
     type : String
