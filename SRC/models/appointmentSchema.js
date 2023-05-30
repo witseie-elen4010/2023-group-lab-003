@@ -24,6 +24,11 @@ const appointmentSchema = new Schema({
     type: Number,
     default: 1
   },
+
+  NumberOfSeats: {
+    type:Number,
+   },
+
   status: {
     type: String,
     enum: ['Upcoming', 'Cancelled', 'Completed'],

@@ -133,7 +133,7 @@ router.post('/searchAppointments', async (req, res, next) => {
       };
     }
 
-    const appointments = await Appointment.find(condition);
+    const appointments = await Appointment.find(condition).populate('timeslot')
 
     res.render('searchAppointment', { appointments });
   } catch (error) {
@@ -298,19 +298,40 @@ router.get('/Join', async (req, res) => {
       return res.status(404).send({ message: 'User not found' });
     }
 
-    const appointment = await Appointment.findById(appointmentId);
+    const appointment = await Appointment.findById(appointmentId).populate('timeslot');
     if (!appointment) {
       return res.status(404).send({ message: 'Appointment not found' });
     }
 
     if (user.appointments.includes(appointmentId)) {
-      return res.status(400).send({ message: 'User already in the appointment' });
+     return res.status(400).send({ message: 'User already in the appointment' });
+   }
+
+   const timeslot = appointment.timeslot;
+
+   if (!timeslot) {
+       return res.status(404).send({ message: 'Timeslot not found for this appointment' });
+   }
+
+   const numberOfStudents = timeslot.numberOfStudents;
+
+   if (numberOfStudents === undefined) {
+       console.log('Timeslot does not have a numberOfStudents property');
+   }
+
+    if (!timeslot) {
+        return res.status(404).send({ message: 'Timeslot not found for this appointment' });
     }
 
+    console.log(numberOfStudents)
+    
+    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true }).populate('timeslot');
 
+    const currentSeatNum = (numberOfStudents - appointment.participantCount)
+    
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
 
-    await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true });
+    await Appointment.findByIdAndUpdate(appointmentId, {NumberOfSeats : currentSeatNum }, { new: true }).populate('timeslot');
 
     res.send({ message: 'Joined the appointment successfully' });
   } catch (error) {
