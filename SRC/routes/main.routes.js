@@ -88,7 +88,8 @@ router.post('/updateAppointmentTimeslot', async (req, res) => {
   const appointmentId = req.body.appointment_id;
   
   const newTimeslotData = {
-    availabilityTime: req.body.availabilityTime,
+    startTime: req.body.startTime,
+    endTime: req.body.endTime,
     numberOfStudents: req.body.numberOfStudents,
     date: req.body.date,
   }
