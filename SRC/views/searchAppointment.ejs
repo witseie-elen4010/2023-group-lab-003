@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/searchAppointment.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Search Appointment</title>
 </head>
 <body>
@@ -26,6 +27,7 @@
                   <h4><%= appointment.eventTitle %></h4>
                   <p>Lecturer Name: <%= appointment.lecturerName %></p>
                   <p>Date: <%= appointment.timeslot.date %></p>
+                  <p>Status: <%= appointment.status %></p>
                   <P>Seats Available: <%= appointment.NumberOfSeats%></P>
                   <a class="join-button" aria-current="page" href="/Join?appointmentId=<%= appointment._id %>">Join</a>
                 </div>
@@ -34,6 +36,17 @@
           <% } else { %>
             <p></p>
           <% } %>
+
+          <% if (DangerMessage && DangerMessage.length > 0) { %>
+            <div class="alert alert-danger">
+              <%= DangerMessage %>
+            </div>
+          <% } else if (succesMessage && succesMessage.length > 0) { %>
+            <div class="alert alert-success">
+              <%= succesMessage %>
+            </div>
+          <% } %>
+
           </form>
     </div>
 </body>
