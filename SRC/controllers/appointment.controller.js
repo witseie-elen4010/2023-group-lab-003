@@ -7,15 +7,18 @@ const logsController = require('../controllers/logs.controller');
 const createAppointment = (req, res, next) => {
   const userId = req.session.userId; //get user id from session
 
-  User.findOne({ $or: [{ userId: userId }] })
+  User.findById(userId )
     .then(user => {
+      let consultationOrganizer = `${user.name} ${user.surname}`
       if (user) {
-        let appointment = new Appointment({
+        const data = {
+          organizer: consultationOrganizer,
           eventTitle: req.body.eventTitle,
           lecturerName: req.body.lecturerName,
           timeslot: req.body.timeslot,
           userId: userId
-        })
+        }
+        let appointment = new Appointment(data)
         let savedAppointment;
         appointment.save()
 

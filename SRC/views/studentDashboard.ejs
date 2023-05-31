@@ -70,15 +70,14 @@
                 <div class="appointments-box">
                     <h2>Upcoming Appointments</h2>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="table">
                             <thead>
                                 <tr>
 
-                                    <th scope="col">Date & Time</th>
-                                    <th scope="col">Event Title</th>
-                                    <th scope="col">Lecturer Name</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Modify Meeting</th>
+                                    <th scope="col" onclick="sortTable(0)">Date & Time</th>
+                                    <th scope="col" onclick="sortTable(1)">Event Title</th>
+                                    <th scope="col" onclick="sortTable(2)">Lecturer Name</th>
+                                    <th scope="col" onclick="sortTable(3)">Status</th>
                                     <th scope="col">Cancel Meeting</th>
 
                                 </tr>
@@ -93,7 +92,7 @@
                                                     <td>                                                       
                                                         <%= appointment.timeslot.date%>
                                                         &
-                                                        <%= appointment.timeslot.availabilityTime%>
+                                                        <%= appointment.timeslot.startTime%>-<%= appointment.timeslot.endTime%>
                                                     </td>
 
                                                     <td>
@@ -105,12 +104,12 @@
                                                     <td>
                                                         <%= appointment.status%>
                                                     </td>
-                                                    <td><a
-                                                        href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
-                                                </td>
-                                                <td>
-                                                    <% if(appointment.status==="Upcoming" ){ %>
-                                                        <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
+                                                  <!----------  <td><a
+                                                            href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
+                                                    </td>--->
+                                                    <td>
+                                                        <% if(appointment.status==="Upcoming" ){ %>
+                                                            <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel Appointment</a>
 
                                                         <%}%>
                                                 </td>
@@ -142,6 +141,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="../scripts/hideflashmessage.js"></script>
+    <script src="../scripts/sortTableColumn.js"></script>
 </body>
 
 </html>

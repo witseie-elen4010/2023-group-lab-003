@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 
 
 const timeslotSchema = new mongoose.Schema ({
-    availabilityTime: {
-
+    startTime: {
         type: String,
-        
+    },
+    endTime: {
+        type: String,
     },
     numberOfStudents: {
         type: String,
