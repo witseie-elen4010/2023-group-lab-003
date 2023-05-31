@@ -105,12 +105,12 @@
                                                     <td>
                                                         <%= appointment.status%>
                                                     </td>
-                                                    <td><a
-                                                        href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
-                                                </td>
-                                                <td>
-                                                    <% if(appointment.status==="Upcoming" ){ %>
-                                                        <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
+                                                  <!----------  <td><a
+                                                            href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
+                                                    </td>--->
+                                                    <td>
+                                                        <% if(appointment.status==="Upcoming" ){ %>
+                                                            <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Leave Appointment</a>
 
                                                         <%}%>
                                                 </td>
