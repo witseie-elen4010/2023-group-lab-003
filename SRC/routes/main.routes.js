@@ -91,11 +91,13 @@ router.post('/updateConsultationTimes', async (req, res) => {
     const update = { date: updateTime };
     const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
     if (updatedAppointment) {
-      res.json({ message: 'Times updated successfully' });
+      req.flash('success', 'Times updated successfully');
+      return res.redirect('/lecturerDashboard')
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
+    req.flash('error', 'An error occurred');
+    return res.redirect('/updateConsultationTimes');
   }
 });
 
