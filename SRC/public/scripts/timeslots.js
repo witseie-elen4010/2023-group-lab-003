@@ -1,4 +1,5 @@
 'use strict'
+
 const validateTime = (startTime, endTime, timeError) => {
   console.log((endTime < startTime))
   if(endTime < startTime){

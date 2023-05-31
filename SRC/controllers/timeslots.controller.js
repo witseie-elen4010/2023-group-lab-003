@@ -3,38 +3,75 @@ const Timeslot = require('../models/timeslots.schema'); //timeslot schema
 
 const createTimeslot = (req, res, next) => {
 
-    const userId = req.session.userId; //get user id from session
+  //steps to follow: 
+  // 1. Find logged in lecturers details
+  // 2. Find all scheduled lecturers timeslots
+  // 3. Check if date selected by user has already been selected
+  // 3.1. If no; create timeslot
+  // 3.2. If yes:
+  // 3.2.1. Check if time range has been selected 
+  // 3.2.1.1. If yes; display clash
+  // 3.2.1.2. If no; cretae timeslot
 
-    User.findOne({ $or: [{ userId: userId }] })
-        .then(user => {
-            if (user) {
-
-                let timeslot = new Timeslot({
-
-                    startTime: req.body.startTime,
-                    endTime: req.body.endTime,
-                    numberOfStudents: req.body.numberOfStudents,
-                    date: req.body.date,
-                    userId: userId
-
-                })
-                timeslot.save()
-                    .then(timeslot => { //associated logged in user with the appointment they schedule
-
-                        return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
-
-                    }).then(user => {
-                        res.redirect('/timeslots');
-                        console.log('New timeslot added');
-
-                    })
-                    .catch(error => {
-
-                        console.log(error)
-                    })
-            }
-
+  const userId = req.session.userId; //get user id from session
+  
+  User.findById(userId) //find logged in user
+  .then( user=> {
+    const data = {
+      startTime: req.body.startTime,
+      endTime: req.body.endTime,
+      numberOfStudents: req.body.numberOfStudents,
+      date: req.body.date,
+      userId: userId
+    }
+      // get all timeslots for current user
+      user.timeslots.forEach(id=> {
+        Timeslot.findById(id)
+        .then( timeslots_ => {
+          if(timeslots_) console.log(timeslots_.date)
+          return timeslots_
         })
+        // .then( )
+      })
+  
+  })
+
+    // Is modified
+    // User.findOne({ $or: [{ userId: userId }] })
+    //     .then(user => {
+    //       console.log('user ', user)
+    //         if (user) {
+
+    //           const data = {
+    //             startTime: req.body.startTime,
+    //             endTime: req.body.endTime,
+    //             numberOfStudents: req.body.numberOfStudents,
+    //             date: req.body.date,
+    //             userId: userId
+    //           }
+
+              // checkOverlap(user, data)
+              // console.log('date ', data)
+              // console.log('validate ', validateDate(data.date))
+
+                // let timeslot = new Timeslot(data)
+                // timeslot.save()
+                //     .then(timeslot => { //associated logged in user with the appointment they schedule
+
+                //         return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
+
+                //     }).then(user => {
+                //         res.redirect('/timeslots');
+                //         console.log('New timeslot added');
+
+                //     })
+                //     .catch(error => {
+
+                //         console.log(error)
+                //     })
+        //     }
+
+        // })
 }
 
 const deleteTimeslot = (req, res) => {
