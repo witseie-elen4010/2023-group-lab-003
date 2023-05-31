@@ -52,7 +52,6 @@
                         <nav class="nav flex-column">
                             <a class="nav-link active" aria-current="page" href="/scheduleAppointment">Set
                                 Appointment</a>
-                            <a class="nav-link" href="/availableTimeslots">View Available Time slots</a>
                             <a class="nav-link" href="#">Cancel Appointments</a>
                             <a class="nav-link active" aria-current="page" href="/searchAppointment">Join Existing
                                 Appointment</a>
@@ -91,9 +90,10 @@
                                         <% appointments.forEach(function(appointment) { %>
                                             <%if (appointment.status==='Upcoming' ) { %>
                                                 <tr>
-                                                    <td>
-                                                        <%= appointment.timeslot%>
-                                                        <!--Must be edited to show timeslot attributes instead of the id-->
+                                                    <td>                                                       
+                                                        <%= appointment.timeslot.date%>
+                                                        &
+                                                        <%= appointment.timeslot.availabilityTime%>
                                                     </td>
 
                                                     <td>
@@ -106,13 +106,14 @@
                                                         <%= appointment.status%>
                                                     </td>
                                                     <td><a
-                                                            href="/updateConsultationTimes/<%= appointment.id %>">Modify</a>
-                                                    </td>
-                                                    <td>
-                                                        <% if(appointment.status==="Upcoming" ){ %>
-                                                            <a href="/cancel/<%= appointment.id %>">Cancel</a>
-                                                            <%}%>
-                                                    </td>
+                                                        href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <% if(appointment.status==="Upcoming" ){ %>
+                                                        <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
+
+                                                        <%}%>
+                                                </td>
 
 
                                                 </tr>

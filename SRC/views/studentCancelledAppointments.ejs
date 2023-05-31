@@ -44,10 +44,9 @@
                         <nav class="nav flex-column">
                             <a class="nav-link active" aria-current="page" href="/scheduleAppointment">Set
                                 Appointment</a>
-                            <a class="nav-link" href="/availableTimeslots">View Available Time slots</a>
-                            <a class="nav-link active" aria-current="page" href="/searchAppointment">Search
+                            <a class="nav-link active" aria-current="page" href="/searchAppointment">Join Existing
                                 Appointment</a>
-                            <a class="nav-link" href="/Settings">Settings</a>
+                            <a class="nav-link" href="/Settings">Update Details</a>
                             <a class="nav-link" href="/logs">User logs</a>
 
                         </nav>
@@ -82,8 +81,10 @@
                                             <%if (appointment.status === 'Cancelled') { %>
                                             <tr>
 
-                                                <td>
-                                                    <%= appointment.date %>
+                                                <td>                                                       
+                                                    <%= appointment.timeslot.date%>
+                                                    &
+                                                    <%= appointment.timeslot.availabilityTime%>  
                                                 </td>
                                                 <td>
                                                     <%= appointment.eventTitle %>
@@ -103,8 +104,6 @@
 
 
                                                 <%}%>
-
-
 
                             </tbody>
                         </table>
