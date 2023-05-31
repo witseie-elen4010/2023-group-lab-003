@@ -14,8 +14,9 @@ const createTimeslot = (req, res, next) => {
   // 3.2.1.2. If no; cretae timeslot
 
   const userId = req.session.userId; //get user id from session
-  
-  User.findById(userId) //find logged in user
+  let scheduledDate = ''
+  // 1. Find logged in lecturers details
+  User.findById(userId)
   .then( user=> {
     const data = {
       startTime: req.body.startTime,
@@ -24,15 +25,22 @@ const createTimeslot = (req, res, next) => {
       date: req.body.date,
       userId: userId
     }
-      // get all timeslots for current user
-      user.timeslots.forEach(id=> {
-        Timeslot.findById(id)
-        .then( timeslots_ => {
-          if(timeslots_) console.log(timeslots_.date)
-          return timeslots_
-        })
-        // .then( )
+    
+    // 2. Find all scheduled lecturers timeslots
+    user.timeslots.forEach(id=> {
+      Timeslot.findById(id)
+      .then( timeslots_ => {
+        if(timeslots_) {
+          //check if date has been selected
+          if(data.date === timeslots_.date){
+            console.log('check time range', data.date, timeslots_.date)
+          } 
+          else {
+            console.log('create timeslot' , data.date, timeslots_.date)
+          }
+        }
       })
+    })
   
   })
 
