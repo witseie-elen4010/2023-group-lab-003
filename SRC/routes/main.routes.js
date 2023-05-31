@@ -109,7 +109,9 @@ router.get('/createTimeslot', (req, res) => {
 })
 
 router.get('/searchAppointment', (req, res) => {
-  res.render('searchAppointment');
+  const DangerMessage = req.flash('danger');
+  const succesMessage = req.flash('success') 
+  res.render('searchAppointment', { DangerMessage, succesMessage })
 })
 
 router.post('/searchAppointments', async (req, res, next) => {
@@ -134,8 +136,14 @@ router.post('/searchAppointments', async (req, res, next) => {
     }
 
     const appointments = await Appointment.find(condition).populate('timeslot')
+    if (appointments.length === 0) {
+      req.flash('danger', 'No appointments found');
+      return res.redirect('/searchAppointment');
+    }
 
-    res.render('searchAppointment', { appointments });
+    const DangerMessage = req.flash('danger');
+    const succesMessage = req.flash('success') 
+    res.render('searchAppointment', { appointments, DangerMessage,succesMessage });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -295,33 +303,26 @@ router.get('/Join', async (req, res) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).send({ message: 'User not found' });
+      req.flash('danger', 'Please signin');
+      return res.redirect('/signin')
     }
 
     const appointment = await Appointment.findById(appointmentId).populate('timeslot');
     if (!appointment) {
-      return res.status(404).send({ message: 'Appointment not found' });
+      req.flash('danger', 'Appointment not Found');
+      return res.redirect('/searchAppointment')
     }
 
     if (user.appointments.includes(appointmentId)) {
-     return res.status(400).send({ message: 'User already in the appointment' });
+      req.flash('danger', 'You are already part of the appointment');
+      return res.redirect('/searchAppointment')
    }
 
    const timeslot = appointment.timeslot;
 
-   if (!timeslot) {
-       return res.status(404).send({ message: 'Timeslot not found for this appointment' });
-   }
-
+   
    const numberOfStudents = timeslot.numberOfStudents;
 
-   if (numberOfStudents === undefined) {
-       console.log('Timeslot does not have a numberOfStudents property');
-   }
-
-    if (!timeslot) {
-        return res.status(404).send({ message: 'Timeslot not found for this appointment' });
-    }
 
     console.log(numberOfStudents)
     
@@ -332,8 +333,9 @@ router.get('/Join', async (req, res) => {
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
 
     await Appointment.findByIdAndUpdate(appointmentId, {NumberOfSeats : currentSeatNum }, { new: true }).populate('timeslot');
-
-    res.send({ message: 'Joined the appointment successfully' });
+    
+    req.flash('success', 'Appointment joined successfully');
+    res.redirect('/searchAppointment');
   } catch (error) {
     res.status(500).send({ message: 'Server error' });
   }
