@@ -45,67 +45,45 @@
                             <a class="nav-link active" aria-current="page" href="/scheduleAppointment">Set
                                 Appointment</a>
                             <a class="nav-link" href="/availableTimeslots">View Available Time slots</a>
-                            <a class="nav-link active" aria-current="page" href="/searchAppointment">Search
-                                Appointment</a>
+                            <a class="nav-link" href="#">Cancel Appointments</a>
                             <a class="nav-link" href="/Settings">Settings</a>
-                            <a class="nav-link" href="/logs">User logs</a>
-
                         </nav>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-10">
                 <section id="dashboard-heading">
-                    <h1>Student Cancelled Appointments Dashboard</h1>
+                    <h1>Student appointment dashboard</h1>
                 </section>
                 <div class="appointments-box">
-                    <h2>Cancelled Appointments</h2>
+                    <h2>Available Time Slots</h2>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-
-                                    <th scope="col">Date & Time</th>
-                                    <th scope="col">Event Title</th>
-                                    <th scope="col">Lecturer Name</th>
-                                    <th scope="col">Status</th>
-                                  
-                                    
-
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Number of allowed students</th>
+                                    <th scope="col">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if(appointments.length===0){ %>
-                                    <td>No appointments available.</td>
-                                    <% }else { %>
-                                        <% appointments.forEach(function(appointment) { %>
-                                            <%if (appointment.status === 'Cancelled') { %>
+                                <% if(timeslots.length === 0){ %>
+                                    <td>No timeslots available.</td>
+                                    <% } else { %>
+                                        <% timeslots.forEach(function(timeslot){ %>
                                             <tr>
-
                                                 <td>
-                                                    <%= appointment.date %>
+                                                    <%= timeslot.availabilityTime %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.eventTitle %>
+                                                    <%= timeslot.numberOfStudents %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.lecturerName %>
+                                                    <%= timeslot.date%>
                                                 </td>
-                                                <td>
-                                                    <%= appointment.status%>
-                                                </td>
-                                               
-                                               
-
                                             </tr>
-                                            <%}%>
                                             <%}); %>
-
-
                                                 <%}%>
-
-
-
                             </tbody>
                         </table>
                     </div>

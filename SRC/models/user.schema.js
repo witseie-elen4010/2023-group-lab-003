@@ -38,6 +38,12 @@ const userSchema = new mongoose.Schema({
             ref: 'timeslots'
         }
     ]
+    , logs:[
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'logs'
+        }
+    ]
 
 }, { timestamps: true });
 

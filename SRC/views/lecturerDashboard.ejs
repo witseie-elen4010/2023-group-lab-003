@@ -72,11 +72,19 @@
                     <div class="col-12 menu-container">
                         <nav class="nav flex-column">
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
+
+                            <a class="nav-link" id="Edit" href="\update">Edit Consultation</a>
+
                             <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
+
                             <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
                             <a class="nav-link" href="/Settings">Settings</a>
+
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
                             <a class="nav-link" href="/lecturer-cancelled-appointments">Cancelled Appointments</a>
+                            <a class="nav-link" href="/logs">User logs</a>
+
+
                         </nav>
                     </div>
                 </div>
@@ -91,9 +99,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
+
                                     <th scope="col">Date & Time</th>
                                     <th scope="col">Event Title</th>
-                                    <th scope="col">Joined Students</th>
+                                    <th scope="col">Lecturer Name</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Modify Meeting</th>
                                     <th scope="col">Cancel Meeting</th>
@@ -108,33 +117,24 @@
 
                                             <tr>
 
-                                                <td>                                                       
-                                                        <%= appointment.timeslot.date%>
-                                                        &
-                                                        <%= appointment.timeslot.availabilityTime%>                                                   
-                                        
-                                                    </td>
                                                 <td>
-                                                    
+                                                    <%= appointment.date %>
+                                                </td>
+                                                <td>
                                                     <%= appointment.eventTitle %>
                                                 </td>
-                                                <td><!--Coming soon-->
-                                                    <!--<%= appointment.lecturerName%>-->
+                                                <td>
+                                                    <%= appointment.lecturerName%>
                                                         <!--name of the student who created the appointment-->
                                                 </td>
                                                 <td>
                                                     <%= appointment.status%>
                                                 </td>
                                                 <td>
-                                                    <a id="Edit"
-                                                        href="/update/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
+                                                    <a class="nav-link" id="Edit"
+                                                        href="/update/<%= appointment.id %>">Edit</a>
                                                 </td>
-                                                                                               <td>
-                                                        <% if(appointment.status==="Upcoming" ){ %>
-                                                            <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
-
-                                                            <%}%>
-                                                </td>
+                                                <td><a href="/cancel/<%= appointment.id %>">Cancel</a></td>
                                             </tr>
                                             <%}%>
                                             <%}); %>
