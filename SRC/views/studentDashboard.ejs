@@ -69,14 +69,14 @@
                 <div class="appointments-box">
                     <h2>Upcoming Appointments</h2>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="table">
                             <thead>
                                 <tr>
 
-                                    <th scope="col">Date & Time</th>
-                                    <th scope="col">Event Title</th>
-                                    <th scope="col">Lecturer Name</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col" onclick="sortTable(0)">Date & Time</th>
+                                    <th scope="col" onclick="sortTable(1)">Event Title</th>
+                                    <th scope="col" onclick="sortTable(2)">Lecturer Name</th>
+                                    <th scope="col" onclick="sortTable(3)">Status</th>
                                     <th scope="col">Modify Meeting</th>
                                     <th scope="col">Cancel Meeting</th>
 
@@ -141,6 +141,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="../scripts/hideflashmessage.js"></script>
+    <script src="../scripts/sortTableColumn.js"></script>
 </body>
 
 </html>
