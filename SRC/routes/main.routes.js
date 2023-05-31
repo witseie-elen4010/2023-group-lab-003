@@ -165,7 +165,6 @@ router.post('/searchAppointments', async (req, res, next) => {
 router.get('/scheduleAppointment', (req, res) => {
   const asuccessMessage = req.flash('success'); //flash success message
   const adangerMessage = req.flash('danger');
-
   res.render('scheduleAppointment', {asuccessMessage, adangerMessage});
 
 
