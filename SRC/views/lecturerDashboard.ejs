@@ -74,13 +74,7 @@
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
 
                             <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
-<<<<<<< HEAD
-=======
-
-            
->>>>>>> master
                             <a class="nav-link" href="/Settings">Settings</a>
-
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
                             <a class="nav-link" href="/lecturer-cancelled-appointments">Cancelled Appointments</a>
                             <a class="nav-link" href="/logs">User logs</a>
@@ -96,15 +90,16 @@
                 </section>
                 <div class="appointments-box">
                     <h2>Lecturer Appointments</h2>
+
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-sortable" id="table">
                             <thead>
                                 <tr>
 
-                                    <th scope="col">Date & Time</th>
-                                    <th scope="col">Event Title</th>
-                                    <th scope="col">Organiser Name</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col" onclick="sortTable(0)">Date & Time</th>
+                                    <th scope="col" onclick="sortTable(1)">Event Title</th>
+                                    <th scope="col" onclick="sortTable(2)">Organiser Name</th>
+                                    <th scope="col" onclick="sortTable(3)">Status</th>
                                     <th scope="col">Modify Meeting</th>
                                 </tr>
                             </thead>
@@ -116,19 +111,17 @@
                                             <%if (appointment.status === 'Upcoming') { %>
 
                                             <tr>
-
-                                                <td>                                                       
-                                                        <%= appointment.timeslot.date%>
-                                                        &
-                                                        <%= appointment.timeslot.availabilityTime%>                                                   
-                                        
-                                                    </td>
                                                 <td>
-                                                    
+                                                    <!-- Need to fix -->
+                                                    <%= appointment.timeslot.date%>
+                                                    &
+                                                    <%= appointment.timeslot.startTime%>-<%= appointment.timeslot.endTime%>
+                                                </td>
+                                                <td>
                                                     <%= appointment.eventTitle %>
                                                 </td>
-                                                <td><!--Coming soon-->
-                                                    <!--<%= appointment.lecturerName%>-->
+                                                <td>
+                                                    <%= appointment.lecturerName%>
                                                         <!--name of the student who created the appointment-->
                                                 </td>
                                                 <td>
@@ -158,6 +151,7 @@
         </div>
     </div>
     <script src="../scripts/hideflashmessage.js"></script>
+    <script src="../scripts/sortTableColumn.js"></script>
 </body>
 
 </html>

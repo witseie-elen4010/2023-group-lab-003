@@ -78,13 +78,13 @@
                 <div class="appointments-box">
                     <h2>Lecturer Timeslots</h2>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="table">
                             <thead>
                                 <tr>
 
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Number of Students</th>
-                                    <th scope="col">Date</th>
+                                    <th scope="col" onclick="sortTable(0)">Time</th>
+                                    <th scope="col" onclick="sortTable(1)">Number of Students</th>
+                                    <th scope="col" onclick="sortTable(2)">Date</th>
                                     <th scope="col">Delete Timeslot</th>
                                 </tr>
                             </thead>
@@ -96,7 +96,7 @@
                                             <tr>
 
                                                 <td>
-                                                    <%= timeslot.availabilityTime %>
+                                                    <%= timeslot.startTime %>-<%= timeslot.endTime %>
                                                 </td>
                                                 <td>
                                                     <%= timeslot.numberOfStudents %>
@@ -121,6 +121,7 @@
             </div>
         </div>
     </div>
+    <script src="../scripts/sortTableColumn.js"></script>
 </body>
 
 </html>
