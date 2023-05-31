@@ -8,6 +8,7 @@ const session = require('express-session');
 const mainroute= require("./SRC/routes/main.routes")
 //const flash = require("express-flash");
 const flash = require("connect-flash");
+const logsRoute = require('./SRC/routes/logs.route');
 
 
 //connect to db url
@@ -52,5 +53,6 @@ app.use(flash());
 
 
 app.use(mainroute)
+app.use(logsRoute)
 
 

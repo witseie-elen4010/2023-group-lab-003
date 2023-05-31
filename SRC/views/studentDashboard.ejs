@@ -57,6 +57,7 @@
                                 Appointment</a>
                             <a class="nav-link" href="/Settings">Settings</a>
                             <a class="nav-link" href="/student-cancelled-appointments">Cancelled Appointments</a>
+                            <a class="nav-link" href="/logs">User logs</a>
 
                         </nav>
                     </div>
@@ -109,8 +110,8 @@
                                                         <% if(appointment.status==="Upcoming" ){ %>
                                                             <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Leave Appointment</a>
 
-                                                            <%}%>
-                                                    </td>
+                                                        <%}%>
+                                                </td>
 
 
                                                 </tr>

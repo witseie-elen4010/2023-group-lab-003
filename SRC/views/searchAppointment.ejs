@@ -10,44 +10,44 @@
 </head>
 <body>
 
-    <div class="search-page">
-        <div id="pre-search-content">
-          <h2>Appointment Search Page</h2>
-          <p>Use the search bar above to find appointments by Event Title or return all appointments for a Lecturer.</p>
-        </div>
-        <form action="/searchAppointments" method="post" id="searchAppointment">
-          <input name="search" type="text" id="search" placeholder="Search Appointments">
-          <button type="submit">Search</button>
-           
-          <% if (typeof appointments !== 'undefined' && appointments.length > 0) { %>
-            <h3>Search Results:</h3>
-            <% appointments.forEach(appointment => { %>
-              <div class="appointment-container">
-                <div class="individual-appointment">
-                  <h4><%= appointment.eventTitle %></h4>
-                  <p>Lecturer Name: <%= appointment.lecturerName %></p>
-                  <p>Date: <%= appointment.timeslot.date %></p>
-                  <p>Status: <%= appointment.status %></p>
-                  <P>Seats Available: <%= appointment.NumberOfSeats%></P>
-                  <a class="join-button" aria-current="page" href="/Join?appointmentId=<%= appointment._id %>">Join</a>
-                </div>
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p></p>
-          <% } %>
-
-          <% if (DangerMessage && DangerMessage.length > 0) { %>
-            <div class="alert alert-danger">
-              <%= DangerMessage %>
-            </div>
-          <% } else if (succesMessage && succesMessage.length > 0) { %>
-            <div class="alert alert-success">
-              <%= succesMessage %>
-            </div>
-          <% } %>
-
-          </form>
+  <div class="search-page">
+    <div id="pre-search-content">
+      <h2>Appointment Search Page</h2>
+      <p>Use the search bar above to find appointments by Event Title or return all appointments for a Lecturer.</p>
     </div>
+    <form action="/searchAppointments" method="post" id="searchAppointment">
+      <input name="search" type="text" id="search" placeholder="Search Appointments">
+      <button type="submit">Search</button>
+       
+      <% if (typeof appointments !== 'undefined' && appointments.length > 0) { %>
+        <h3>Search Results:</h3>
+        <% appointments.forEach(appointment => { %>
+          <div class="appointment-container">
+            <div class="individual-appointment">
+              <h4><%= appointment.eventTitle %></h4>
+              <p>Lecturer Name: <%= appointment.lecturerName %></p>
+              <p>Date: <%= appointment.timeslot.date %></p>
+              <p>Status: <%= appointment.status %></p>
+              <P>Seats Available: <%= appointment.NumberOfSeats%></P>
+              <a class="join-button" aria-current="page" href="/Join?appointmentId=<%= appointment._id %>">Join</a>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p></p>
+      <% } %>
+
+      <% if (DangerMessage && DangerMessage.length > 0) { %>
+        <div class="alert alert-danger">
+          <%= DangerMessage %>
+        </div>
+      <% } else if (succesMessage && succesMessage.length > 0) { %>
+        <div class="alert alert-success">
+          <%= succesMessage %>
+        </div>
+      <% } %>
+
+      </form>
+</div>
 </body>
 </html>

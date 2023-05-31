@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const { builtinModules } = require('module');
 const session = require('express-session');
 const { authLecture, authenticate } = require('../middleware/authenticate.routes');
+const logsController = require('../controllers/logs.controller');
 
 const register = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, function (err, hashedPass) {
@@ -53,7 +54,9 @@ const login = (req, res, next) => {
                     if (results) {
                         req.session.userId = user._id; //user session id
                         let token = jwt.sign({ email: user.email }, 'verySecretValue')
-                        const userId = user._id; 
+                        const userId = user._id;
+                        action = 'Sign in'
+                        logsController.createLog(userId, action)
                         if (user.role === 'lecture') {
                             req.flash('success', 'Login successful');
                             res.redirect('/lecturerDashboard');
@@ -64,13 +67,13 @@ const login = (req, res, next) => {
                             res.redirect('/studentDashboard');
                             userId;
                         }
-                        
+
 
                     }
                     else {
                         req.flash('danger', "Password does not match!");
                         res.redirect('/signin');
-                     
+
                     }
 
                 })
@@ -89,7 +92,7 @@ const updateEmail = async (req, res) => {
     var userId = req.session.userId; // retrieve user id from session
     var email = req.body.email;
 
-    if(email) {
+    if (email) {
         try {
             // Updating the user's email in the database
             const updatedUser = await User.findOneAndUpdate({ _id: userId }, { email: email }, { new: true });
@@ -98,6 +101,8 @@ const updateEmail = async (req, res) => {
                 console.log('No user found with this id');
                 res.status(404).send('No user found with this id');
             } else {
+                action = 'Updated email'
+                logsController.createLog(userId, action)
                 console.log('Updated User: ', updatedUser);
                 res.send('Updated email: ' + updatedUser.email);
             }
@@ -124,12 +129,12 @@ const updatePassword = async (req, res, next) => {
     }
 
     const isMatch = await bcrypt.compare(currentPassword, user.password);
-    
+
     if (!isMatch) {
         return res.status(404).json({ message: 'Incorrect current password' });
     }
 
-    if(newPassword !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
         return res.status(404).json({ message: 'Passwords do not match' });
     }
 
@@ -137,7 +142,9 @@ const updatePassword = async (req, res, next) => {
 
     user.password = hashedPassword;
     await user.save();
-    
+    action = 'Update password'
+    logsController.createLog(userId, action)
+
     res.status(200).json({ message: 'Password updated successfully' });
 }
 
@@ -150,17 +157,19 @@ const createAnotherLecturer = (req, res, next) => {
 
 const deleteAccount = async (req, res) => {
     const userId = req.session.userId;
-    
-      await User.findOneAndRemove({ _id: userId });  
-      req.session.destroy((err) => {
+
+    await User.findOneAndRemove({ _id: userId });
+    action = 'Delete account'
+                        logsController.createLog(userId, action)
+    req.session.destroy((err) => {
         if (err) {
-          res.status(404).send('An error occurred while deleting the session');
+            res.status(404).send('An error occurred while deleting the session');
         } else {
-          res.redirect('/goodbye');
+            res.redirect('/goodbye');
         }
-      });
-  };
-  
+    });
+};
+
 
 
 module.exports = {
