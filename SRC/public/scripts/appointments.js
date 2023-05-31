@@ -95,7 +95,7 @@ const lecturerName = () => {
         timeslots.forEach(timeslot => {
           const option = document.createElement('option');
           const availabilityTime = `${timeslot.startTime}-${timeslot.endTime}`
-          option.value = `${timeslot.date} ${availabilityTime}`;
+          option.value = timeslot._id;
           option.text = `Time: ${availabilityTime}, Date: ${timeslot.date}`;
           timeslotID.add(option);
         });
