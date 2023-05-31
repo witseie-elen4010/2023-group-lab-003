@@ -14,7 +14,6 @@ const createTimeslot = (req, res, next) => {
   // 3.2.1.2. If no; create timeslot
 
   const userId = req.session.userId; //get user id from session
-  let createdTimeslot = 0
   // 1. Find logged in lecturers details
   User.findById(userId).populate("timeslots").exec()
   .then( user=> {
@@ -25,26 +24,25 @@ const createTimeslot = (req, res, next) => {
       date: req.body.date,
       userId: userId
     }
-    const dates_ = []
-    const availabilityTimes_ = []
+
+    const timeslotsDates_ = []
+    const timeslotsTimes_ = []
     user.timeslots.forEach(timeslot =>{
-      dates_.push(timeslot.date)
+      timeslotsDates_.push(timeslot.date)
       const availabilityTime = {start: timeslot.startTime, end: timeslot.endTime}
-      availabilityTimes_.push(availabilityTime)
+      timeslotsTimes_.push(availabilityTime)
     })
 
-    console.log('dates ', dates_)
-    console.log('times ', availabilityTimes_)
+    console.log('dates ', timeslotsDates_)
+    console.log('times ', timeslotsTimes_)
+    let eventTime = {start: data.startTime, end: data.endTime}
+    let eventDate = data.date
 
     // Check overlap
     // check if date has been selected
-    overlapDate = dateOverlapIndeces (dates_, data.date)
-    if(overlapDate.length){
-      console.log('Check time range is not overlapping')
-    }
-    else{
-      console.log('Create availability timeslot')
-    }
+    let overlap = isOverlap(timeslotsDates_, eventDate, timeslotsTimes_, eventTime)
+    console.log('Event : ', eventDate, eventTime)
+    console.log('overlap ', overlap)
 
 
     
@@ -62,7 +60,7 @@ const createTimeslot = (req, res, next) => {
     //         ]
 
     //         console.log('time array ', timeArray)
-    //         if(isOverlappig(timeArray)) console.log('time is overlapping. Cannot create appointment')
+    //   TimeOverlapping(timeArray)) console.log('time is overlapping. Cannot create appointment')
     //         else console.log('create appointment')
     //       } 
     //       else {
@@ -79,35 +77,33 @@ const createTimeslot = (req, res, next) => {
     // })
   })
 
-  const dateOverlapIndeces = (dates_, eventDate) => {
-    const indexes = [];
-    dates_.forEach((element, index) => {
-      if (element === eventDate) {
-        indexes.push(index);
-      }
-    });
-    return indexes
+  const isOverlap = (timeslotsDates_, eventDate, timeslotsTimes_, eventTime) => {
+
+    // check if date is overlapping. 
+    // if date is overlapping, compare time ranges and check if they overlap
+    // if yes lecturer cannot  create timeslot, 
+    let overlapDate = dateOverlapIndeces (timeslotsDates_, eventDate)
+    let bool = false
+    if(overlapDate.length){
+      console.log('Check time range is not overlapping')
+
+      // check time overlap for each date
+      overlapDate.forEach(dateIndex => {
+        let timeslotTime = timeslotsTimes_[dateIndex]
+        let timeArray = [timeslotTime, eventTime] 
+        if(isTimeOverlapping(timeArray)){
+          bool = true
+          return bool
+        }
+      })
+      return bool
+    }
+    else{
+      return bool
+    }
   }
 
-
-  const isOverlappig = (timeArray) => {   
-    let i, j;
-    for (i = 0; i < timeArray.length - 1; i++) {
-        for (j = i + 1; j < timeArray.length; j++) {
-          if (overlapping(timeArray[i], timeArray[j])) {
-             return true;
-          }
-       };
-    };
-    return false;
- }
- const overlapping = (a, b) => {
-  const getMinutes = s => {
-    const p = s.split(':').map(Number);
-    return p[0] * 60 + p[1];
-  };
-  return getMinutes(a.end) > getMinutes(b.start) && getMinutes(b.end) > getMinutes(a.start);
- }
+ 
 
     // Is modified
     // User.findOne({ $or: [{ userId: userId }] })
@@ -145,6 +141,37 @@ const createTimeslot = (req, res, next) => {
         //     }
 
         // })
+}
+
+const dateOverlapIndeces = (timeslotsDates_, eventDate) => {
+  const indexes = [];
+  timeslotsDates_.forEach((element, index) => {
+    if (element === eventDate) {
+      indexes.push(index);
+    }
+  });
+  return indexes
+}
+
+
+const isTimeOverlapping = (timeArray) => {   
+  let i, j;
+  for (i = 0; i < timeArray.length - 1; i++) {
+      for (j = i + 1; j < timeArray.length; j++) {
+        if (timeoverlapping(timeArray[i], timeArray[j])) {
+           return true;
+        }
+     };
+  };
+  return false;
+}
+
+const timeoverlapping = (a, b) => {
+  const getMinutes = s => {
+    const p = s.split(':').map(Number);
+    return p[0] * 60 + p[1];
+  };
+  return getMinutes(a.end) > getMinutes(b.start) && getMinutes(b.end) > getMinutes(a.start);
 }
 
 const deleteTimeslot = (req, res) => {
