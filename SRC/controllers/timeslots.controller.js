@@ -32,17 +32,12 @@ const createTimeslot = (req, res, next) => {
       const availabilityTime = {start: timeslot.startTime, end: timeslot.endTime}
       timeslotsTimes_.push(availabilityTime)
     })
-
-    console.log('dates ', timeslotsDates_)
-    console.log('times ', timeslotsTimes_)
     let eventTime = {start: data.startTime, end: data.endTime}
     let eventDate = data.date
 
     // Check overlap
     // check if date has been selected
     let overlap = isOverlap(timeslotsDates_, eventDate, timeslotsTimes_, eventTime)
-    console.log('Event : ', eventDate, eventTime)
-    console.log('overlap ', overlap)
 
     if(overlap) {
       res.status(500).json({ error: 'timeslot overlaps.' });
@@ -61,38 +56,6 @@ const createTimeslot = (req, res, next) => {
             console.log(error)
         })
     }
-
-
-    
-    // user.timeslots.forEach(id=> {
-    //   Timeslot.findById(id)
-    //   .then( timeslots_ => {
-    //     if(timeslots_) {
-    //       // Check overlap
-    //       // check if date has been selected
-    //       if(data.date === timeslots_.date){
-    //         console.log('checking time range')
-    //         let timeArray = [
-    //           {start: timeslots_.startTime, end:timeslots_.endTime},
-    //           {start: data.startTime, end: data.endTime}
-    //         ]
-
-    //         console.log('time array ', timeArray)
-    //   TimeOverlapping(timeArray)) console.log('time is overlapping. Cannot create appointment')
-    //         else console.log('create appointment')
-    //       } 
-    //       else {
-    //         console.log('can create timeslot')
-    //         if(createdTimeslot) console.log('Timeslot already created', createdTimeslot)
-    //         else {
-    //           console.log('create timeslot ', createdTimeslot + 1)
-    //           createdTimeslot++
-    //         }
-
-    //       }
-    //     }
-    //   })
-    // })
   })
 
   const isOverlap = (timeslotsDates_, eventDate, timeslotsTimes_, eventTime) => {
@@ -103,7 +66,6 @@ const createTimeslot = (req, res, next) => {
     let overlapDate = dateOverlapIndeces (timeslotsDates_, eventDate)
     let bool = false
     if(overlapDate.length){
-      console.log('Check time range is not overlapping')
 
       // check time overlap for each date
       overlapDate.forEach(dateIndex => {
@@ -120,45 +82,6 @@ const createTimeslot = (req, res, next) => {
       return bool
     }
   }
-
- 
-
-    // Is modified
-    // User.findOne({ $or: [{ userId: userId }] })
-    //     .then(user => {
-    //       console.log('user ', user)
-    //         if (user) {
-
-    //           const data = {
-    //             startTime: req.body.startTime,
-    //             endTime: req.body.endTime,
-    //             numberOfStudents: req.body.numberOfStudents,
-    //             date: req.body.date,
-    //             userId: userId
-    //           }
-
-              // checkOverlap(user, data)
-              // console.log('date ', data)
-              // console.log('validate ', validateDate(data.date))
-
-                // let timeslot = new Timeslot(data)
-                // timeslot.save()
-                //     .then(timeslot => { //associated logged in user with the appointment they schedule
-
-                //         return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
-
-                //     }).then(user => {
-                //         res.redirect('/timeslots');
-                //         console.log('New timeslot added');
-
-                //     })
-                //     .catch(error => {
-
-                //         console.log(error)
-                //     })
-        //     }
-
-        // })
 }
 
 const dateOverlapIndeces = (timeslotsDates_, eventDate) => {
