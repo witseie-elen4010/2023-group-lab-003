@@ -123,16 +123,16 @@ const deleteTimeslot = (req, res) => {
         return user.save();
       })
       .then((user) => {
-        if (user.role === 'student') {
-          res.redirect('/studentDashboard');
-        } else {
-          res.redirect('/timeslots');
-        }
+        req.flash('success', 'Timeslot was successfully deleted');
+                   
+        res.redirect('/timeslots');
+        
   
       })
       .catch(error => {
-        console.log(error);
-        res.status(500).json({ error: 'Failed to delete timeslot' });
+        req.flash('danger', 'Failed to delete timeslot');
+                   
+        res.redirect('/timeslots');
       });
 };
   

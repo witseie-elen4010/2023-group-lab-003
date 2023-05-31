@@ -103,16 +103,17 @@ const updateEmail = async (req, res) => {
             } else {
                 action = 'Updated email'
                 logsController.createLog(userId, action)
-                console.log('Updated User: ', updatedUser);
-                res.send('Updated email: ' + updatedUser.email);
+                
+                req.flash('success', "Email updated successfully");
+                res.redirect('/signin');
             }
         } catch (err) {
             console.log('Error: ', err);
             res.status(404).send('Database error');
         }
     } else {
-        console.log('Email not provided');
-        res.send('Email not provided');
+        req.flash('danger', "Email not provided");
+                res.redirect('/signin'); // 
     }
 };
 
