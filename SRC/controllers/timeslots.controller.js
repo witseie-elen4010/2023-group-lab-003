@@ -44,6 +44,13 @@ const createTimeslot = (req, res, next) => {
     console.log('Event : ', eventDate, eventTime)
     console.log('overlap ', overlap)
 
+    if(overlap) {
+      res.status(500).json({ error: 'timeslot overlaps.' });
+    }
+    else {
+      res.status(200).json({ message: 'Timeslot has been successfully created'})
+    }
+
 
     
     // user.timeslots.forEach(id=> {
