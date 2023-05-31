@@ -41,11 +41,12 @@ const createAppointment = (req, res, next) => {
             return lecturer.save();
           })
           .then(() => {
+            req.flash('success', 'Appointment created successfully');
             res.redirect('/studentDashboard');
           })
           .catch(error => {
-            console.log(error)
-            res.status(500).json({ message: 'Failed to create appointment' });
+            req.flash('danger', 'failed to create appointment: ' + error.message);
+            res.redirect('/scheduleAppointment');
           });
 
         
