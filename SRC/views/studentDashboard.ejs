@@ -53,10 +53,11 @@
                             <a class="nav-link active" aria-current="page" href="/scheduleAppointment">Set
                                 Appointment</a>
                             <a class="nav-link" href="#">Cancel Appointments</a>
-                            <a class="nav-link active" aria-current="page" href="/searchAppointment">Search
+                            <a class="nav-link active" aria-current="page" href="/searchAppointment">Join Existing
                                 Appointment</a>
                             <a class="nav-link" href="/Settings">Settings</a>
                             <a class="nav-link" href="/student-cancelled-appointments">Cancelled Appointments</a>
+                            <a class="nav-link" href="/logs">User logs</a>
 
                         </nav>
                     </div>
@@ -105,14 +106,14 @@
                                                         <%= appointment.status%>
                                                     </td>
                                                     <td><a
-                                                            href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
-                                                    </td>
-                                                    <td>
-                                                        <% if(appointment.status==="Upcoming" ){ %>
-                                                            <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
+                                                        href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <% if(appointment.status==="Upcoming" ){ %>
+                                                        <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
 
-                                                            <%}%>
-                                                    </td>
+                                                        <%}%>
+                                                </td>
 
 
                                                 </tr>
