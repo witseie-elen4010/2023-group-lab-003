@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/searchAppointment.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Search Appointment</title>
 </head>
 <body>
@@ -34,6 +35,17 @@
           <% } else { %>
             <p></p>
           <% } %>
+
+          <% if (DangerMessage && DangerMessage.length > 0) { %>
+            <div class="alert alert-danger">
+              <%= DangerMessage %>
+            </div>
+          <% } else if (succesMessage && succesMessage.length > 0) { %>
+            <div class="alert alert-success">
+              <%= succesMessage %>
+            </div>
+          <% } %>
+
           </form>
     </div>
 </body>
