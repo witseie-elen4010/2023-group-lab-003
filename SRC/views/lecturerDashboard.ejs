@@ -62,7 +62,8 @@
             <div class="alert alert-success">
               <%= successMessage %>
             </div>
-          <% } %>   
+          <% } %>
+          
     </section>
     <div class="container-fluid">
         <div class="row">
@@ -106,26 +107,24 @@
                                             <%if (appointment.status === 'Upcoming') { %>
 
                                             <tr>
+
                                                 <td>                                                       
                                                         <%= appointment.timeslot.date%>
                                                         &
                                                         <%= appointment.timeslot.availabilityTime%>                                                   
                                         
-                                                </td>
-
-                                                <td>   
+                                                    </td>
+                                                <td>
+                                                    
                                                     <%= appointment.eventTitle %>
                                                 </td>
-
                                                 <td><!--Coming soon-->
                                                     <!--<%= appointment.lecturerName%>-->
                                                         <!--name of the student who created the appointment-->
                                                 </td>
-
                                                 <td>
                                                     <%= appointment.status%>
                                                 </td>
-
                                                 <td>
                                                     <a id="Edit"
                                                         href="/update/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
@@ -136,12 +135,13 @@
 
                                                             <%}%>
                                                 </td>
-
                                             </tr>
                                             <%}%>
                                             <%}); %>
 
+
                                                 <%}%>
+
                             </tbody>
                         </table>
                     </div>
