@@ -18,8 +18,9 @@
     <div class="container">
         <p>Update Times</p>
         <form action="/updateAppointmentTimeslot" method="post">
-            <label class="form-label">New Timeslot
-                <input name="availabilityTime" type="text" class="form-control" >
+            <label class="form-label">Availability time<br>
+                <input name="startTime" id="startTime" type="time" class="form-control-sm" required> to
+                <input name="endTime" id="endTime" type="time" class="form-control-sm" required>
             </label><br>
             <label class="form-label">Date
                 <input name="date" type="text" class="form-control" >
