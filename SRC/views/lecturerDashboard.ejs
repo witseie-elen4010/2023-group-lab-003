@@ -74,8 +74,6 @@
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
 
                             <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
-
-                            <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
                             <a class="nav-link" href="/Settings">Settings</a>
 
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
@@ -101,7 +99,6 @@
                                     <th scope="col">Joined Students</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Modify Meeting</th>
-                                    <th scope="col">Cancel Meeting</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -133,13 +130,13 @@
                                                 <td>
                                                     <a id="Edit"
                                                         href="/update/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
-                                                </td>
+                                           <!-------------    </td>
                                                                                                <td>
                                                         <% if(appointment.status==="Upcoming" ){ %>
                                                             <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
 
                                                             <%}%>
-                                                    </td>
+                                                    </td>------------>
                                             </tr>
                                             <%}%>
                                             <%}); %>

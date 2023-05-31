@@ -76,9 +76,7 @@
                                     <th scope="col">Date & Time</th>
                                     <th scope="col">Event Title</th>
                                     <th scope="col">Lecturer Name</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Modify Meeting</th>
-                                    <th scope="col">Cancel Meeting</th>
+                                    <th scope="col">Status</t>
 
                                 </tr>
                             </thead>
@@ -104,12 +102,12 @@
                                                     <td>
                                                         <%= appointment.status%>
                                                     </td>
-                                                    <td><a
+                                                  <!----------  <td><a
                                                             href="/updateConsultationTimes/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
-                                                    </td>
+                                                    </td>--->
                                                     <td>
                                                         <% if(appointment.status==="Upcoming" ){ %>
-                                                            <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
+                                                            <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Leave Appointment</a>
 
                                                             <%}%>
                                                     </td>

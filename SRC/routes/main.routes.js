@@ -83,20 +83,52 @@ router.get('/signout', (req, res) => {
 });
 
 
-router.post('/updateConsultationTimes', async (req, res) => {
-  const updateTime = req.body.update_date;
+router.post('/updateAppointmentTimeslot', async (req, res) => {
+  const userId = req.session.userId; 
   const appointmentId = req.body.appointment_id;
-
-  try {
-    const update = { date: updateTime };
-    const updatedAppointment = await Appointment.findOneAndUpdate({ _id: appointmentId }, update, { new: true });
-    if (updatedAppointment) {
-      res.json({ message: 'Times updated successfully' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
+  
+  const newTimeslotData = {
+    availabilityTime: req.body.availabilityTime,
+    numberOfStudents: req.body.numberOfStudents,
+    date: req.body.date,
   }
+
+  User.findOne({ userId: userId })
+    .then(user => {
+      if (user) {
+        Appointment.findOne({ _id: appointmentId })
+          .populate('timeslot') 
+          .then(appointment => {
+            if (appointment) {
+              Timeslot.findByIdAndUpdate(
+                appointment.timeslot._id,
+                newTimeslotData,
+                { new: true }, 
+              )
+                .then(updatedTimeslot => {
+                  res.redirect('/timeslots');
+                  console.log('Timeslot updated');
+                })
+                .catch(error => {
+                  console.log(error);
+                  res.status(500).send('Error updating timeslot');
+                });
+            } else {
+              res.status(404).send('Appointment not found');
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            res.status(500).send('Error finding appointment');
+          });
+      } else {
+        res.status(403).send('User not found');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).send('Error finding user');
+    });
 });
 
 //--------------------------------------------------------------------
