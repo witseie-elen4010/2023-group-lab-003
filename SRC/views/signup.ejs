@@ -33,11 +33,11 @@
                 <div class="row align-items-center">
                     <form id="signupform" action="/signup" method="post">
                         <div class="input-group mb-3">
-                            <input name="name" type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Name">
+                            <input name="name" type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Name" required>
                         </div>
 
                         <div class="input-group mb-3">
-                            <input name="surname" type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Surname">
+                            <input name="surname" type="text" class="form-control form=control-lg bg-light fs-6" placeholder="Surname" required>
                         </div>
 
                         <div class="input-group mb-3">
@@ -48,7 +48,7 @@
                             </div></div>
                 
                         <div class="input-group mb-3">
-                            <select name="role" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                            <select name="role" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" required>
                                 <option selected>Select your role</option>
                                 <option value="student">Student</option>
                                 <option value="lecture">Lecture</option>
@@ -57,7 +57,7 @@
                         </div>
                             <div class="password-wrapper">
                                 <input class="form-control" type="password" id="password" placeholder="Password"
-                                    name="password" oninput="validatePasswordWrapper(event)" />
+                                    name="password" oninput="validatePasswordWrapper(event)" required/>
                                     <i id="togglePassword" class="fa fa-eye password-icon"></i>
                                     </div>
 
@@ -74,7 +74,7 @@
                             <div class="password-wrapper">
                                 <input class="form-control" type="password" id="password_confirm"
                                     placeholder="Confirm Password" name="password_confirm"
-                                    oninput="confirmPasswordWrapper(event)" />
+                                    oninput="confirmPasswordWrapper(event)" required/>
                                     <i id="togglePassword-confirm" class="fa fa-eye password-icon"></i>
                             </div>
                                 <div class="password_requirements">
