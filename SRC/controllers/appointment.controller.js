@@ -18,6 +18,7 @@ const createAppointment = (req, res, next) => {
         })
         let savedAppointment;
         appointment.save()
+
           .then(appointment => { //associated logged in user with the appointment they schedule
             savedAppointment = appointment
             return User.findByIdAndUpdate(userId, { $push: { appointments: appointment } }, { new: true });
@@ -46,6 +47,8 @@ const createAppointment = (req, res, next) => {
             console.log(error)
             res.status(500).json({ message: 'Failed to create appointment' });
           });
+
+        
       }
     });
 };
