@@ -3,18 +3,7 @@ const Timeslot = require('../models/timeslots.schema'); //timeslot schema
 
 const createTimeslot = (req, res, next) => {
 
-  //steps to follow: 
-  // 1. Find logged in lecturers details
-  // 2. Find all scheduled lecturers timeslots
-  // 3. Check if date selected by user has already been selected
-  // 3.1. If no; create timeslot
-  // 3.2. If yes:
-  // 3.2.1. Check if time range has been selected 
-  // 3.2.1.1. If yes; display clash
-  // 3.2.1.2. If no; create timeslot
-
   const userId = req.session.userId; //get user id from session
-  // 1. Find logged in lecturers details
   User.findById(userId).populate("timeslots").exec()
   .then( user=> {
     const data = {
@@ -25,18 +14,18 @@ const createTimeslot = (req, res, next) => {
       userId: userId
     }
 
-    const timeslotsDates_ = []
-    const timeslotsTimes_ = []
+    let timeslotsDates_ = []
+    let timeslotsTimes_ = []
     user.timeslots.forEach(timeslot =>{
       timeslotsDates_.push(timeslot.date)
       const availabilityTime = {start: timeslot.startTime, end: timeslot.endTime}
       timeslotsTimes_.push(availabilityTime)
     })
+
     let eventTime = {start: data.startTime, end: data.endTime}
     let eventDate = data.date
 
-    // Check overlap
-    // check if date has been selected
+    // Check if timeslots overlap
     let overlap = isOverlap(timeslotsDates_, eventDate, timeslotsTimes_, eventTime)
 
     if(overlap) {
@@ -44,7 +33,6 @@ const createTimeslot = (req, res, next) => {
     }
     else {
       let timeslot = new Timeslot(data)
-      console.log(timeslot)
       timeslot.save()
         .then(timeslot => { //associated logged in user with the appointment they schedule
             return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
@@ -58,32 +46,28 @@ const createTimeslot = (req, res, next) => {
     }
   })
 
-  const isOverlap = (timeslotsDates_, eventDate, timeslotsTimes_, eventTime) => {
-
-    // check if date is overlapping. 
-    // if date is overlapping, compare time ranges and check if they overlap
-    // if yes lecturer cannot  create timeslot, 
-    let overlapDate = dateOverlapIndeces (timeslotsDates_, eventDate)
-    let bool = false
-    if(overlapDate.length){
-
-      // check time overlap for each date
-      overlapDate.forEach(dateIndex => {
-        let timeslotTime = timeslotsTimes_[dateIndex]
-        let timeArray = [timeslotTime, eventTime] 
-        if(isTimeOverlapping(timeArray)){
-          bool = true
-          return bool
-        }
-      })
-      return bool
-    }
-    else{
-      return bool
-    }
-  }
 }
 
+const isOverlap = (timeslotsDates_, eventDate, timeslotsTimes_, eventTime) => { 
+  let overlapDate = dateOverlapIndeces (timeslotsDates_, eventDate)
+  let bool = false
+  if(overlapDate.length){
+
+    // check time overlap for each date
+    overlapDate.forEach(dateIndex => {
+      let timeslotTime = timeslotsTimes_[dateIndex]
+      let timeArray = [timeslotTime, eventTime] 
+      if(isTimeOverlapping(timeArray)){
+        bool = true
+        return bool
+      }
+    })
+    return bool
+  }
+  else{
+    return bool
+  }
+}
 const dateOverlapIndeces = (timeslotsDates_, eventDate) => {
   const indexes = [];
   timeslotsDates_.forEach((element, index) => {
