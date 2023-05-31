@@ -80,8 +80,10 @@
                                             <%if (appointment.status === 'Cancelled') { %>
                                             <tr>
 
-                                                <td>
-                                                    <%= appointment.date %>
+                                                <td>                                                       
+                                                    <%= appointment.timeslot.date%>
+                                                    &
+                                                    <%= appointment.timeslot.availabilityTime%>  
                                                 </td>
                                                 <td>
                                                     <%= appointment.eventTitle %>

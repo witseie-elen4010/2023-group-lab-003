@@ -37,7 +37,8 @@ const createAppointment = (req, res, next) => {
           return lecturer.save();
         })
         .then(() => {
-          res.redirect('/studentDashboard');
+          req.flash('success', 'Appointment successfully made');
+          return res.redirect('/studentDashboard');
         })
         .catch(error => {
           console.log(error)
