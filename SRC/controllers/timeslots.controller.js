@@ -48,7 +48,18 @@ const createTimeslot = (req, res, next) => {
       res.status(500).json({ error: 'timeslot overlaps.' });
     }
     else {
-      res.status(200).json({ message: 'Timeslot has been successfully created'})
+      let timeslot = new Timeslot(data)
+      console.log(timeslot)
+      timeslot.save()
+        .then(timeslot => { //associated logged in user with the appointment they schedule
+            return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
+        }).then(user => {
+            res.redirect('/timeslots');
+            console.log('New timeslot added');
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 
 
