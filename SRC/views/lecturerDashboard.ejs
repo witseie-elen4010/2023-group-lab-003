@@ -74,13 +74,7 @@
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
 
                             <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
-<<<<<<< HEAD
-=======
-
-            
->>>>>>> master
                             <a class="nav-link" href="/Settings">Settings</a>
-
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
                             <a class="nav-link" href="/lecturer-cancelled-appointments">Cancelled Appointments</a>
                             <a class="nav-link" href="/logs">User logs</a>
@@ -121,7 +115,7 @@
                                                     <!-- Need to fix -->
                                                     <%= appointment.timeslot.date%>
                                                     &
-                                                    <%= appointment.timeslot.availabilityTime%>
+                                                    <%= appointment.timeslot.startTime%>-<%= appointment.timeslot.endTime%>
                                                 </td>
                                                 <td>
                                                     <%= appointment.eventTitle %>
