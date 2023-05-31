@@ -42,7 +42,7 @@ const createAppointment = (req, res, next) => {
           })
           .then(() => {
             req.flash('success', 'Appointment created successfully');
-            res.redirect('/studentDashboard');
+            res.redirect('/scheduleAppointment');
           })
           .catch(error => {
             req.flash('danger', 'failed to create appointment: ' + error.message);

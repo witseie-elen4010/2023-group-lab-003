@@ -6,6 +6,11 @@ const User = require('../models/user.schema');
 const session = require('express-session')
 const authController = require('../controllers/auth.controller');
 const flash = require('connect-flash');
+const appointmentController = require('../controllers/appointment.controller')
+const timeslotsController = require('../controllers/timeslots.controller')
+// showing schedule appointment form
+const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
+
 
 errorHandler = (err) => {
   console.error(err.message, err.code);
@@ -112,7 +117,7 @@ router.get('/createTimeslot', (req, res) => {
 
 router.get('/searchAppointment', (req, res) => {
   const DangerMessage = req.flash('danger');
-  const succesMessage = req.flash('success') 
+  const succesMessage = req.flash('success')
   res.render('searchAppointment', { DangerMessage, succesMessage })
 })
 
@@ -144,8 +149,8 @@ router.post('/searchAppointments', async (req, res, next) => {
     }
 
     const DangerMessage = req.flash('danger');
-    const succesMessage = req.flash('success') 
-    res.render('searchAppointment', { appointments, DangerMessage,succesMessage });
+    const succesMessage = req.flash('success')
+    res.render('searchAppointment', { appointments, DangerMessage, succesMessage });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -154,22 +159,18 @@ router.post('/searchAppointments', async (req, res, next) => {
 
 
 // ------------------- Schedule Appointment -----------------------
-// showing schedule appointment form
-const { emptyInput, validateEventTitle, validateLecturerName } = require('../public/scripts/backendAppointment')
-const appointmentController = require('../controllers/appointment.controller')
-const timeslotsController = require('../controllers/timeslots.controller')
 
 router.get('/scheduleAppointment', (req, res) => {
-  //fetch lecturer names and timeslots from the database
-  //User.find({role:'lecture'},'name timeslots')
-  //.populate('timeslots')
-  //.then(lecturers =>{
-  res.render('scheduleAppointment');
-  //})
+  const successMessage = req.flash('success'); //flash success message
+  const dangerMessage = req.flash('danger');
+
+  res.render('scheduleAppointment', {successMessage, dangerMessage});
+
 
 })
 //get lectuers for selection 
 router.get('/scheduleAppointment/lecturerDetails', (req, res) => {
+  const successMessage = req.flash('success'); //flash success message
   User.find({ role: 'lecture', })
     .populate('timeslots')
     .then(
@@ -191,11 +192,11 @@ router.get('/studentDashboard', (req, res) => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } })
-      .populate('timeslot')
-      .then((appointments) => {
-        const successMessage = req.flash('success'); //flash success message
-        res.render('studentDashboard', { appointments, successMessage });
-      })
+        .populate('timeslot')
+        .then((appointments) => {
+          const successMessage = req.flash('success'); //flash success message
+          res.render('studentDashboard', { appointments, successMessage });
+        })
     }
     else {
       req.flash('danger', 'Please sign in'); //flash success message
@@ -212,12 +213,11 @@ router.get('/lecturerDashboard', (req, res) => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } })
-      .populate('timeslot')
-      .then((appointments) => {
-        const successMessage = req.flash('success'); //flash success message
-        
+        .populate('timeslot')
+        .then((appointments) => {
+          const successMessage = req.flash('success'); //flash success message
           res.render('lecturerDashboard', { appointments, successMessage })
-      })
+        })
     }
     else {
       req.flash('danger', 'Please sign in'); //flash success message
@@ -265,7 +265,7 @@ router.get('/cancel/:id', (req, res) => {
         return res.status(404).json({ error: 'User not found' });
 
       }
-    
+
       // Find the appointment to be canceled
       const appointment = user.appointments.find(appt => appt._id.toString() === appointmentId);
       if (!appointment) {
@@ -281,7 +281,7 @@ router.get('/cancel/:id', (req, res) => {
     })
     .then((user) => {
       if (user.role === 'student') {
-        
+
         res.redirect('/studentDashboard');
       } else {
         res.redirect('/lecturerDashboard');
@@ -318,24 +318,24 @@ router.get('/Join', async (req, res) => {
     if (user.appointments.includes(appointmentId)) {
       req.flash('danger', 'You are already part of the appointment');
       return res.redirect('/searchAppointment')
-   }
+    }
 
-   const timeslot = appointment.timeslot;
+    const timeslot = appointment.timeslot;
 
-   
-   const numberOfStudents = timeslot.numberOfStudents;
+
+    const numberOfStudents = timeslot.numberOfStudents;
 
 
     console.log(numberOfStudents)
-    
+
     await Appointment.findByIdAndUpdate(appointmentId, { $inc: { participantCount: 1 } }, { new: true }).populate('timeslot');
 
     const currentSeatNum = (numberOfStudents - appointment.participantCount)
-    
+
     await User.findByIdAndUpdate(userId, { $push: { appointments: appointmentId } });
 
-    await Appointment.findByIdAndUpdate(appointmentId, {NumberOfSeats : currentSeatNum }, { new: true }).populate('timeslot');
-    
+    await Appointment.findByIdAndUpdate(appointmentId, { NumberOfSeats: currentSeatNum }, { new: true }).populate('timeslot');
+
     req.flash('success', 'Appointment joined successfully');
     res.redirect('/searchAppointment');
   } catch (error) {
@@ -367,10 +367,10 @@ router.get('/student-cancelled-appointments', (req, res) => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } })
-      .populate('timeslot')
-      .then((appointments) => {
-        res.render('studentCancelledAppointments', { appointments })
-      })
+        .populate('timeslot')
+        .then((appointments) => {
+          res.render('studentCancelledAppointments', { appointments })
+        })
     }
     else {
       req.flash('danger', 'Please sign in'); //flash success message
@@ -387,10 +387,10 @@ router.get('/lecturer-cancelled-appointments', (req, res) => {
     if (user) {
       const userAppointments = user.appointments
       Appointment.find({ _id: { $in: userAppointments } })
-      .populate('timeslot')
-      .then((appointments) => {
-        res.render('lecturerCancelledAppointments', { appointments })
-      })
+        .populate('timeslot')
+        .then((appointments) => {
+          res.render('lecturerCancelledAppointments', { appointments })
+        })
     }
     else {
       req.flash('danger', 'Please sign in'); //flash success message
