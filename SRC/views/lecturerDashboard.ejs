@@ -62,8 +62,7 @@
             <div class="alert alert-success">
               <%= successMessage %>
             </div>
-          <% } %>
-          
+          <% } %>   
     </section>
     <div class="container-fluid">
         <div class="row">
@@ -72,10 +71,15 @@
                     <div class="col-12 menu-container">
                         <nav class="nav flex-column">
                             <a class="nav-link" href="/createTimeslot">Set Availability times</a>
+
                             <a class="nav-link" id="Edit" href="\includeAnotherLecturer">Include another lecturer</a>
+
                             <a class="nav-link" id="Edit" href="/update">Edit Consultation</a>
                             <a class="nav-link" href="/Settings">Settings</a>
+
                             <a class="nav-link" href="/timeslots">View Timeslots</a>
+                            <a class="nav-link" href="/lecturer-cancelled-appointments">Cancelled Appointments</a>
+
                         </nav>
                     </div>
                 </div>
@@ -90,7 +94,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-
                                     <th scope="col">Date & Time</th>
                                     <th scope="col">Event Title</th>
                                     <th scope="col">Joined Students</th>
@@ -104,16 +107,17 @@
                                     <td>No appointments available.</td>
                                     <% }else { %>
                                         <% appointments.forEach(function(appointment){ %>
-                                            
+                                            <%if (appointment.status === 'Upcoming') { %>
+
                                             <tr>
                                                 <td>                                                       
                                                         <%= appointment.timeslot.date%>
                                                         &
                                                         <%= appointment.timeslot.availabilityTime%>                                                   
+                                        
                                                 </td>
 
-                                                <td>
-                                                    
+                                                <td>   
                                                     <%= appointment.eventTitle %>
                                                 </td>
 
@@ -127,25 +131,20 @@
                                                 </td>
 
                                                 <td>
-                                                    <% if(appointment.status==="Upcoming" ){ %>
-                                                        <a id="Edit"
+                                                    <a id="Edit"
                                                         href="/update/<%= appointment.id %>" class="btn btn-secondary" role="button">Edit</a>
-                                                        <%}%>
                                                 </td>
-
-                                                <td>
+                                                                                               <td>
                                                         <% if(appointment.status==="Upcoming" ){ %>
                                                             <a href="/cancel/<%= appointment.id %>" class="btn btn-danger" role="button">Cancel</a>
-                                                        <%}%>
-                                                </td>
 
+                                                            <%}%>
+                                                </td>
                                             </tr>
-                                            
+                                            <%}%>
                                             <%}); %>
 
-
-                                            <%}%>
-
+                                                <%}%>
                             </tbody>
                         </table>
                     </div>
