@@ -23,13 +23,15 @@ const createTimeslot = (req, res, next) => {
                         return User.findByIdAndUpdate(userId, { $push: { timeslots: timeslot } }, { new: true });
 
                     }).then(user => {
-                        res.redirect('/timeslots');
-                        console.log('New timeslot added');
+                      req.flash('success', 'Timeslot was successfully created');
+                      res.redirect('/createTimeslot');
+                       
 
                     })
                     .catch(error => {
 
-                        console.log(error)
+                      req.flash('danger', 'failed to create timeslot');
+                      res.redirect('/createTimeslot');
                     })
             }
 
@@ -60,16 +62,16 @@ const deleteTimeslot = (req, res) => {
         return user.save();
       })
       .then((user) => {
-        if (user.role === 'student') {
-          res.redirect('/studentDashboard');
-        } else {
-          res.redirect('/timeslots');
-        }
+        req.flash('success', 'Timeslot was successfully deleted');
+                   
+        res.redirect('/timeslots');
+        
   
       })
       .catch(error => {
-        console.log(error);
-        res.status(500).json({ error: 'Failed to delete timeslot' });
+        req.flash('danger', 'Failed to delete timeslot');
+                   
+        res.redirect('/timeslots');
       });
 };
   

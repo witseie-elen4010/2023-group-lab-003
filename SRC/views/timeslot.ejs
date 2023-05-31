@@ -38,6 +38,16 @@
             </nav>
         </header>
     </section>
+    <% if (tsuccessMessage && tsuccessMessage.length> 0) { %>
+        <div class="alert alert-success">
+            <%= tsuccessMessage %>
+        </div>
+       
+        <% } else if (tdangerMessage && tdangerMessage.length > 0) { %>
+            <div class="alert alert-danger">
+              <%= tdangerMessage %>
+            </div>
+          <% } %>
     <section style="padding: 100px;">
     <h3>Set Availability Time slot</h3><br>
     <div class="card text-center">

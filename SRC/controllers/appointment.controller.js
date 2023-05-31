@@ -38,12 +38,12 @@ const createAppointment = (req, res, next) => {
             lecturer.appointments.push(savedAppointment);
             action = 'New appointment created'
             logsController.createLog(userId, action)
-            return lecturer.save();
-          })
-          .then(() => {
+           
             req.flash('success', 'Appointment created successfully');
             res.redirect('/scheduleAppointment');
+            return lecturer.save();
           })
+          
           .catch(error => {
             req.flash('danger', 'failed to create appointment: ' + error.message);
             res.redirect('/scheduleAppointment');

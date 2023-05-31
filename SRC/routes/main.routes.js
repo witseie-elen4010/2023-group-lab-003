@@ -112,7 +112,9 @@ router.post('/updateConsultationTimes', async (req, res) => {
 //---------------------Availalbility----------------------------------
 //specify availability time slots
 router.get('/createTimeslot', (req, res) => {
-  res.render('timeslot');
+  tsuccessMessage =  req.flash('success')
+  tdangerMessage = req.flash('danger')
+  res.render('timeslot', {tsuccessMessage, tdangerMessage});
 })
 
 router.get('/searchAppointment', (req, res) => {
@@ -161,10 +163,10 @@ router.post('/searchAppointments', async (req, res, next) => {
 // ------------------- Schedule Appointment -----------------------
 
 router.get('/scheduleAppointment', (req, res) => {
-  const successMessage = req.flash('success'); //flash success message
-  const dangerMessage = req.flash('danger');
+  const asuccessMessage = req.flash('success'); //flash success message
+  const adangerMessage = req.flash('danger');
 
-  res.render('scheduleAppointment', {successMessage, dangerMessage});
+  res.render('scheduleAppointment', {asuccessMessage, adangerMessage});
 
 
 })
@@ -235,6 +237,7 @@ router.get('/timeslots', (req, res) => {
       const userTimeslots = user.timeslots
       console.log(userTimeslots)
       Timeslot.find({ _id: { $in: userTimeslots } }).then((timeslots) => {
+        
         res.render('timeslots', { timeslots })
       })
     }
